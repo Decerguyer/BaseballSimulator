@@ -91,7 +91,7 @@ public:
     //starts a stream and throws out the first few frames
     void startStream(int numFrames = 0){
         pipe.start(cfg);
-        if(numFrames > 0){throwFrames(numFrames);}
+        throwFrames(numFrames);
     }
     
     void endStream(){
