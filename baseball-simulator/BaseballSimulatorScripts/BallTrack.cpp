@@ -99,7 +99,7 @@ int main(){
             std::cout << "Recording..." << std::endl;
         }
         
-        //discard first 3 frames waiting for the stream to stabilize
+        //discard first 'n' frames waiting for the stream to stabilize
         for (int i = 0; i < 10; i++){
             rs2::frameset f = pipe.wait_for_frames();
         }

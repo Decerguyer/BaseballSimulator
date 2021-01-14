@@ -12,7 +12,6 @@
 #include <librealsense2/rsutil.h> // Include RealSense Cross Platform API
 #include <opencv2/opencv.hpp>
 
-
 cv::Mat rsDepthToCVMat(rs2::depth_frame depthFrame){
     auto pf = depthFrame.get_profile().as<rs2::video_stream_profile>();
 
@@ -69,16 +68,18 @@ public:
     /*Takes specified number of frames and
      returns a vector of the collected frames
      */
-    std::vector<rs2::frameset> recordRSFrames(int numFrames){
+    std::vector<rs2::frameset> recordRSFrames(int numFrames,int numThrow = 20){
         std::vector<rs2::frameset> frames;
         
         pipe.start(cfg);
+        throwFrames(numThrow);
         for (int i = 0; i < numFrames; i++){
             rs2::frameset fSet = pipe.wait_for_frames();
             
             fSet.keep();
             frames.push_back(fSet);
         }
+        intrin = pipe.get_active_profile().get_stream(RS2_STREAM_DEPTH).as<rs2::video_stream_profile>().get_intrinsics();
         pipe.stop();
         return frames;
     }
@@ -89,7 +90,7 @@ public:
     }
     
     //starts a stream and throws out the first few frames
-    void startStream(int numFrames = 0){
+    void startStream(int numFrames = 20){
         pipe.start(cfg);
         throwFrames(numFrames);
     }
@@ -103,7 +104,9 @@ public:
             getFrame();
         }
     }
-    
+    struct rs2_intrinsics getIntrin(){
+    	return intrin;
+    }
     
 private:
     rs2::config cfg;
@@ -113,6 +116,8 @@ private:
     rs2::sensor depthSensor;
     
     bool isStreaming = false;
+    
+    struct rs2_intrinsics intrin;
 };
 
 class ThresholdFilter{

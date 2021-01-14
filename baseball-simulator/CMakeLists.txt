@@ -6,7 +6,7 @@ cmake_minimum_required(VERSION 3.1.0)
 project(RealsenseExamplesBaseballSimulator)
 
 find_package( OpenCV REQUIRED )
-add_executable(rs-baseball-simulator TFSubtraction.cpp)
+add_executable(rs-baseball-simulator stagnantMeasurement3D.cpp)
 set_property(TARGET rs-baseball-simulator PROPERTY CXX_STANDARD 11)
 include_directories(rs-baseball-simulator ${OpenCV_INCLUDE_DIRS})
 target_link_libraries(rs-baseball-simulator ${DEPENDENCIES} ${OpenCV_LIBS})
