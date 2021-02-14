@@ -78,8 +78,6 @@ private:
         cv::Mat ir_mat = cv::Mat(prof.height(), prof.width(), CV_8UC1, (void*)irFrame.get_data());
         return ir_mat;
     }
-    
-    
 };
 
 
@@ -114,6 +112,10 @@ public:
     
     void enableIRStream(int width, int height, int fps, int index = 1){
         cfg.enable_stream(RS2_STREAM_INFRARED, index, width, height, RS2_FORMAT_Y8, fps);
+    }
+    
+    void disableEmitter(){
+        depthSensor.set_option(RS2_OPTION_EMITTER_ENABLED, false);
     }
     
     void setDefaultSettings(){
@@ -196,7 +198,7 @@ public:
     ThresholdFilter() {
         createThresholdFrame();
     }
-    ThresholdFilter(Camera cam) : camera{cam} {
+    ThresholdFilter(Camera &cam) : camera{cam} {
         createThresholdFrame();
     }
     
