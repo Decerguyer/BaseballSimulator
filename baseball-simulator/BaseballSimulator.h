@@ -117,12 +117,12 @@ public:
     }
     
     void setDefaultSettings(){
-    	depthSensor.set_option(RS2_OPTION_ENABLE_AUTO_EXPOSURE, true);
-	depthSensor.set_option(RS2_OPTION_GAIN, 16.f);
-    	depthSensor.set_option(RS2_OPTION_EMITTER_ENABLED, true);
-    	depthSensor.set_option(RS2_OPTION_EMITTER_ON_OFF, false);
-    	enableDepthStream(848, 480, 90);
-	enableIRStream(848, 480, 90);
+        depthSensor.set_option(RS2_OPTION_ENABLE_AUTO_EXPOSURE, true);
+    depthSensor.set_option(RS2_OPTION_GAIN, 16.f);
+        depthSensor.set_option(RS2_OPTION_EMITTER_ENABLED, true);
+        depthSensor.set_option(RS2_OPTION_EMITTER_ON_OFF, false);
+        enableDepthStream(848, 480, 90);
+    enableIRStream(848, 480, 90);
     }
     
     /*Takes specified number of frames and
@@ -176,7 +176,7 @@ public:
         }
     }
     struct rs2_intrinsics getIntrinsics(){
-    	return intrin;
+        return intrin;
     }
     
 private:
@@ -246,38 +246,111 @@ private:
     }
 };
 
+struct coord2D{
+    float x;
+    float y;
+    float depth;
+};
+
+struct coord3D{
+    float x;
+    float y;
+    float z;
+};
+
+class ROIPredictor{
+public:
+    cv::Rect genNewROI(float timeStamp, int ROISize, struct rs2_intrinsics intrin){
+        coord3D predPos = predictNextPos(timeStamp);
+        
+        float pixelLoc[2];
+        
+        if (isFirstMeas){
+            return cv::Rect(0, 0, 848, 480);
+            isFirstMeas = false;
+        }
+        else{
+            float predPoint[3] = {predPos.x, predPos.y, predPos.z};
+            
+            rs2_project_point_to_pixel(pixelLoc, &intrin, predPoint);
+        }
+        
+        cv::Rect ROI = cv::Rect(pixelLoc[0] - (ROISize/2), pixelLoc[1] - (ROISize/2), ROISize, ROISize);
+        
+        return ROI;
+    }
+    
+    void updateVals(coord3D currPos, float timeStamp){
+        updateVelo(currPos, timeStamp);
+        prevPos = currPos;
+        prevTimeStamp = timeStamp;
+    }
+    
+private:
+    coord3D prevPos;
+    float prevTimeStamp;
+    
+    coord3D velo;
+    
+    bool isFirstMeas = true;
+    
+    coord3D predictNextPos(float timeStamp){
+        coord3D predPos;
+        predPos.x = prevPos.x + velo.x * (timeStamp - prevTimeStamp);
+        predPos.y = prevPos.y + velo.y * (timeStamp - prevTimeStamp);
+        predPos.z = prevPos.z + velo.z * (timeStamp - prevTimeStamp);
+        return predPos;
+    }
+    
+    void updateVelo(coord3D currPos, float timeStamp){
+        float deltaT = timeStamp - prevTimeStamp;
+        
+        velo.x = (currPos.x - prevPos.x)/deltaT;
+        velo.y = (currPos.y - prevPos.y)/deltaT;
+        velo.z = (currPos.z - prevPos.z)/deltaT;
+    }
+};
 
 class Tracker{
 public:
-    Tracker(int width, int height){
-        ROI = cv::Rect(0, 0, width - 1, height - 1);
+    Tracker(int width, int height, struct rs2_intrinsics intrinsics){
+        ROIRect = cv::Rect(0, 0, width - 1, height - 1);
         imageSize = cv::Rect(0, 0, width - 1, height - 1);
-        inBoundsROI = ROI & imageSize;
+        inBoundsROI = ROIRect & imageSize;
+        intrin = intrinsics;
     }
     
-    //returns a Mat with a circle drawn on it
-    cv::Mat drawCircle(cv::Mat image, cv::Vec3f coord){
-        cv::Mat retMat = image.clone();
-        cv::Point pnt(coord[0], coord[1]);
+    //Function in progress
+    coord3D find3DPos(ImageData imgData){
+        cv::Mat depthVis = depthToVisual(imgData.getDepthMat());
+        cv::Vec3f circle = findBall(depthVis, pred3DPos.z);
         
-        //draw the outer circle //green
-        circle(retMat, pnt, coord[2], cv::Scalar(0,255,0), 2, 8, 0 );
-        //draw the center of the circle //red
-        circle(retMat, pnt, 2 , cv::Scalar(0,0,255), 2, 8, 0 );
-        
-        return retMat;
+        //Checks if a circle was found
+        if (!circle[2]){
+            
+        }
+        coord3D a;
+        return a;
     }
+
 private:
     float bndBoxSize = 180;
     
-    cv::Rect ROI;
+    ROIPredictor;
+    
+    cv::Rect ROIRect;
     cv::Rect imageSize;
     cv::Rect inBoundsROI;
     
-    int ballPixX;
-    int ballPixY;
+    cv::Mat ROI;
+
+    coord3D pred3DPos = {0, 0, 1};
     
-    //returns pixel x [0], pixel y [1], and the radius[0]
+    struct rs2_intrinsics intrin;
+    
+    
+    
+    //returns pixel x [0], pixel y [1], and the radius[2]
     cv::Vec3f findBall(cv::Mat image, double distance){
         std::vector<cv::Vec3f> coords;
 
@@ -286,7 +359,12 @@ private:
         //Should eventually refine parameters again
         cv::HoughCircles(image, coords, cv::HOUGH_GRADIENT, 1.6, 4000, 50, 5, (radius - radius*0.15), radius + radius*0.15);
         
-        return coords[0];
+        if (!coords.empty()){
+            return coords[0];
+        }
+        else{
+            return cv::Vec3f(0, 0, 0);
+        }
     }
     
     // Returns the radius of the ball
@@ -297,13 +375,42 @@ private:
         if (radius > 25){
             radius = 25;
         }
+        return radius;
     }
     
     void adjustROI(){
         
     }
     
+    cv::Mat depthToVisual(cv::Mat depth){
+        cv::Mat depthVis;
+        depth.convertTo(depthVis, CV_8UC1, 255,0); //Convert the copy to 8 bit grey-scale format
+        return depthVis;
+    }
+    
 };
+
+//class Visualizer{
+//
+//public:
+//    //returns a Mat with a circle drawn on it
+//    cv::Mat drawCircle(ImageData images, cv::Vec3f coord){
+//        cv::Mat retMat = image.clone();
+//        cv::Point pnt(coord[0], coord[1]);
+//
+//        //draw the outer circle //green
+//        circle(retMat, pnt, coord[2], cv::Scalar(0,255,0), 2, 8, 0 );
+//        //draw the center of the circle //red
+//        circle(retMat, pnt, 2 , cv::Scalar(0,0,255), 2, 8, 0 );
+//
+//        return retMat;
+//    }
+//
+//};
+
 
 
 #endif /* BaseballSimulator_h */
+
+
+
