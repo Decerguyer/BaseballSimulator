@@ -1,3 +1,5 @@
+# serverless.yml
+
 service: serverless-flask
 
 plugins:
