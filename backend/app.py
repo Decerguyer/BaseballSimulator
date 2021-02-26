@@ -24,7 +24,7 @@ else:
 
 @app.route("/")
 def hello():
-    return jsonify(os.environ)
+    return jsonify("This is the backend API for the baseball simulator app")
 
 
 @app.route("/pitch/<string:pitch_id>")
