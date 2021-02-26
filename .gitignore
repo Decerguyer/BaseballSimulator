@@ -1,0 +1,6 @@
+backend/secrets.txt
+backend/node_modules
+backend/venv
+backend/.serverless
+backend/.dynamodb
+backend/__pycache__
