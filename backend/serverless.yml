@@ -8,7 +8,7 @@ plugins:
   - serverless-dynamodb-local
 
 custom:
-  tableName: 'users-table-${self:provider.stage}'
+  tableName: 'pitches-table-${self:provider.stage}'
   wsgi:
     app: app.app
     packRequirements: false
@@ -33,9 +33,9 @@ provider:
         - dynamodb:UpdateItem
         - dynamodb:DeleteItem
       Resource:
-        - { "Fn::GetAtt": ["UsersDynamoDBTable", "Arn" ] }
+        - { "Fn::GetAtt": ["PitchesDynamoDBTable", "Arn" ] }
   environment:
-    USERS_TABLE: ${self:custom.tableName}
+    PITCHES_TABLE: ${self:custom.tableName}
 
 functions:
   app:
@@ -46,18 +46,18 @@ functions:
 
 resources:
   Resources:
-    UsersDynamoDBTable:
+    PitchesDynamoDBTable:
       Type: 'AWS::DynamoDB::Table'
       Properties:
         AttributeDefinitions:
           -
-            AttributeName: userId
+            AttributeName: pitch_id
             AttributeType: S
         KeySchema:
           -
-            AttributeName: userId
+            AttributeName: pitch_id
             KeyType: HASH
         ProvisionedThroughput:
-          ReadCapacityUnits: 1
+          ReadCapacityUnits: 25
           WriteCapacityUnits: 1
         TableName: ${self:custom.tableName}

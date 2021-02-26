@@ -1,53 +1,76 @@
+# app.py
+
 import os
 
 import boto3
+import uuid
+import datetime
 
 from flask import Flask, jsonify, request
 app = Flask(__name__)
 
-USERS_TABLE = os.environ['USERS_TABLE']
-client = boto3.client('dynamodb')
+PICHES_TABLE = os.environ['PITCHES_TABLE']
+IS_OFFLINE = os.environ.get('IS_OFFLINE')
+
+if IS_OFFLINE:
+    client = boto3.client(
+        'dynamodb',
+        region_name='localhost',
+        endpoint_url='http://localhost:8000'
+    )
+else:
+    client = boto3.client('dynamodb')
 
 
 @app.route("/")
 def hello():
-    return "Hello World!"
+    return jsonify(os.environ)
 
 
-@app.route("/users/<string:user_id>")
-def get_user(user_id):
+@app.route("/pitch/<string:pitch_id>")
+def get_user(pitch_id):
     resp = client.get_item(
-        TableName=USERS_TABLE,
+        TableName=PICHES_TABLE,
         Key={
-            'userId': { 'S': user_id }
+            'pitch_id': {'S': pitch_id}
         }
     )
     item = resp.get('Item')
     if not item:
-        return jsonify({'error': 'User does not exist'}), 404
+        return jsonify({'error': 'Pitch does not exist'}), 404
 
     return jsonify({
-        'userId': item.get('userId').get('S'),
-        'name': item.get('name').get('S')
+        'pitch_id': item.get('pitch_id').get('S'),
+        'positions': item.get('positions').get('NS'),
+        'spin': item.get('spin').get('N'),
+        'timestamp': item.get('time').get('S'),
+        'pitcher': item.get('pitcher').get('S')
     })
 
 
-@app.route("/users", methods=["POST"])
-def create_user():
-    user_id = request.json.get('userId')
+@app.route("/pitch", methods=["POST"])
+def record_pitch():
+    pitch_id = uuid.uuid4()
+    positions = request.json.get('positions')
+    spin = request.json.get('spin')
+    pitcher = request.json.get('pitcher')
+    time = datetime.datetime.now()
+
     name = request.json.get('name')
-    if not user_id or not name:
-        return jsonify({'error': 'Please provide userId and name'}), 400
+    if not positions or not spin or not pitcher:
+        return jsonify({'error': 'Please provide positions, spin, and user'}), 400
 
     resp = client.put_item(
-        TableName=USERS_TABLE,
+        TableName=PICHES_TABLE,
         Item={
-            'userId': {'S': user_id },
-            'name': {'S': name }
-        }
+                'pitch_id': {'S': str(pitch_id)},
+                'positions': {'NS': positions},
+                'spin': {'N': spin},
+                'time': {'S': str(time)},
+                'pitcher': {'S': pitcher}
+                }
     )
 
     return jsonify({
-        'userId': user_id,
-        'name': name
-    })
+        'success': 'recorded pitch with id: {}'.format(pitch_id)
+    }), 201
