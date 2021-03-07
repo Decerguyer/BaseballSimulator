@@ -47,6 +47,24 @@ def get_user(pitch_id):
         'pitcher': item.get('pitcher').get('S')
     })
 
+@app.route("/pitch", methods=["GET"])
+def get_pitch_history():
+    resp = client.scan(
+        TableName=PICHES_TABLE
+    )
+    result = []
+    print('Response: ', resp)
+    for pitch in resp.get('Items'):
+        result.append({
+            'pitch_id': pitch.get('pitch_id').get('S'),
+            'positions': pitch.get('positions').get('NS'),
+            'spin': pitch.get('spin').get('N'),
+            'timestamp': pitch.get('time').get('S'),
+            'pitcher': pitch.get('pitcher').get('S')
+        })
+
+    return jsonify(result), 200
+
 
 @app.route("/pitch", methods=["POST"])
 def record_pitch():
