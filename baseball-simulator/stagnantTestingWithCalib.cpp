@@ -24,13 +24,15 @@ std::vector <cv::Vec3f> ball_detector(cv::Mat image, double distance){
         radius = 25;
     }
     
-    cv::HoughCircles(image, circles, cv::HOUGH_GRADIENT, 1.6, 4000, 50, 5, (radius - radius*0.15), radius + radius*0.15);
+    
+    //cv::HoughCircles(image, circles, cv::HOUGH_GRADIENT, 1.6, 4000, 50, 5, (radius - radius*0.15), radius + radius*0.15);
+    cv::HoughCircles(image, circles, cv::HOUGH_GRADIENT, 1.6, 4000, 50, 5, 5, 50);
     //std::cout<<circles.size()<<std::endl;
     return circles;
 }
 
 int main(){
-    
+   
     //Calibration Block
     CameraCalibration calibrationParameters;
     cv::Mat rotationMatrix,translationMatrix;
@@ -39,8 +41,13 @@ int main(){
     std::cout << "Rotation Matrix: " << rotationMatrix << std::endl;
     std::cout << "Translation Matrix: " << translationMatrix << std::endl;
     
+    cv::Mat zeroPoint = (cv::Mat_<double>(3,1) << 0,0,0); //Converting m to mm
+    zeroPoint=rotationMatrix*(zeroPoint-translationMatrix);
+    std::cout << "Camera 0,0,0 transformation: " << zeroPoint << std::endl << std::endl;
+    
     //Camera Setup Block
     Camera cam;    //Create Camera Object
+    //cam.setExposure(1000);
     cam.enableStreams(848, 480, 90);    //Specify stream parameters
     ThresholdFilter threshFilter;    //Create depth background for threshold/background-subraction
     
@@ -56,16 +63,20 @@ int main(){
     //Processing Block
     for(int i =0; i<(int)frames.size();(i >= 0 ? i++ : i = 0)){    //Iterates through the vector of framesets
         
+        cv::Mat irMAT = frames[i].getIRMat();
         cv::Mat depthMatOriginal = frames[i].getDepthMat(); //Pull the depth frame from the frameset and convert it to cv::Mat format
-        depthMatOriginal = threshFilter.filter(depthMatOriginal,0.3048,1);    //Send the depth frame through the threshold/background-subtraction filter
+        depthMatOriginal = threshFilter.filter(depthMatOriginal,0.3048,3);    //Send the depth frame through the threshold/background-subtraction filter
         
         cv::Mat depthMatCopy;    //Create a copy of the filtered depth frames
         depthMatCopy = depthMatOriginal.clone();
     
     depthMatCopy.convertTo(depthMatCopy, CV_8UC1, 255,0); //Convert the copy to 8 bit grey-scale format
     
+    cv::Mat gaussianBlur;
+    cv::GaussianBlur(depthMatCopy,gaussianBlur,cv::Size(9,9),0);
+    
     float minThreshDist = 0.3048f;
-    std::vector <cv::Vec3f> circles = ball_detector(depthMatCopy,minThreshDist); //Find the ball in the image
+    std::vector <cv::Vec3f> circles = ball_detector(/*depthMatCopy*/gaussianBlur,minThreshDist); //Find the ball in the image
     
     float pixel[2] = {90, 90}; //Temporary center of the ball
         if (circles.size() >= 1){ //If the vector circles has a value (ball is found)
@@ -80,7 +91,7 @@ int main(){
             auto intrin = cam.getIntrinsics(); //retreives the intrinsics of the camera necessary for deprojection
             
             //std::cout<<intrin<<std::endl;
-        rs2_deproject_pixel_to_point(tdPoint, &intrin, pixel, distance); //Convert the distance and 2D pixel location into 3D position
+            rs2_deproject_pixel_to_point(tdPoint, &intrin, pixel, distance); //Convert the distance and 2D pixel location into 3D position
             
             std::cout<<(tdPoint[0]/0.3048)*12<<std::endl; //x component
             std::cout<<(tdPoint[1]/0.3048)*12<<std::endl; //y component
@@ -93,6 +104,17 @@ int main(){
             std::cout << "x: " << tdPoint[0] << " y: " << tdPoint[1] << " z: " << tdPoint[2] << std::endl;
             transformedPoint=rotationMatrix*(testPoint-translationMatrix);
             std::cout << "Transformed Point: " << transformedPoint << std::endl;
+            
+            /*float input;
+            std::cout << std::endl << std::endl << "Enter ground truth depth" << std::endl;
+            std::cin >> input;
+            rs2_deproject_pixel_to_point(tdPoint, &intrin, pixel, input); //Convert the
+            testPoint = (cv::Mat_<double>(3,1) << tdPoint[0]*1000,tdrealPoint[1]*1000,tdPoint[2]*1000); //Converting m to mm
+            //testPoint = rotation*testPoint+T;
+            std::cout << "x: " << tdPoint[0] << " y: " << tdPoint[1] << " z: " << tdPoint[2] << std::endl;
+            transformedPoint=rotationMatrix*(testPoint-translationMatrix);
+            std::cout << "Transformed Point: " << transformedPoint << std::endl;
+            */
             //Note that the origin is considered to be the left imager (facing outwards) x axis facing right, y axis facing down, z axis facing away
             
             cv::circle(depthMatOriginal, pnt, int(circles[0][2]), cv::Scalar(0,255,0), 2, 8, 0 ); //Draw a circle with the determined radius of the ball around ball's center point
@@ -103,6 +125,8 @@ int main(){
 
 
         cv::imshow("Depth Thresholded", depthMatOriginal); //Display the original depth image with fitted circle and center point
+        cv::imshow("Gaussian Blurred Image 9x9 kernel",gaussianBlur);
+        cv::imshow("IR Imager", irMAT);
         //cv::imshow("Depth Copy", depthMatCopy); //Display the original depth image with fitted circle and center point
 
         int key = cv::waitKey(0); //Blocks until user input

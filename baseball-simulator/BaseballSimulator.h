@@ -93,7 +93,6 @@ public:
         
         depthSensor = dev.first<rs2::depth_sensor>();
         
-        intrin = depthSensor.get_stream_profiles().front().as<rs2::video_stream_profile>().get_intrinsics();
     }
     
     void setExposure(int exposureTime){
@@ -120,11 +119,11 @@ public:
     
     void setDefaultSettings(){
         depthSensor.set_option(RS2_OPTION_ENABLE_AUTO_EXPOSURE, true);
-    depthSensor.set_option(RS2_OPTION_GAIN, 16.f);
+    	depthSensor.set_option(RS2_OPTION_GAIN, 16.f);
         depthSensor.set_option(RS2_OPTION_EMITTER_ENABLED, true);
         depthSensor.set_option(RS2_OPTION_EMITTER_ON_OFF, false);
         enableDepthStream(848, 480, 90);
-    enableIRStream(848, 480, 90);
+    	enableIRStream(848, 480, 90);
     }
     
     /*Takes specified number of frames and
@@ -133,7 +132,8 @@ public:
     std::deque<rs2::frameset> recordRSFrames(int numFrames,int numThrow = 20){
         std::deque<rs2::frameset> frames;
         
-        pipe.start(cfg);
+        /*pipe.start(cfg);*/
+        startStream();
         throwFrames(numThrow);
         for (int i = 0; i < numFrames; i++){
             rs2::frameset fSet = pipe.wait_for_frames();
@@ -165,6 +165,7 @@ public:
     //starts a stream and throws out the first few frames
     void startStream(int numFrames = 20){
         pipe.start(cfg);
+        intrin = pipe.get_active_profile().get_stream(RS2_STREAM_DEPTH).as<rs2::video_stream_profile>().get_intrinsics();
         throwFrames(numFrames);
     }
     
@@ -338,7 +339,7 @@ public:
 private:
     float bndBoxSize = 180;
     
-    ROIPredictor;
+    ROIPredictor pred;
     
     cv::Rect ROIRect;
     cv::Rect imageSize;
