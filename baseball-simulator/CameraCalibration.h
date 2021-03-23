@@ -41,11 +41,22 @@ private:
     //const float squareSize = 28.575; //in mm
     //const int CHECKERBOARD[2]={3,3}; //Dimensions of CheckerPattern in corners
     //const float squareSize = 39.6875; //Square length in mm
+    
+    //Yoni Room Cedar
+    /*
     int rows = 4;
     int columns = 5;
     int CHECKERBOARD[2]={columns,rows}; //Printout Chckerboard
     float squareSize = 76.2; //in mm
+    */
     
+    //Yoni Hallway Cedar
+    ///*
+    int rows = 3;
+    int columns = 3;
+    int CHECKERBOARD[2] = {columns, rows};
+    float squareSize = 104.775;
+    //*/
     void createCalibration(){
         camera.setDefaultSettings();
         camera.disableEmitter();
@@ -111,6 +122,7 @@ private:
             }
             corner_pts = sortCornerPoints(corner_pts,rows,columns);
             auto intrin = camera.getIntrinsics();
+            //std::cout << "Fx: " << intrin.fx << std::endl << "Fy: " << intrin.fy << std::endl << "ppx: " << intrin.ppx << std::endl << "ppy: " << intrin.ppy << std::endl;
             cv::Mat cameraMatrix = (cv::Mat_<float>(3,3) << intrin.fx,0,intrin.ppx,0,intrin.fy,intrin.ppy,0,0,1);
             cv::Mat distCoeffs = (cv::Mat_<float>(1,5) << 0,0,0,0,0); //Distortion coeff, should be 0 for all usable realsense cameras
             cv::Mat R,T; //Output Rotation and Translation Vectors
@@ -121,9 +133,21 @@ private:
             cv::invert(rotation,rotationInverse);
         rotationMatrix += rotationInverse;
         translationMatrix += T;
+        //Delete block below
+        /*cv::imshow("Image",frame);
+        cv::waitKey(0);
+        cv::destroyAllWindows();
+        cv::waitKey(1);
+        */
     }
         rotationMatrix /= numCalibrationFrames;
         translationMatrix /= numCalibrationFrames;
+        //Delete Block Below
+        cv::imshow("Image",frames[0].getIRMat());
+        cv::waitKey(0);
+        cv::destroyAllWindows();
+        cv::waitKey(1);
+        
     }
     
     std::vector<cv::Point2f> sortCornerPoints(std::vector<cv::Point2f> cornerPoints,int rows,int columns) {
