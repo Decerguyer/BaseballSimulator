@@ -128,30 +128,40 @@ int main(){
     	std::cout << "Vector Size: " << vect.size() << std::endl;
     	if(vect.size()==2){
     		std::cout<<"Spin Computation: " << std::endl;
-    		/*
-    		double xyVect1[2] = {vect[0].at<double>(1,1),vect[0].at<double>(2,1)}; 
-    		double xyVect2[2] = {vect[1].at<double>(1,1),vect[1].at<double>(2,1)};
-    		double normFactor1 = 1/std::sqrt((xyVect1[0]*xyVect1[0]+xyVect1[1]*xyVect1[1]));
-    		double normFactor2 = 1/std::sqrt((xyVect2[0]*xyVect2[0]+xyVect2[1]*xyVect2[1]));
-    		xyVect1[0] = xyVect1[0]*normFactor1;
-    		xyVect1[1] = xyVect1[1]*normFactor1;
-    		xyVect2[0] = xyVect2[0]*normFactor2;
-    		xyVect2[1] = xyVect2[1]*normFactor2;
     		
+    		//Z Comp	
+    		double xyVect1[2] = {vect[0].at<double>(0),vect[0].at<double>(1)}; 
+    		double xyVect2[2] = {vect[1].at<double>(0),vect[1].at<double>(1)};
+    		std::cout << "Vect 1: " << xyVect1[0] << " , " << xyVect1[1] << std::endl;
+    		std::cout << "Vect 2: " << xyVect2[0] << " , " << xyVect2[1] << std::endl;
+    		
+    		double normFactorZ1 = 1/std::sqrt((xyVect1[0]*xyVect1[0]+xyVect1[1]*xyVect1[1]));
+    		double normFactorZ2 = 1/std::sqrt((xyVect2[0]*xyVect2[0]+xyVect2[1]*xyVect2[1]));
+    		xyVect1[0] = xyVect1[0]*normFactorZ1;
+    		xyVect1[1] = xyVect1[1]*normFactorZ1;
+    		xyVect2[0] = xyVect2[0]*normFactorZ2;
+    		xyVect2[1] = xyVect2[1]*normFactorZ2;
+    		
+    		std::cout << "Vect 1 NORM: " << xyVect1[0] << " , " << xyVect1[1] << std::endl;
+    		std::cout << "Vect 2 NORM: " << xyVect2[0] << " , " << xyVect2[1] << std::endl;
+    		
+    		float angleZ = std::acos(xyVect1[0]*xyVect2[0]+xyVect1[1]*xyVect2[1]);
     		float rotZ = 1000000*60*(std::acos(xyVect1[0]*xyVect2[0]+xyVect1[1]*xyVect2[1])/(2*3.141593))/(timeStamp[1]-timeStamp[0]);
     		std::cout << "Z rotation: " <<  rotZ << " RPM" << std::endl; 
-    		*/
+    		std::cout << "Angle  Z" << angleZ << std::endl;
+    		
+    		//Y Comp
     		double xzVect1[2] = {vect[0].at<double>(0),vect[0].at<double>(2)}; 
     		double xzVect2[2] = {vect[1].at<double>(0),vect[1].at<double>(2)};
     		std::cout << "Vect 1: " << xzVect1[0] << " , " << xzVect1[1] << std::endl;
     		std::cout << "Vect 2: " << xzVect2[0] << " , " << xzVect2[1] << std::endl;
     		
-    		double normFactor1 = 1/std::sqrt((xzVect1[0]*xzVect1[0]+xzVect1[1]*xzVect1[1]));
-    		double normFactor2 = 1/std::sqrt((xzVect2[0]*xzVect2[0]+xzVect2[1]*xzVect2[1]));
-    		xzVect1[0] = xzVect1[0]*normFactor1;
-    		xzVect1[1] = xzVect1[1]*normFactor1;
-    		xzVect2[0] = xzVect2[0]*normFactor2;
-    		xzVect2[1] = xzVect2[1]*normFactor2;
+    		double normFactorY1 = 1/std::sqrt((xzVect1[0]*xzVect1[0]+xzVect1[1]*xzVect1[1]));
+    		double normFactorY2 = 1/std::sqrt((xzVect2[0]*xzVect2[0]+xzVect2[1]*xzVect2[1]));
+    		xzVect1[0] = xzVect1[0]*normFactorY1;
+    		xzVect1[1] = xzVect1[1]*normFactorY1;
+    		xzVect2[0] = xzVect2[0]*normFactorY2;
+    		xzVect2[1] = xzVect2[1]*normFactorY2;
     		
     		std::cout << "Vect 1 NORM: " << xzVect1[0] << " , " << xzVect1[1] << std::endl;
     		std::cout << "Vect 2 NORM: " << xzVect2[0] << " , " << xzVect2[1] << std::endl;
@@ -160,6 +170,27 @@ int main(){
     		float rotY = 1000000*60*(std::acos(xzVect1[0]*xzVect2[0]+xzVect1[1]*xzVect2[1])/(2*3.141593))/(timeStamp[1]-timeStamp[0]);
     		std::cout << "Angle Y " << angleY << std::endl;
     		std::cout << "Y rotation: " <<  rotY << " RPM" << std::endl; 
+    		
+    		//X Comp
+    		double yzVect1[2] = {vect[0].at<double>(1),vect[0].at<double>(2)}; 
+    		double yzVect2[2] = {vect[1].at<double>(1),vect[1].at<double>(2)};
+    		std::cout << "Vect 1: " << yzVect1[0] << " , " << yzVect1[1] << std::endl;
+    		std::cout << "Vect 2: " << yzVect2[0] << " , " << yzVect2[1] << std::endl;
+    		
+    		double normFactorX1 = 1/std::sqrt((yzVect1[0]*yzVect1[0]+yzVect1[1]*yzVect1[1]));
+    		double normFactorX2 = 1/std::sqrt((yzVect2[0]*yzVect2[0]+yzVect2[1]*yzVect2[1]));
+    		yzVect1[0] = yzVect1[0]*normFactorX1;
+    		yzVect1[1] = yzVect1[1]*normFactorX1;
+    		yzVect2[0] = yzVect2[0]*normFactorX2;
+    		yzVect2[1] = yzVect2[1]*normFactorX2;
+    		
+    		std::cout << "Vect 1 NORM: " << yzVect1[0] << " , " << yzVect1[1] << std::endl;
+    		std::cout << "Vect 2 NORM: " << yzVect2[0] << " , " << yzVect2[1] << std::endl;
+    		
+    		float angleX = std::acos(yzVect1[0]*yzVect2[0]+yzVect1[1]*yzVect2[1]);
+    		float rotX = 1000000*60*(std::acos(yzVect1[0]*yzVect2[0]+yzVect1[1]*yzVect2[1])/(2*3.141593))/(timeStamp[1]-timeStamp[0]);
+    		std::cout << "Angle X " << angleX << std::endl;
+    		std::cout << "X rotation: " <<  rotX << " RPM" << std::endl; 
     		
     	}
     	
