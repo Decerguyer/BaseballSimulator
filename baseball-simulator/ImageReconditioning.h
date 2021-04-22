@@ -44,6 +44,10 @@ public:
     	cv::GaussianBlur(src,dst,cv::Size(dimmension,dimmension),0);
     	return dst;
     }
+    cv::Mat otsuThresh(cv::Mat src, int thresh = 0, int maxValue = 255){
+    	cv::threshold(src,dst,thresh,maxValue,cv::THRESH_OTSU);
+    	return dst;
+    }
     
 private:
 	cv::Mat dst;

@@ -19,9 +19,17 @@
 #include <opencv2/imgproc/imgproc.hpp>
 #include "opencv2/aruco.hpp"
 
+//Global Variables (TEMPORARY)
+int click[2][2] = {{0,0},{0,0}};
+
 static void onMouse( int event, int x, int y, int f, void* ){
-    if (event == cv::EVENT_LBUTTONDOWN)
+    if (event == cv::EVENT_LBUTTONDOWN){
         std::cout << x << " " << y << std::endl;
+        click[0][0] = click[1][0];
+        click[0][1] = click[1][1];
+        click[1][0] = x;
+        click[1][1] = y;
+    }
 }
 
 int main(){
@@ -59,7 +67,7 @@ int main(){
     cv::setMouseCallback("Brightened", onMouse, 0 );
     //std::cout << "Press any key to continue" << std::endl;
     //int block = cv::waitKey(0);
-    
+   
     int key = cv::waitKey(0);
         if (key == 'n'){
             if (i == (int)frames.size() - 1)
@@ -70,11 +78,11 @@ int main(){
         else if (key == 27)
             break;
         else if (key == 'f'){
-        	std::cout << "Enter the 2 corners in order" << std::endl;
-    		cv::Point2f a,b; 
-    		std::cin >> a.x >> a.y >> b.x >> b.y;
+        	//std::cout << "Enter the 2 corners in order" << std::endl;
+    		//cv::Point2f a,b; 
+    		//std::cin >> a.x >> a.y >> b.x >> b.y;
     		cv::Mat cropped;
-    		cropped = Processor.crop(irMAT,a.x,a.y,b.x,b.y);
+    		cropped = Processor.crop(irMAT,click[0][0],click[0][1],click[1][0],click[1][1]);
    
     		//Sharpening Block
     		cv::Mat sharpened;
@@ -83,22 +91,38 @@ int main(){
     		//Enchancement Block
     		cv::Mat enhanced;
     		enhanced = Processor.clahe(sharpened);
-   
+   		
     		//Scaling Block
     		cv::Mat scaled;
     		scaled = Processor.scale(enhanced,5);
-    
+    		
+    		//Guassian Blur Block
+    		cv::Mat blur;
+    		blur = Processor.guassianBlur(scaled);	
+    		
+    		//Binarization
+   		cv::Mat binary;
+   		binary = Processor.otsuThresh(blur);
+   		
+   		//Extra Sharpening Block
+   		cv::Mat tmp = binary.clone();
+    		cv::Mat extraSharpened;
+    		extraSharpened = Processor.sharpen(tmp);	
+    		
+		/*    
     		//Decimation Block
     		cv::Mat dec = enhanced.clone();
     		cv::Mat decimated;
     		decimated = Processor.scale(dec,0.5);
-    
+    		*/
     		//Visualization Block
     		cv::imshow("Cropped", cropped);
     		cv::imshow("Scaled", scaled);
     		cv::imshow("Sharpened", sharpened);
     		cv::imshow("Enhanced", enhanced);
-    		cv::imshow("decimated", enhanced); 
+    		cv::imshow("Binarized", binary);
+    		cv::imshow("Extra Sharpen", extraSharpened);
+    		//cv::imshow("decimated", enhanced); 
         }
         	
         else
