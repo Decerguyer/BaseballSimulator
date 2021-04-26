@@ -9,12 +9,16 @@
 #define ImageReconditioning_h
 
 #include "BaseballSimulator.h"
+#include <opencv2/calib3d/calib3d.hpp>
+#include <opencv2/highgui/highgui.hpp>
+#include <opencv2/imgproc/imgproc.hpp>
+#include "opencv2/aruco.hpp"
 
 
 class ImageReconditioning{
 public:
     ImageReconditioning() {
-    	Clahe = cv::createCLAHE();
+    	Clahe = cv::createCLAHE(); //Creating the clahe object
     	//sharpnessKernel = (cv::Mat_<float>(3,3) << -1,-1,-1,-1,9,-1,-1,-1,-1); //Small kernel
     	sharpnessKernel = (cv::Mat_<float>(5,5) << -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,25,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1); //Larger Kernel
     }
