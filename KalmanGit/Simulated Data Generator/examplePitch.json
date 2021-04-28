@@ -1,0 +1,17 @@
+{
+    "positions": [
+        {
+            "x": 23.5,
+            "y": 43.3,
+            "z": 54.3,
+            "timestamp": "time"
+        }
+    ],
+    "spin": {
+        "x": 12.2,
+        "y": 4.1,
+        "z": 34.6
+    },
+    "id": 1,
+    "pitcher": "Juan Martos"
+}
