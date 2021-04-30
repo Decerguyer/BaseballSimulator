@@ -4,7 +4,7 @@
             "x": 23.5,
             "y": 43.3,
             "z": 54.3,
-            "timestamp": "time"
+            "timestamp": "2018-12-12T01:02:03.123456789"
         }
     ],
     "spin": {
@@ -12,6 +12,5 @@
         "y": 4.1,
         "z": 34.6
     },
-    "id": 1,
-    "pitcher": "Juan Martos"
+    "pitcherId": "JuanMartos"
 }
