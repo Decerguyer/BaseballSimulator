@@ -1,25 +1,18 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-Created on Mon Jul 13 23:19:18 2020
-
-@author: yonatanarieh
-"""
-
-#!/usr/bin/env python3
-# -*- coding: utf-8 -*-
-"""
 Created on Wed Jul  1 16:45:36 2020
 
 @author: yonatanarieh
 """
 import math
 import csv
+from numpy.random import randn
 #Speed, Initial Position, Vertical plane angle, Horizontal plane angle, backspin, sidespin, gyroscopic spin
 #Note that position is coordinates in feet with respect to the back corner of home plate which is (0,0,0)
 #Angles are given in degrees, Spin is given in rpm
-def baseballTrajectory(Xi,Yi,Zi,Vinx,Viny,Vinz,wb,ws,wg):
-    print(Xi,Yi,Zi,Vinx,Viny,Vinz,wb,ws,wg)
+def baseballTrajectory(mph,Xi,Yi,Zi,theta,phi,wb,ws,wg):
+    
     baseballMass = 5.125 #Oz
     baseballCircumference = 9.125 #inches
     rho = 0.0740 #Air density at (75 F) (50% Humidity) (760 mm Hg pressure) (0 elevation)
@@ -28,19 +21,18 @@ def baseballTrajectory(Xi,Yi,Zi,Vinx,Viny,Vinz,wb,ws,wg):
     Cd = 0.330 #Drag Coefficient
     #beta = 0.0001217 #Constant in calculating actual pressure not used in this script just for reference
     #SVP constant (Saturation Vapor Pressure)
-    #theta = theta*(math.pi/180) #Convert to radians
-    #phi = phi*(math.pi/180) #Convert to radians
+    theta = theta*(math.pi/180) #Convert to radians
+    phi = phi*(math.pi/180) #Convert to radians
     
+    if(spin == []):
+        spin.append(wb+randn()*50)
+        spin.append(ws+randn()*50)
+        spin.append(wg+randn()*50)
     
-    
-    #Vin = mph*1.467
-    #Vinz = Vin*math.sin(theta) #Takes vertical component of throw
-    #Vinx = Vin*math.cos(theta)*math.sin(phi) #Takes horizontal component of throw then adjusts on horizontal plane. X axis = 1st base-third base line
-    #Viny = Vin*math.cos(theta)*math.cos(phi)#Takes horizontal component of throw then adjusts on horizontal plane. Y axis = Home plate to pitching mound line
-    Vin = math.sqrt(Vinx**2 + Viny**2 + Vinz**2)
-    theta = math.asin(Vinz/Vin)
-    phi = math.acos(Viny/(Vin*math.cos(theta)))
-    print(math.degrees(theta),math.degrees(phi))
+    Vin = mph*1.467
+    Vinz = Vin*math.sin(theta) #Takes vertical component of throw
+    Vinx = Vin*math.cos(theta)*math.sin(phi) #Takes horizontal component of throw then adjusts on horizontal plane. X axis = 1st base-third base line
+    Viny = Vin*math.cos(theta)*math.cos(phi)#Takes horizontal component of throw then adjusts on horizontal plane. Y axis = Home plate to pitching mound line
     
     wx = (wb*math.cos(phi)-ws*math.sin(theta)*math.sin(phi)+wg*Vinx/Vin)*math.pi/30
     wy = (-wb*math.sin(phi)-ws*math.sin(theta)*math.cos(phi)+wg*Viny/Vin)*math.pi/30
@@ -53,7 +45,7 @@ def baseballTrajectory(Xi,Yi,Zi,Vinx,Viny,Vinz,wb,ws,wg):
     vyw = 0 #Wind speed in y direction ft/sec
     
     
-    #Re_100 = 210000 #2.100E+05 Reynolds number for 100 mph throw
+    Re_100 = 210000 #2.100E+05 Reynolds number for 100 mph throw
     
     positionVector = []
     velocityVector = []
@@ -98,76 +90,50 @@ def baseballTrajectory(Xi,Yi,Zi,Vinx,Viny,Vinz,wb,ws,wg):
         pZ = positionVector[-1][2] + vZ*dt + 0.5*aZ*dt*dt
         position = [pX,pY,pZ]
         positionVector.append(position)
-    
+        
         t += dt #Increment time 
-    #print(positionVector)
-    with open('FullSystemSimulation.csv', 'w', newline='') as f:
+
+    #'''
+    with open('TrajectoryDataPosition.csv', 'w', newline='') as f:
+            writer = csv.writer(f)
+            writer.writerows(positionVector)
+    
+    spinString = ([str(spin[0])],[str(spin[1])],[str(spin[2])])
+    with open('Spin.csv', 'w', newline='') as f:
+        writer = csv.writer(f,delimiter = ',')
+        writer.writerows(spinString)
+    
+    
+    
+    noisySensorInput = []
+    tempState = []
+    netDistance = 10 #This is variable to change
+    netPosition = Yi-netDistance
+    timeStamp = 0
+    for i in range(0,len(positionVector),167):
+        #print(ydata[i])
+        if(positionVector[i][1] < netPosition):
+            break
+        tempState.append(positionVector[i][0]+randn()*(0.1/3))
+        tempState.append(positionVector[i][1]+randn()*(((10-positionVector[i][2])*0.01)/3))
+        tempState.append(positionVector[i][2]+randn()*(0.1/3))
+        #tempState.append(positionVector[i][0]+randn()*(0.1/3))
+        #tempState.append(positionVector[i][1]+randn()*(((10-positionVector[i][2])*0.01)/3))
+        #tempState.append(positionVector[i][2]+randn()*(0.1/3))
+        tempState.append(timeStamp)
+        noisySensorInput.append(tempState)
+        tempState = []
+        timeStamp += 0.0166
+        
+    with open('SimNoisySensorInput.csv', 'w', newline='') as f:
+        writer = csv.writer(f)
+        writer.writerows(noisySensorInput)
+    
+    with open('KalmanTestTrajectoryDataPosition.csv', 'w', newline='') as f:
         writer = csv.writer(f)
         writer.writerows(positionVector)
-        #writer.writerows(velocityVector)
-        #writer.writerows(accelerationVector)
-
-xdata = []
-ydata = []
-zdata = []
-
-vxdata = []
-vydata = []
-vzdata = []
-
-with open('KalmanFilterPositionSmooth.csv', newline='') as f:
-    reader = csv.reader(f)
-    for row in reader:
-        None
-    xdata.append(float(row[0]))
-    ydata.append(float(row[1]))
-    zdata.append(float(row[2]))
-    vxdata.append(float(row[3]))
-    vydata.append(float(row[4]))
-    vzdata.append(float(row[5]))
-
-spin = []   
-with open('Spin.csv', newline='') as f:
-    reader = csv.reader(f)
-    for row in reader:
-       spin.append(float(row[0]))
-
-a = 0
-netDistance = 10
-netPosition = 55-netDistance
-for i in range(0,len(ydata)):
-    #print(ydata[i])
-    if(ydata[i] < netPosition):
-        a = i
-        break
-
-#actualInitial= [-0.792482447, 44.92264101,5.610230194,3.248701609,-136.8477863,-5.817849185,10.95954332,32.42372471,-13.19278932]
-#Xi = actualInitial[0]
-#Yi = actualInitial[1]
-#Zi = actualInitial[2]
-#Vinx = actualInitial[3]
-#Viny = actualInitial[4]
-#Vinz = actualInitial[5]
-
-Xi = xdata[a]
-Yi = ydata[a]
-Zi = zdata[a]
-Vinx = vxdata[a]
-Viny = vydata[a]
-Vinz = vzdata[a]
-
-#print(spin)
-baseballTrajectory(Xi,Yi,Zi,Vinx,Viny,Vinz,spin[0],spin[1],spin[2])
-
-
-
-
-        
-        
-        
-        
-        
-        
     
-    
-    
+spin = []
+#baseballTrajectory(95,-1,55,6,-2,179,1500,1000,0) #Pitch 1
+#baseballTrajectory(82,-1,55,6,-2,179,1200,-800,0) #Pitch 2
+baseballTrajectory(55,-1,55,6,6,179,1200,-800,0) #Pitch 1

@@ -13,14 +13,26 @@ import matplotlib.pyplot as plt
 import csv
 
 fig = plt.figure()
+
 ax = plt.axes(projection='3d')
+ax.set_xlim(-3,3)
+ax.set_ylim(0,60)
+ax.set_zlim(0,12)
+'''ax.set_xticks(np.arange(min(xdata), max(xdata)+1, 1.0))
+ax.set_yticks(np.arange(min(ydata), max(ydata)+1, 1.0))
+ax.set_zticks(np.arange(min(zdata), max(zdata)+1, 1.0))'''
+#ax.set_xticks(np.arange(-3, 3, 1.0))
+#ax.set_yticks(np.arange(0, 60, 1.0))
+#ax.set_zticks(np.arange(0, 10, 1.0))
+#fig.set_size_inches(2, 20, 4)
+
 finalPos = []
 
 xdata = []
 ydata = []
 zdata = []
 
-with open('TrajectoryDataPosition copy.csv', newline='') as f:
+with open('TrajectoryDataPosition.csv', newline='') as f:
     reader = csv.reader(f)
     for row in reader:
         xdata.append(float(row[0]))
@@ -30,6 +42,8 @@ with open('TrajectoryDataPosition copy.csv', newline='') as f:
 finalPos.append(xdata[-2])
 finalPos.append(ydata[-2])
 finalPos.append(zdata[-2])
+
+
 ax.scatter3D(xdata, ydata, zdata, c=zdata, cmap='Greens');
 
 xdata = []
