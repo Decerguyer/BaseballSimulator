@@ -30,14 +30,7 @@ public:
     cv::Mat getTranslationMatrix(){
         return translationMatrix;
     }
-    cv::Mat centerPointAdjust(cv::Mat point3D){
-        cv::Mat adjustedPoint = geometricCenterAdjuster(point3D);
-        return adjustedPoint;
-    }
-    cv::Mat transformPoint(cv::Mat adjustedPoint3D){
-        cv::Mat transformedPoint = pointTransform(adjustedPoint3D);
-        return transformedPoint;
-    }
+    
     
 private:
     Camera camera;
@@ -146,7 +139,7 @@ private:
         cv::destroyAllWindows();
         cv::waitKey(1);
         */
-        }
+    }
         rotationMatrix /= numCalibrationFrames;
         translationMatrix /= numCalibrationFrames;
         //Delete Block Below
@@ -154,6 +147,7 @@ private:
         cv::waitKey(0);
         cv::destroyAllWindows();
         cv::waitKey(1);
+        
     }
     
     std::vector<cv::Point2f> sortCornerPoints(std::vector<cv::Point2f> cornerPoints,int rows,int columns) {
@@ -186,31 +180,7 @@ private:
             }
         }
         return finalSortedCorners;
-    }
-    
-    cv::Mat geometricCenterAdjuster(cv::Mat point3D){
-        double x = point3D.at<double>(0);
-        double y = point3D.at<double>(1);
-        double z = point3D.at<double>(2);
-        
-        double r = 0.036888 //Baseball radius in meters approximation
-        
-        double _x, _y, _z;
-        
-        _x = (x*std::sqrt(x*x + y*y + z*z + r))/std::sqrt(x*x + y*y + z*z); //Similar Triangles
-        _y = (y*(x*x + y*y + z*z + r))/(x*x + y*y + z*z);
-        _z = (z*(x*x + y*y + z*z + r))/(x*x + y*y + z*z);
-        
-        cv::Mat adjustedPoint = (cv::Mat_<double>(3,1) << _x,_y,_z);
-        return adjustedPoint;
-    }
-    
-    cv::Mat pointTransform(cv::Mat untransformedPoint){
-        cv::Mat untransformedPointmm = (cv::Mat_<double>(3,1) << untransformedPoint[0]*1000,untransformedPoint[1]*1000,untransformedPoint[2]*1000); //Converting m to mm
-        cv::Mat transformedPointmm=rotationMatrix*(untransformedPointmm-translationMatrix);
-        cv::Mat transformedPoint = cv::Mat_<double>(3,1) << transformedPointmm.at<double>(0)/1000,transformedPointmm.at<double>(1)/1000,transformedPointmm.at<double>(2)/1000); //Converting m to mm
-        return transformedPoint;
-    }
+}
 
 };
 
