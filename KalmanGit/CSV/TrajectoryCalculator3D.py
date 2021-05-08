@@ -25,9 +25,9 @@ def baseballTrajectory(mph,Xi,Yi,Zi,theta,phi,wb,ws,wg):
     phi = phi*(math.pi/180) #Convert to radians
     
     if(spin == []):
-        spin.append(wb+randn()*50)
-        spin.append(ws+randn()*50)
-        spin.append(wg+randn()*50)
+        spin.append(wb)
+        spin.append(ws)
+        spin.append(wg)
     
     Vin = mph*1.467
     Vinz = Vin*math.sin(theta) #Takes vertical component of throw
@@ -123,7 +123,7 @@ def baseballTrajectory(mph,Xi,Yi,Zi,theta,phi,wb,ws,wg):
         tempState.append(timeStamp)
         noisySensorInput.append(tempState)
         tempState = []
-        timeStamp += 0.0166
+        timeStamp += 0.0167
         
     with open('SimNoisySensorInput.csv', 'w', newline='') as f:
         writer = csv.writer(f)
@@ -134,6 +134,5 @@ def baseballTrajectory(mph,Xi,Yi,Zi,theta,phi,wb,ws,wg):
         writer.writerows(positionVector)
     
 spin = []
-#baseballTrajectory(95,-1,55,6,-2,179,1500,1000,0) #Pitch 1
+baseballTrajectory(95,-1,55,6,-2,179,1500,1000,0) #Pitch 1
 #baseballTrajectory(82,-1,55,6,-2,179,1200,-800,0) #Pitch 2
-baseballTrajectory(55,-1,55,6,6,179,1200,-800,0) #Pitch 1
