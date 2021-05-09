@@ -21,7 +21,7 @@
 int main(){
 
     Camera cam;
-    cam.enableIRStream(424, 240, 6);
+    cam.enableIRStream(848, 480, 90);
     
     ThresholdFilter threshFilter(cam);
     
