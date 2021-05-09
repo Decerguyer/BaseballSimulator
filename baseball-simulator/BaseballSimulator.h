@@ -93,6 +93,12 @@ public:
     cv::Vec3f depthVisBallLoc = {0, 0 , 0};
     cv::Vec3f IRBallLoc = {0, 0, 0};
 
+    cv::Mat depthToVisual(cv::Mat depth){
+    cv::Mat depthVis;
+    depth.convertTo(depthVis, CV_8UC1, 255,0); //Convert the copy to 8 bit grey-scale format
+    return depthVis;
+    }
+
     
 private:
     long long timeStamp;
@@ -114,12 +120,6 @@ private:
         rs2::video_stream_profile prof = irFrame.get_profile().as<rs2::video_stream_profile>();
         cv::Mat ir_mat = cv::Mat(prof.height(), prof.width(), CV_8UC1, (void*)irFrame.get_data());
         return ir_mat;
-    }
-    
-    cv::Mat depthToVisual(cv::Mat depth){
-        cv::Mat depthVis;
-        depth.convertTo(depthVis, CV_8UC1, 255,0); //Convert the copy to 8 bit grey-scale format
-        return depthVis;
     }
 };
 
@@ -319,18 +319,21 @@ public:
     }
     
     cv::Rect ROIPrediction(float timeStamp){
-        if (secondMeas == 0){
+        if (secondMeas < 2){
             ROI = imageSize;
-        }
-        else if (secondMeas == 1){
-            ROI = cv::Rect(velo.x - ROISize*2, velo.y - ROISize*2, ROISize*4, ROISize*4);
         }
         else{
             coord2D predPos = pixelPosPredictor(timeStamp);
             ROI = cv::Rect(predPos.x - ROISize, predPos.y - ROISize, ROISize*2, ROISize*2);
         }
         
-        return ROI & imageSize;
+        cv::Rect inBoundsROI = ROI & imageSize;
+        if (inBoundsROI.area()){
+            return inBoundsROI;
+        }
+        else {
+            return imageSize;
+        }
     }
     
     coord2D pixelPosPredictor(float timeStamp){
@@ -343,12 +346,14 @@ public:
     }
     
     void updateROIPredictor(coord2D currPos, float timeStamp, int currRadius){
-        velo.x = currPos.x - prevPos.x;
-        velo.y = currPos.y - prevPos.y;
-        velo.depth = currPos.depth - prevPos.depth;
+        velo.x = (currPos.x - prevPos.x)/(timeStamp-prevTimeStamp);
+        velo.y = (currPos.y - prevPos.y)/(timeStamp-prevTimeStamp);
+        velo.depth = (currPos.depth - prevPos.depth)/(timeStamp-prevTimeStamp);
 
         prevPos = currPos;
+        prevTimeStamp = timeStamp;
         ROISize = currRadius;
+        secondMeas++;
     }
     
     cv::Rect createROI(cv::Vec3f ballCircle, float error){
@@ -361,7 +366,7 @@ public:
 private:
     coord2D prevPos;
     coord2D velo;
-    float prevTimeStamp;
+    float prevTimeStamp = 0;
     int secondMeas = 0;
     
     int ROISize;
@@ -376,6 +381,23 @@ public:
         intrin = intrinsics;
     }
     
+    coord2D track(ImageData &imgData){
+        coord2D ballCoordDepth = findBallFromDepth(imgData);
+        coord2D ballCoordIR = findBallFromIR(imgData, imgData.depthVisBallLoc, ballCoordDepth.depth);
+
+        if (ballCoordIR.depth){
+            ROIPred.updateROIPredictor(ballCoordIR, imgData.getTimeStamp(), imgData.IRBallLoc[2]);
+            return ballCoordIR;
+        }
+        else if (ballCoordDepth.depth){
+            ROIPred.updateROIPredictor(ballCoordDepth, imgData.getTimeStamp(), imgData.depthVisBallLoc[2]);
+            return ballCoordDepth;
+        }
+        else{
+            return {0, 0, 0};
+        }
+    }
+
     coord2D findBallFromDepth(ImageData &imgData){
         imgData.depthVisMatCropped = cropDepthVis(imgData);
         cv::Vec3f ballCircle = depthVisHoughCircle(imgData, 0.25);

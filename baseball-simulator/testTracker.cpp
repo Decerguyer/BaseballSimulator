@@ -21,19 +21,27 @@
 int main(){
 
     Camera cam;
-    cam.enableIRStream(848, 480, 90);
+    cam.enableStreams(848, 480, 90);
+    cam.setExposure(300);
     
     ThresholdFilter threshFilter(cam);
     
-    std::deque<ImageData> images = cam.recordImageData(20);
-    
     Tracker trk(848, 480, cam.getIntrinsics());
-    
+
+    int a;
+    std::cout << "Record Data?\n";
+    std::cin >> a;
+
+
+    std::deque<ImageData> images = cam.recordImageData(100);
+
     for (int i = 0; i < images.size(); i++){
-        //images[i].depthMat = threshFilter.filter(images[i].depthMat);
+        images[i].depthMat = threshFilter.filter(images[i].depthMat);
+        images[i].depthVisMat = images[i].depthToVisual(images[i].depthMat);
         
-        //coord2D ballCoordDepth = trk.findBallFromDepth(images[i]);
-        //coord2D ballCoordIR = trk.findBallFromIR(images[i], images[i].depthVisBallLoc, ballCoordDepth.depth);
+        coord2D coordinate = trk.track(images[i]);
+
+        std::cout << i << std::endl;
     }
     
     Visualizer vis;
