@@ -82,10 +82,6 @@ public:
     }
     
     
-private:
-    long long timeStamp;
-    unsigned long long frameNumber;
-    
     cv::Mat depthMat;
     cv::Mat irMat;
     cv::Mat depthVisMat;
@@ -97,6 +93,11 @@ private:
     cv::Vec3f depthVisBallLoc = {0, 0 , 0};
     cv::Vec3f IRBallLoc = {0, 0, 0};
 
+    
+private:
+    long long timeStamp;
+    unsigned long long frameNumber;
+    
     
     cv::Mat rsDepthToCVMat(rs2::depth_frame depthFrame){
         rs2::video_stream_profile prof = depthFrame.get_profile().as<rs2::video_stream_profile>();
