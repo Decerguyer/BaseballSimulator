@@ -324,7 +324,7 @@ public:
         }
         else{
             coord2D predPos = pixelPosPredictor(timeStamp);
-            ROI = cv::Rect(predPos.x - ROISize, predPos.y - ROISize, ROISize*2, ROISize*2);
+            ROI = cv::Rect(predPos.x - ROISize*1.5, predPos.y - ROISize*1.5, ROISize*3, ROISize*3);
         }
         
         cv::Rect inBoundsROI = ROI & imageSize;
@@ -338,9 +338,9 @@ public:
     
     coord2D pixelPosPredictor(float timeStamp){
         coord2D predPos;
-        predPos.x = prevPos.x + velo.x*timeStamp;
-        predPos.y = prevPos.y + velo.y*timeStamp;
-        predPos.depth = prevPos.depth + velo.depth*timeStamp;
+        predPos.x = prevPos.x + velo.x*(timeStamp-prevTimeStamp);
+        predPos.y = prevPos.y + velo.y*(timeStamp-prevTimeStamp);
+        predPos.depth = prevPos.depth + velo.depth*(timeStamp-prevTimeStamp);
         
         return predPos;
     }
@@ -369,7 +369,7 @@ private:
     float prevTimeStamp = 0;
     int secondMeas = 0;
     
-    int ROISize;
+    int ROISize = 0;
     cv::Rect ROI;
     cv::Rect imageSize;
 };
@@ -383,8 +383,11 @@ public:
     
     coord2D track(ImageData &imgData){
         coord2D ballCoordDepth = findBallFromDepth(imgData);
-        coord2D ballCoordIR = findBallFromIR(imgData, imgData.depthVisBallLoc, ballCoordDepth.depth);
-
+        coord2D ballCoordIR = {0, 0 , 0};
+        if (ballCoordDepth.depth){
+            std::cout << "here" << std::endl;
+            ballCoordIR = findBallFromIR(imgData, imgData.depthVisBallLoc, ballCoordDepth.depth);
+        }
         if (ballCoordIR.depth){
             ROIPred.updateROIPredictor(ballCoordIR, imgData.getTimeStamp(), imgData.IRBallLoc[2]);
             return ballCoordIR;
@@ -399,8 +402,8 @@ public:
     }
 
     coord2D findBallFromDepth(ImageData &imgData){
-        imgData.depthVisMatCropped = cropDepthVis(imgData);
-        cv::Vec3f ballCircle = depthVisHoughCircle(imgData, 0.25);
+        imgData.depthVisMatCropped = cropFromPred(imgData.getDepthVisMat(), imgData.getTimeStamp());
+        cv::Vec3f ballCircle = depthVisHoughCircle(imgData, 0.15);
         
         cv::Point offset = ROIOffset(imgData.depthVisMatCropped);
         ballCircle[0] = ballCircle[0] + offset.x;
@@ -410,14 +413,15 @@ public:
         float meanDepth = 0;
         if (ballCircle[2]){
             meanDepth = findAveDepth(imgData, ballCircle);
-        }
-            
+            if (meanDepth < 0.1524)
+                meanDepth = 0;
+        }            
         coord2D ball2DCoord = {ballCircle[0], ballCircle[1], meanDepth};
         return ball2DCoord;
     }
     
     coord2D findBallFromIR(ImageData &imgData, cv::Vec3f ballCircleDepth, float meanDepth){
-        imgData.irMatCropped = cropIR(imgData, ballCircleDepth, 0.25);
+        imgData.irMatCropped = cropIR(imgData, ballCircleDepth, 0.15);
         cv::Vec3f ballCircleIR = irHoughCircle(imgData, 0.25);
         
         cv::Point offset = ROIOffset(imgData.irMatCropped);
@@ -426,7 +430,7 @@ public:
         imgData.IRBallLoc = ballCircleIR;
         
         if (ballCircleIR[2]){
-        imgData.irMatCropped = cropIR(imgData, ballCircleIR, 0.05);
+            imgData.irMatCropped = cropIR(imgData, ballCircleIR, 0.05);
         
         return {ballCircleIR[0], ballCircleIR[1], meanDepth};
         }
@@ -449,9 +453,18 @@ private:
     //returns pixel x [0], pixel y [1], and the radius[2]
     cv::Vec3f depthVisHoughCircle(ImageData &imgData, int error){
         std::vector<cv::Vec3f> coords;
+
+        
         
         //Should eventually refine parameters again
-        cv::HoughCircles(imgData.depthVisMatCropped, coords, cv::HOUGH_GRADIENT, 1.6, 4000, 50, 5, prevRadius-prevRadius*error, prevRadius+prevRadius*error);
+        int minRadius = prevRadius-prevRadius*error;
+        if (minRadius < 5)
+            minRadius = 5;
+        int maxRadius = prevRadius+prevRadius*error;
+        if (maxRadius > 40 || maxRadius == 0)
+            maxRadius = 40;
+
+        cv::HoughCircles(imgData.depthVisMatCropped, coords, cv::HOUGH_GRADIENT, 1.6, 4000, 50, 5, minRadius, maxRadius);
         
         if (!coords.empty()){
             return coords[0];
@@ -478,7 +491,7 @@ private:
             return coords[0];
         }
         else{
-            imgData.irMatCropped = imgData.irMat;
+            imgData.irMatCropped = cropFromPred(imgData.getIRMat(), imgData.getTimeStamp());
             cv::HoughCircles(imgData.irMatCropped, coords, cv::HOUGH_GRADIENT, 1.6, 4000, 50, 5, prevRadius-prevRadius*error, prevRadius+prevRadius*error);
             if (!coords.empty()){
                 return coords[0];
@@ -489,9 +502,9 @@ private:
         }
     }
     
-    cv::Mat cropDepthVis(ImageData &imgData){
-        cv::Rect ROI = ROIPred.ROIPrediction(imgData.getTimeStamp());
-        return imgData.depthVisMat(ROI);
+    cv::Mat cropFromPred(cv::Mat fullSizeMat, float timeStamp){
+        cv::Rect ROI = ROIPred.ROIPrediction(timeStamp);
+        return fullSizeMat(ROI);
     }
     
     cv::Mat cropIR(ImageData &imgData, cv::Vec3f ballCircle, float error){
@@ -515,7 +528,7 @@ private:
                 sum += imgData.getDepthAt(circleCenter[0] - 1 + i, circleCenter[1] - 1 + k);
             }
         }
-        float meanDepth = sum / numMeas;
+        float meanDepth = numMeas ? (sum / numMeas) : 0;
         
         return meanDepth;
     }
@@ -526,7 +539,7 @@ class Visualizer{
 public:
     //returns a Mat with a circle drawn on it
     cv::Mat drawCircle(cv::Mat image, cv::Vec3f coord){
-        cv::Mat retMat = image.clone();
+        cv::Mat retMat = image;
         cv::Point pnt(coord[0], coord[1]);
 
         //draw the outer circle //green

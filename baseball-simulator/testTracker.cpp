@@ -22,7 +22,7 @@ int main(){
 
     Camera cam;
     cam.enableStreams(848, 480, 90);
-    cam.setExposure(300);
+    cam.setExposure(1500);
     
     ThresholdFilter threshFilter(cam);
     
