@@ -11,6 +11,7 @@
 #include <opencv2/calib3d/calib3d.hpp>
 #include <opencv2/highgui/highgui.hpp>
 #include <opencv2/imgproc/imgproc.hpp>
+#include <string>
 #include <climits>
 #include "BaseballSimulator.h"
 
@@ -24,6 +25,23 @@ public:
         createCalibration();
     }
     
+    void writeMat(cv::Mat mat, std::string fileName){
+        fileName.append(".xml");
+        cv::FileStorage file(fileName, cv::FileStorage::WRITE);
+
+        file << "saved_matrix" << mat;
+        file.release();
+    }
+
+    cv::Mat readMat(std::string fileName){
+        fileName.append(".xml");
+        cv::FileStorage file(fileName, cv::FileStorage::READ);
+        cv::Mat retMatrix;
+        file["saved_matrix"] >> retMatrix;
+        file.release();
+        return retMatrix;
+    }
+
     cv::Mat getRotationMatrix(){
         return rotationMatrix;
     }
