@@ -17,7 +17,8 @@ using json = nlohmann::json;
 class Post{
 public:
     json body;
-    explicit Post(json b){
+
+    Post(json b){
         body = b;
     }
 
@@ -53,7 +54,7 @@ public:
 
 
 
-};
+}
 
 /**
 int main (){
