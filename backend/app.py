@@ -7,6 +7,7 @@ import uuid
 import datetime
 
 from flask import Flask, jsonify, request
+
 app = Flask(__name__)
 
 PICHES_TABLE = os.environ['PITCHES_TABLE']
@@ -47,6 +48,7 @@ def get_user(pitch_id):
         'pitcher': item.get('pitcher').get('S')
     })
 
+
 @app.route("/pitch", methods=["GET"])
 def get_pitch_history():
     resp = client.scan(
@@ -81,12 +83,12 @@ def record_pitch():
     resp = client.put_item(
         TableName=PICHES_TABLE,
         Item={
-                'pitch_id': {'S': str(pitch_id)},
-                'positions': {'NS': positions},
-                'spin': {'N': spin},
-                'time': {'S': str(time)},
-                'pitcher': {'S': pitcher}
-                }
+            'pitch_id': {'S': str(pitch_id)},
+            'positions': {'NS': positions},
+            'spin': {'N': spin},
+            'time': {'S': str(time)},
+            'pitcher': {'S': pitcher}
+        }
     )
 
     return jsonify({
