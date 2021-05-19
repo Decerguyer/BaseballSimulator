@@ -91,13 +91,15 @@ def get_user(pitch_id):
     if not item:
         return jsonify({'error': 'Pitch does not exist'}), 404
 
-    return jsonify({
-        'pitch_id': item.get('pitch_id').get('S'),
-        'positions': item.get('positions').get('NS'),
-        'spin': item.get('spin').get('N'),
-        'timestamp': item.get('time').get('S'),
-        'pitcher': item.get('pitcher').get('S')
-    })
+    # {
+    #     'pitch_id': item.get('pitch_id').get('S'),
+    #     'positions': item.get('positions').get('NS'),
+    #     'spin': item.get('spin').get('N'),
+    #     'timestamp': item.get('time').get('S'),
+    #     'pitcher': item.get('pitcher').get('S')
+    # }
+
+    return jsonify(item), 200
 
 
 @app.route("/pitch", methods=["GET"])
@@ -107,16 +109,16 @@ def get_pitch_history():
     )
     result = []
     print('Response: ', resp)
-    for pitch in resp.get('Items'):
-        result.append({
-            'pitch_id': pitch.get('pitch_id').get('S'),
-            'positions': pitch.get('positions').get('NS'),
-            'spin': pitch.get('spin').get('N'),
-            'timestamp': pitch.get('time').get('S'),
-            'pitcher': pitch.get('pitcher').get('S')
-        })
+    # for pitch in resp.get('Items'):
+    #     # result.append({
+    #     #     'pitch_id': pitch.get('pitch_id').get('S'),
+    #     #     'positions': pitch.get('positions').get('NS'),
+    #     #     'spin': pitch.get('spin').get('N'),
+    #     #     'timestamp': pitch.get('time').get('S'),
+    #     #     'pitcher': pitch.get('pitcher').get('S')
+    #     # })
 
-    return jsonify(result), 200
+    return jsonify(resp.get('Items')), 200
 
 
 @app.route("/pitch", methods=["POST"])
