@@ -17,13 +17,13 @@ class Vector3D():
     def to_dynamo_item(self):
         return { 'M': { 'x': { 'N': self.x }, 'y': { 'N': self.y }, 'z': { 'N': self.z } } }
 class Pitch:
-    def __init__(self, positions: List[Vector3D], timestamps: List[float], spin: Vector3D, pitcher_id: str, pitch_id: str, serial_number: int, error: Vector3D, time: str):
+    def __init__(self, positions: List[Vector3D], timestamps: List[float], spin: Vector3D, pitcher_id: str, pitch_id: str, serial_number: int, error: List[Vector3D], time: str):
         self.positions = positions
         self.timestamps = timestamps
         self.spin = spin
         self.pitcher_id = pitcher_id
         self.serial_number = serial_number
-        self.pitch_id = pitch_id,
+        self.pitch_id = pitch_id
         self.error = error
         self.time = time
 
@@ -31,15 +31,18 @@ class Pitch:
     def to_dynamo_item(self):
         dynamo_positions = []
         dynamo_timestamps = []
+        dynamo_error = []
         for position in self.positions:
             dynamo_positions.append(position.to_dynamo_item())
+        for err in self.error:
+            dynamo_error.append(err.to_dynamo_item())
         for timestamp in self.timestamps:
             dynamo_timestamps.append({ 'N': timestamp })
         return {
             'positions': { 'L': dynamo_positions },
             'timestamps': { 'L': dynamo_timestamps },
             'spin': self.spin.to_dynamo_item(),
-            'error': self.error.to_dynamo_item(),
+            'error': { 'L': dynamo_error },
             'serial_number': { 'N': self.serial_number },
             'pitcher_id': { 'S': self.pitcher_id },
             'pitch_id': { 'S': self.pitch_id }            
@@ -120,17 +123,19 @@ def get_pitch_history():
 def record_pitch():
     pitch_id = uuid.uuid4().hex
     print(pitch_id)
-    time = datetime.datetime.now()
+    time = str(datetime.datetime.now())
     positions = []
     for position in request.json.get('positions'):
         positions.append(Vector3D(*position))
+    error_list = []
+    for error in request.json.get('error'):
+        error_list.append(Vector3D(*error))
 
-    timestamps = request.json.get('timestamps')
+    timestamps= request.json.get('timestamps')
     spin = Vector3D(*request.json.get('spin'))
-    error = Vector3D(*request.json.get('error'))
     pitcher_id = request.json.get('pitcher_id')
     serial_number = request.json.get('serial_number')
-    pitch = Pitch(positions, timestamps, spin, pitcher_id, pitch_id, serial_number, error, time)
+    pitch = Pitch(positions, timestamps, spin, pitcher_id, pitch_id, serial_number, error_list, time)
     
 
     name = request.json.get('name')
