@@ -1,12 +1,60 @@
-# app.py
-
-import os
-
-import boto3
-import uuid
-import datetime
-
 from flask import Flask, jsonify, request
+from typing import List, Tuple, Dict
+import os
+import boto3
+import math
+import datetime
+import uuid
+import json
+
+
+class Vector3D():
+    def __init__(self, x, y, z):
+        self.x = x
+        self.y = y
+        self.z = z
+
+    def to_dynamo_item(self):
+        return { 'M': { 'x': { 'N': self.x }, 'y': { 'N': self.y }, 'z': { 'N': self.z } } }
+class Pitch:
+    def __init__(self, positions: List[Vector3D], timestamps: List[float], spin: Vector3D, pitcher_id: str, pitch_id: str, serial_number: int, error: Vector3D, time: str):
+        self.positions = positions
+        self.timestamps = timestamps
+        self.spin = spin
+        self.pitcher_id = pitcher_id
+        self.serial_number = serial_number
+        self.pitch_id = pitch_id,
+        self.error = error
+        self.time = time
+
+
+    def to_dynamo_item(self):
+        dynamo_positions = []
+        dynamo_timestamps = []
+        for position in self.positions:
+            dynamo_positions.append(position.to_dynamo_item())
+        for timestamp in self.timestamps:
+            dynamo_timestamps.append({ 'N': timestamp })
+        return {
+            'positions': { 'L': dynamo_positions },
+            'timestamps': { 'L': dynamo_timestamps },
+            'spin': self.spin.to_dynamo_item(),
+            'error': self.error.to_dynamo_item(),
+            'serial_number': { 'N': self.serial_number },
+            'pitcher_id': { 'S': self.pitcher_id },
+            'pitch_id': { 'S': self.pitch_id }            
+        }
+        
+
+    def kalman_filter(self):
+        print('filter the pitch')
+        return self
+
+    def simulate(self):
+        print('simulate the rest of the pitch from the kalman filter')
+        return self
+
+
 
 app = Flask(__name__)
 
@@ -70,27 +118,31 @@ def get_pitch_history():
 
 @app.route("/pitch", methods=["POST"])
 def record_pitch():
-    pitch_id = uuid.uuid4()
-    positions = request.json.get('positions')
-    spin = request.json.get('spin')
-    pitcher = request.json.get('pitcher')
+    pitch_id = str(uuid.uuid4().hex)
+    print(pitch_id)
     time = datetime.datetime.now()
+    positions = []
+    for position in request.json.get('positions'):
+        positions.append(Vector3D(*position))
+
+    timestamps = request.json.get('timestamps')
+    spin = Vector3D(*request.json.get('spin'))
+    error = Vector3D(*request.json.get('error'))
+    pitcher_id = request.json.get('pitcher_id')
+    serial_number = request.json.get('serial_number')
+    pitch = Pitch(positions, timestamps, spin, pitcher_id, pitch_id, serial_number, error, time)
+    
 
     name = request.json.get('name')
-    if not positions or not spin or not pitcher:
+    if not positions or not spin or not pitch_id:
         return jsonify({'error': 'Please provide positions, spin, and user'}), 400
 
     resp = client.put_item(
         TableName=PICHES_TABLE,
-        Item={
-            'pitch_id': {'S': str(pitch_id)},
-            'positions': {'NS': positions},
-            'spin': {'N': spin},
-            'time': {'S': str(time)},
-            'pitcher': {'S': pitcher}
-        }
+        Item=pitch.to_dynamo_item()
     )
 
     return jsonify({
         'success': 'recorded pitch with id: {}'.format(pitch_id)
     }), 201
+
