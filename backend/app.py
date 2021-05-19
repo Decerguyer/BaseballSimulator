@@ -118,7 +118,7 @@ def get_pitch_history():
 
 @app.route("/pitch", methods=["POST"])
 def record_pitch():
-    pitch_id = str(uuid.uuid4().hex)
+    pitch_id = uuid.uuid4().hex
     print(pitch_id)
     time = datetime.datetime.now()
     positions = []
