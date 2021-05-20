@@ -12,6 +12,9 @@
 #include <librealsense2/rsutil.h> // Include RealSense Cross Platform API
 #include <opencv2/opencv.hpp>
 #include <deque>
+#include <cmath>
+
+#define BASEBALL_RADIUS 0.0365
 
 cv::Mat rsDepthToCVMat(rs2::depth_frame depthFrame){
     auto pf = depthFrame.get_profile().as<rs2::video_stream_profile>();
@@ -209,6 +212,7 @@ public:
     void startStream(int numFrames = 20){
         pipe.start(cfg);
         intrin = pipe.get_active_profile().get_stream(RS2_STREAM_DEPTH).as<rs2::video_stream_profile>().get_intrinsics();
+
         throwFrames(numFrames);
     }
     
@@ -249,7 +253,7 @@ public:
     //This filters out any depth that extends past (background depth - threshDist)
     //NOTE TO SELF; Should change copying method as it's expensive
     cv::Mat filter(cv::Mat depthMat, float threshDist = 0.6096, float maxThreshDist = 3.048){
-        cv::Mat retMat = depthMat.clone();
+        cv::Mat retMat = depthMat; /*depthMat.clone();*/
         for (int i=0; i < depthMat.rows; i++){
             for(int j=0; j < depthMat.cols; j++){
                 float threshMatDepth = thresholdMat.at<float>(i,j);
@@ -304,15 +308,15 @@ struct coord3D{
     float z;
 };
 
-class ROIPredictor{
+class LocPredictor{
 public:
-    ROIPredictor(){
+    LocPredictor(){
         ROI = cv::Rect(0, 0, 0, 0);
         imageSize = cv::Rect(0, 0, 0, 0);
         ROISize = 0;
     }
     
-    ROIPredictor(int width, int height){
+    LocPredictor(int width, int height){
         ROI = cv::Rect(0, 0, width - 1, height - 1);
         imageSize = cv::Rect(0, 0, width - 1, height - 1);
         ROISize = 0;
@@ -344,6 +348,18 @@ public:
         
         return predPos;
     }
+
+    float depthPred(float timeStamp){
+        if (secondMeas == 0){
+            return 1;
+        }
+        else if (secondMeas == 1){
+            return 0.8 + prevPos.depth;
+        }
+        else{
+            return prevPos.depth + velo.depth*(timeStamp-prevTimeStamp);
+        }        
+    }
     
     void updateROIPredictor(coord2D currPos, float timeStamp, int currRadius){
         velo.x = (currPos.x - prevPos.x)/(timeStamp-prevTimeStamp);
@@ -362,6 +378,33 @@ public:
         return tempROI & imageSize;
     }
     
+    float radiusPred(float depth, const struct rs2_intrinsics * intrin){
+        float point[3];
+        float pixel[2] = {intrin->ppx, intrin->ppy};
+        std::cout << "Intrinsics = " << intrin->ppx << " " << intrin->ppy << std::endl;
+
+        rs2_deproject_pixel_to_point(point, intrin, pixel, depth);
+        point[2] += BASEBALL_RADIUS;
+
+        std::cout << "point = " << point[0] << " " << point[1] << " " << point[2] << std::endl; 
+
+
+        float topEdge[3] = {point[0], point[1] + BASEBALL_RADIUS, point[2]};
+
+        std::cout << "top edge point = " << topEdge[0] << " " << topEdge[1] << " " << topEdge[2] << std::endl; 
+
+        rs2_project_point_to_pixel(pixel, intrin, topEdge);
+
+        std::cout << "top edge pixel = " << pixel[0] << " " << pixel[1] << std::endl; 
+        
+        return pixel[1]-(intrin->ppy);
+    }
+
+    // void findEdge(float pixel[2], float changeX, float changeY, float point[3]){
+    //     point[0] += changeX;
+    //     point[1] += changeY;
+    //     rs2::rs2_project_point_to_pixel(pixel, intrin, point);
+    // }
     
 private:
     coord2D prevPos;
@@ -376,24 +419,30 @@ private:
 
 class Tracker{
 public:
-    Tracker(int width, int height, struct rs2_intrinsics intrinsics){
-        ROIPred = ROIPredictor(width, height);
-        intrin = intrinsics;
+    Tracker(int width, int height, struct rs2_intrinsics intrinsics, ThresholdFilter &threshFilter)
+    : intrin(intrinsics), threshFilter(threshFilter)
+    {
+        locPred = LocPredictor(width, height);
+        Clahe = cv::createCLAHE();
     }
     
     coord2D track(ImageData &imgData){
+        float predDepth = locPred.depthPred(imgData.getTimeStamp());
+        imgData.depthMat = threshFilter.filter(imgData.depthMat, 0.6096 ,(1.1*predDepth));
+        imgData.depthVisMat = imgData.depthToVisual(imgData.depthMat);
+
         coord2D ballCoordDepth = findBallFromDepth(imgData);
         coord2D ballCoordIR = {0, 0 , 0};
         if (ballCoordDepth.depth){
-            std::cout << "here" << std::endl;
+            std::cout << "here Depth = " << ballCoordDepth.depth << std::endl;
             ballCoordIR = findBallFromIR(imgData, imgData.depthVisBallLoc, ballCoordDepth.depth);
         }
         if (ballCoordIR.depth){
-            ROIPred.updateROIPredictor(ballCoordIR, imgData.getTimeStamp(), imgData.IRBallLoc[2]);
+            locPred.updateROIPredictor(ballCoordIR, imgData.getTimeStamp(), imgData.IRBallLoc[2]);
             return ballCoordIR;
         }
         else if (ballCoordDepth.depth){
-            ROIPred.updateROIPredictor(ballCoordDepth, imgData.getTimeStamp(), imgData.depthVisBallLoc[2]);
+            locPred.updateROIPredictor(ballCoordDepth, imgData.getTimeStamp(), imgData.depthVisBallLoc[2]);
             return ballCoordDepth;
         }
         else{
@@ -421,8 +470,13 @@ public:
     }
     
     coord2D findBallFromIR(ImageData &imgData, cv::Vec3f ballCircleDepth, float meanDepth){
-        imgData.irMatCropped = cropIR(imgData, ballCircleDepth, 0.15);
-        cv::Vec3f ballCircleIR = irHoughCircle(imgData, 0.25);
+        imgData.irMatCropped = cropIR(imgData, ballCircleDepth, 0.25);
+        //cv::equalizeHist(imgData.irMatCropped, imgData.irMatCropped);
+
+        std::cout << "Intrinsics = " << intrin.ppx << " " << intrin.ppy << std::endl;
+        int radius = locPred.radiusPred(meanDepth, &intrin);
+
+        cv::Vec3f ballCircleIR = irHoughCircle(imgData, radius, 0.02);
         
         cv::Point offset = ROIOffset(imgData.irMatCropped);
         ballCircleIR[0] = ballCircleIR[0] + offset.x;
@@ -438,6 +492,8 @@ public:
             return {0, 0, 0};
         }
     }
+
+
     
 
 private:
@@ -447,20 +503,23 @@ private:
     
     struct rs2_intrinsics intrin;
     
-    ROIPredictor ROIPred;
+    LocPredictor locPred;
+
+    cv::Ptr<cv::CLAHE> Clahe;
+
+    ThresholdFilter threshFilter;
+
     
     
     //returns pixel x [0], pixel y [1], and the radius[2]
-    cv::Vec3f depthVisHoughCircle(ImageData &imgData, int error){
+    cv::Vec3f depthVisHoughCircle(ImageData &imgData, float error){
         std::vector<cv::Vec3f> coords;
 
-        
-        
         //Should eventually refine parameters again
-        int minRadius = prevRadius-prevRadius*error;
+        int minRadius = std::floor(prevRadius-prevRadius*error);
         if (minRadius < 5)
             minRadius = 5;
-        int maxRadius = prevRadius+prevRadius*error;
+        int maxRadius = std::ceil(prevRadius+prevRadius*error);
         if (maxRadius > 40 || maxRadius == 0)
             maxRadius = 40;
 
@@ -471,7 +530,7 @@ private:
         }
         else{
             imgData.depthVisMatCropped = imgData.depthVisMat;
-            cv::HoughCircles(imgData.depthVisMatCropped, coords, cv::HOUGH_GRADIENT, 1.6, 4000, 50, 5, prevRadius-prevRadius*error, prevRadius+prevRadius*error);
+            cv::HoughCircles(imgData.depthVisMatCropped, coords, cv::HOUGH_GRADIENT, 1.6, 4000, 50, 5, minRadius, maxRadius);
             if (!coords.empty()){
                 return coords[0];
             }
@@ -481,34 +540,42 @@ private:
         }
     }
                            
-    cv::Vec3f irHoughCircle(ImageData &imgData, int error){
+    cv::Vec3f irHoughCircle(ImageData &imgData, float radius, float error){
         std::vector<cv::Vec3f> coords;
+
+        int minRadius = radius - 5;//std::floor(radius-radius*error);
+        int maxRadius = radius + 5;//std::ceil(radius+radius*error);
+
+        std::cout << minRadius << " < Radius < " << maxRadius << " and rad = " << radius << std::endl;
         
         //Should eventually refine parameters again
-        cv::HoughCircles(imgData.irMatCropped, coords, cv::HOUGH_GRADIENT, 1.6, 4000, 50, 5, prevRadius-prevRadius*error, prevRadius+prevRadius*error);
+        cv::HoughCircles(imgData.irMatCropped, coords, cv::HOUGH_GRADIENT, 1.6, 4000, 50, 5, minRadius, maxRadius);
         
         if (!coords.empty()){
+            std::cout << "Actual Found radius is " << coords[0][2] << std::endl;
             return coords[0];
         }
         else{
             imgData.irMatCropped = cropFromPred(imgData.getIRMat(), imgData.getTimeStamp());
-            cv::HoughCircles(imgData.irMatCropped, coords, cv::HOUGH_GRADIENT, 1.6, 4000, 50, 5, prevRadius-prevRadius*error, prevRadius+prevRadius*error);
+            cv::HoughCircles(imgData.irMatCropped, coords, cv::HOUGH_GRADIENT, 1.6, 4000, 50, 5, minRadius, maxRadius);
             if (!coords.empty()){
+                std::cout << "Actual Found radius is " << coords[0][2] << std::endl;
                 return coords[0];
             }
             else{
+                std::cout << "Radius not found " << std::endl;
                 return cv::Vec3f(0, 0, 0);
             }
         }
     }
     
     cv::Mat cropFromPred(cv::Mat fullSizeMat, float timeStamp){
-        cv::Rect ROI = ROIPred.ROIPrediction(timeStamp);
+        cv::Rect ROI = locPred.ROIPrediction(timeStamp);
         return fullSizeMat(ROI);
     }
     
     cv::Mat cropIR(ImageData &imgData, cv::Vec3f ballCircle, float error){
-        return imgData.irMat(ROIPred.createROI(ballCircle, error));
+        return imgData.irMat(locPred.createROI(ballCircle, error));
     }
     
     cv::Point ROIOffset(cv::Mat croppedImg){
@@ -531,6 +598,13 @@ private:
         float meanDepth = numMeas ? (sum / numMeas) : 0;
         
         return meanDepth;
+    }
+
+    cv::Mat clahe(cv::Mat src, int clipLimit = 4){ //Constrast Limited Adaptive Histogram Equalization
+    	cv::Mat dst = src;
+        Clahe->setClipLimit(clipLimit);
+    	Clahe->apply(src,dst);
+        return dst;
     }
 };
 
