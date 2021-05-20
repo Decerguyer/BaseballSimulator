@@ -22,11 +22,12 @@ int main(){
 
     Camera cam;
     cam.enableStreams(848, 480, 90);
-    cam.setExposure(1500);
+    cam.setExposure(2400);
     
     ThresholdFilter threshFilter(cam);
     
-    Tracker trk(848, 480, cam.getIntrinsics());
+    std::cout << "Intrinsics = " << cam.getIntrinsics().ppx << " " << cam.getIntrinsics().ppy << std::endl;
+    Tracker trk(848, 480, cam.getIntrinsics(), threshFilter);
 
     int a;
     std::cout << "Record Data?\n";
@@ -35,10 +36,7 @@ int main(){
 
     std::deque<ImageData> images = cam.recordImageData(100);
 
-    for (int i = 0; i < images.size(); i++){
-        images[i].depthMat = threshFilter.filter(images[i].depthMat);
-        images[i].depthVisMat = images[i].depthToVisual(images[i].depthMat);
-        
+    for (int i = 0; i < images.size(); i++){        
         coord2D coordinate = trk.track(images[i]);
 
         std::cout << i << std::endl;
