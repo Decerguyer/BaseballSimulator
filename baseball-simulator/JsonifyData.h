@@ -20,7 +20,7 @@ public:
         jsonify(data);
     }
     //getJson() returns the resultant json
-    getJson(){
+    json getJson(){
         return j;
     }
 private:
