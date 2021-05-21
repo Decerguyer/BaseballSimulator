@@ -11,9 +11,9 @@
 
 class ThresholdFilter{
 public:
-    ThresholdFilter() {
-        createThresholdFrame();
-    }
+    // ThresholdFilter() {
+    //     createThresholdFrame();
+    // }
     ThresholdFilter(Camera &cam) : camera{cam} {
         createThresholdFrame();
     }
@@ -41,7 +41,7 @@ public:
     
     
 private:
-    Camera camera;
+    Camera &camera;
     cv::Mat thresholdMat;
     
     void createThresholdFrame(){

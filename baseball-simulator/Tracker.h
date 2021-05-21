@@ -19,6 +19,9 @@ public:
     
     coord2D track(ImageData &imgData){
         float predDepth = locPred.depthPred(imgData.getTimeStamp());
+        if (predDepth < 0.8){
+            predDepth = 0.8;
+        }
         imgData.depthMat = threshFilter.filter(imgData.depthMat, 0.6096 ,(1.1*predDepth));
         imgData.depthVisMat = imgData.depthToVisual(imgData.depthMat);
 
@@ -114,14 +117,14 @@ private:
         if (maxRadius > 40 || maxRadius == 0)
             maxRadius = 40;
 
-        cv::HoughCircles(imgData.depthVisMatCropped, coords, cv::HOUGH_GRADIENT, 1.6, 4000, 50, 5, minRadius, maxRadius);
+        cv::HoughCircles(imgData.depthVisMatCropped, coords, cv::HOUGH_GRADIENT, 1.6, 4000, 50, 20, minRadius, maxRadius);
         
         if (!coords.empty()){
             return coords[0];
         }
         else{
             imgData.depthVisMatCropped = imgData.depthVisMat;
-            cv::HoughCircles(imgData.depthVisMatCropped, coords, cv::HOUGH_GRADIENT, 1.6, 4000, 50, 5, minRadius, maxRadius);
+            cv::HoughCircles(imgData.depthVisMatCropped, coords, cv::HOUGH_GRADIENT, 1.6, 4000, 50, 20, minRadius, maxRadius);
             if (!coords.empty()){
                 return coords[0];
             }
@@ -134,8 +137,8 @@ private:
     cv::Vec3f irHoughCircle(ImageData &imgData, float radius, float error){
         std::vector<cv::Vec3f> coords;
 
-        int minRadius = radius - 5;//std::floor(radius-radius*error);
-        int maxRadius = radius + 5;//std::ceil(radius+radius*error);
+        int minRadius = std::floor(radius-radius*error);
+        int maxRadius = std::ceil(radius+radius*error);
 
         std::cout << minRadius << " < Radius < " << maxRadius << " and rad = " << radius << std::endl;
         

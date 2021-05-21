@@ -51,7 +51,7 @@ public:
 
     float depthPred(float timeStamp){
         if (secondMeas == 0){
-            return 1;
+            return 0.8;
         }
         else if (secondMeas == 1){
             return 0.8 + prevPos.depth;
@@ -81,21 +81,15 @@ public:
     float radiusPred(float depth, const struct rs2_intrinsics * intrin){
         float point[3];
         float pixel[2] = {intrin->ppx, intrin->ppy};
-        std::cout << "Intrinsics = " << intrin->ppx << " " << intrin->ppy << std::endl;
 
         rs2_deproject_pixel_to_point(point, intrin, pixel, depth);
         point[2] += BASEBALL_RADIUS;
 
-        std::cout << "point = " << point[0] << " " << point[1] << " " << point[2] << std::endl; 
-
 
         float topEdge[3] =  {point[0], point[1] + (float)BASEBALL_RADIUS, point[2]};
 
-        std::cout << "top edge point = " << topEdge[0] << " " << topEdge[1] << " " << topEdge[2] << std::endl; 
 
         rs2_project_point_to_pixel(pixel, intrin, topEdge);
-
-        std::cout << "top edge pixel = " << pixel[0] << " " << pixel[1] << std::endl; 
         
         return pixel[1]-(intrin->ppy);
     }
