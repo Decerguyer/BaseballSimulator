@@ -6,6 +6,7 @@
 #include <opencv2/opencv.hpp>
 #include <deque>
 #include <cmath>
+#include "ThresholdFilter.h"
 
 class Tracker{
 public:

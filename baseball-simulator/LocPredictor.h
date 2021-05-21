@@ -89,7 +89,7 @@ public:
         std::cout << "point = " << point[0] << " " << point[1] << " " << point[2] << std::endl; 
 
 
-        float topEdge[3] = {point[0], point[1] + BASEBALL_RADIUS, point[2]};
+        float topEdge[3] =  {point[0], point[1] + (float)BASEBALL_RADIUS, point[2]};
 
         std::cout << "top edge point = " << topEdge[0] << " " << topEdge[1] << " " << topEdge[2] << std::endl; 
 

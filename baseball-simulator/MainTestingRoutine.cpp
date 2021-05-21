@@ -47,7 +47,7 @@ int main(){
     ThresholdFilter threshFilter(cam);
     
     //**************************Tracker Initialization*************************//
-    Tracker trk(848, 480, cam.getIntrinsics());
+    Tracker trk(848, 480, cam.getIntrinsics(), threshFilter);
 
     //****************************User Control Block***************************//
     int numFrames;

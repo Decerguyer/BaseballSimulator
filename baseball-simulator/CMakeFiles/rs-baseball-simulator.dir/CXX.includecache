@@ -115,6 +115,8 @@ deque
 -
 cmath
 -
+ThresholdFilter.h
+/home/ubuntu/BaseballSimulator/baseball-simulator/ThresholdFilter.h
 
 /home/ubuntu/BaseballSimulator/baseball-simulator/Visualizer.h
 librealsense2/rs.hpp
