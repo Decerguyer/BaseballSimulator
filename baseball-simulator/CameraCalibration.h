@@ -13,7 +13,7 @@
 #include <opencv2/imgproc/imgproc.hpp>
 #include <string>
 #include <climits>
-#include "BaseballSimulator.h"
+//#include "BaseballSimulator.h" you need a camera object to run the calibration
 
 
 class CameraCalibration{

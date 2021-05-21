@@ -8,9 +8,6 @@
 #ifndef BaseballSimulator_h
 #define BaseballSimulator_h
 
-#include <librealsense2/rs.hpp> // Include RealSense Cross Platform API
-#include <librealsense2/rsutil.h> // Include RealSense Cross Platform API
-#include <opencv2/opencv.hpp>
 #include <deque>
 #include <cmath>
 

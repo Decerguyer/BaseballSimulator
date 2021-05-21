@@ -6,7 +6,6 @@
 #include <opencv2/opencv.hpp>
 #include <deque>
 #include <cmath>
-#include "BaseballSimulator.h"
 
 cv::Mat rsDepthToCVMat(rs2::depth_frame depthFrame){
     auto pf = depthFrame.get_profile().as<rs2::video_stream_profile>();

@@ -6,7 +6,6 @@
 #include <opencv2/opencv.hpp>
 #include <deque>
 #include <cmath>
-#include "BaseballSimulator.h"
 
 #define BASEBALL_RADIUS 0.0365
 

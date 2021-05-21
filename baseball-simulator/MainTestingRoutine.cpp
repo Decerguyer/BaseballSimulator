@@ -12,21 +12,17 @@
 #include <stdio.h>
 #include <iostream>
 
-#include <vector> //I don't think we even use this in the main. Remove?
-
-//OpenCV libraries. Remove?
-#include <opencv2/calib3d/calib3d.hpp> //These should exist only in the headers of
-#include <opencv2/highgui/highgui.hpp> //the classes where they are used. Remove?
-#include <opencv2/imgproc/imgproc.hpp>
-#include "opencv2/aruco.hpp"
-
-//Custom Intel Realsense Header
-//This too can likely be removed and only exist in the Camera class that utilizes it?
-#include <librealsense2/rsutil.h> // Include RealSense Cross Platform API
-
 //Custom JEY Solutions headers
 #include "BaseballSimulator.h"
+#include "Camera.h"
+#include "ImageData.h"
 #include "CameraCalibration.h"
+#include "DataStructure.h"
+#include "Post.h"
+#include "LocPredictor.h"
+#include "Tracker.h"
+#include "ThresholdFilter.h"
+#include "Visualize.h"
 #include "DataStructure.h"
 #include "Post.h"
 

@@ -6,7 +6,6 @@
 #include <opencv2/opencv.hpp>
 #include <deque>
 #include <cmath>
-#include "BaseballSimulator.h"
 
 
 class LocPredictor{
