@@ -153,6 +153,6 @@ def record_pitch():
         return jsonify({
             'success': 'recorded pitch with id: {}'.format(pitch_id)
         }), 201
-    except(error):
-        return jsonify({'error': error})
+    except Exception as e:
+        return jsonify({'error': str(e)}), 400
 
