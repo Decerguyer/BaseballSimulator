@@ -9,13 +9,13 @@ import json
 
 
 class Vector3D():
-    def __init__(self, x, y, z):
+    def __init__(self, x:float, y:float, z:float):
         self.x = x
         self.y = y
         self.z = z
 
     def to_dynamo_item(self):
-        return { 'M': { 'x': { 'N': self.x }, 'y': { 'N': self.y }, 'z': { 'N': self.z } } }
+        return { 'M': { 'x': { 'N': str(self.x) }, 'y': { 'N': str(self.y) }, 'z': { 'N': str(self.z) } } }
 class Pitch:
     def __init__(self, positions: List[Vector3D], timestamps: List[float], spin: Vector3D, pitcher_id: str, pitch_id: str, serial_number: int, error: List[Vector3D], time: str):
         self.positions = positions
@@ -37,15 +37,15 @@ class Pitch:
         for err in self.error:
             dynamo_error.append(err.to_dynamo_item())
         for timestamp in self.timestamps:
-            dynamo_timestamps.append({ 'N': timestamp })
+            dynamo_timestamps.append({ 'N': str(timestamp) })
         return {
             'positions': { 'L': dynamo_positions },
             'timestamps': { 'L': dynamo_timestamps },
             'spin': self.spin.to_dynamo_item(),
             'error': { 'L': dynamo_error },
-            'serial_number': { 'N': self.serial_number },
-            'pitcher_id': { 'S': self.pitcher_id },
-            'pitch_id': { 'S': self.pitch_id }            
+            'serial_number': { 'N': str(self.serial_number) },
+            'pitcher_id': { 'S': str(self.pitcher_id) },
+            'pitch_id': { 'S': str(self.pitch_id) }            
         }
         
 
