@@ -16,6 +16,12 @@
 #include <opencv2/highgui/highgui.hpp>
 #include <opencv2/imgproc/imgproc.hpp>
 #include "opencv2/aruco.hpp"
+#include "Camera.h"
+#include "ImageData.h"
+#include "ThresholdFilter.h"
+#include "LocPredictor.h"
+#include "Tracker.h"
+#include "Visualizer.h"
 
 
 int main(){
