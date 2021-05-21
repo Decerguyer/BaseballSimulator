@@ -24,7 +24,7 @@
 #include "ThresholdFilter.h"
 #include "Visualize.h"
 #include "DataStructure.h"
-#include "Post.h"
+#include "Post.hpp"
 
 
 int main(){
@@ -37,6 +37,8 @@ int main(){
     std::cout << "Rotation Matrix: " << rotationMatrix << std::endl;
     std::cout << "Translation Matrix: " << translationMatrix << std::endl;
     
+    //************************Data Structure Initialization***********************//
+    data DataStructure;
     //****************************Camera Initialization***************************//
     Camera cam;
     cam.enableStreams(848, 480, 90);
@@ -76,19 +78,34 @@ int main(){
     
     //***********************Position Error Processing Block**********************//
     
+    //*********************Position&Error Transformation Block********************//
+    
     //****************************Spin Block***************************//
     
     //Deploy user input to input spin
+    float[3] spin;
+    std::cout<< "Enter Wb, Ws, Wg in order:" << std::endl;
+    std::cin >> spin[0] >> spin[1] >> spin[2];
+    std::cout << std::endl << "Spin values set: " << spin[0] << std::endl << spin[1] << std::endl << spin[2] << std::endl;
+    data.data_struct.spin = spin;
     
     //************************Populate Data Structure Block***********************//
     
-    //We may have already filled in position, error, and spin at this point?
+    //We have already filled in position, error, and spin at this point
     //Add Camera serial number and a temoprary pitcher name to the data structure
     
+    
     //****************************JSONify data block***************************//
-    //Pass data structure to a JSONify data object which will return a JSON object
+    //Jsonify the data using the jsonify method in DataStructure
+    data.jsonObj = data.jsonify();
     
     //****************************HTTP Post block***************************//
     //Pass the JSON object to a POST object that will send the pitch to be recorded in the backend API
+    Post httpPost;
+    httpPost.Post(data.jsonObj);
+    httpPost.sendRequest();
+    
+    //****************************Completion Message***************************//
+    std::cout<<"The Routine has completed" << std::endl;
 }
 

@@ -30,15 +30,17 @@ public:
         string username;
     };
     
-    json jsonify(data_struct data){
+    json jsonObj;
+    
+    json jsonify(){
         if (!error.empty() && !positions.empty() && !timestamps.empty()){
             json out;
-            out["serial_number"] = data.serialNumber;
-            out["pitcher_id"] = data.username;
-            out["spin"] = data.spin;
-            out["error"] = data.error;
-            out["positions"] = data.positions;
-            out["timestamps"] = data.timestamps;
+            out["serial_number"] = data_struct.serialNumber;
+            out["pitcher_id"] = data_struct.username;
+            out["spin"] = data_struct.spin;
+            out["error"] = data_struct.error;
+            out["positions"] = data_struct.positions;
+            out["timestamps"] = data_struct.timestamps;
             return out;
         } else {
             json j = {};
