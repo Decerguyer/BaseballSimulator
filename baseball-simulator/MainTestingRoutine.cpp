@@ -59,14 +59,14 @@ int main(){
     
     //Perhaps Deploy another User Control Block
     //to find the first frame the ball is in FOV
-    
-    for (int i = 0; i < images.size(); i++){
-        images[i].depthMat = threshFilter.filter(images[i].depthMat);
-        images[i].depthVisMat = images[i].depthToVisual(images[i].depthMat);
-        
-        coord2D coordinate = trk.track(images[i]);
 
-        std::cout << i << std::endl;
+    std::vector<coord2D> coord2DVec;
+    std::vector<long long> timeStampsVec;
+    coord2DVec.reserve(images.size());
+    timeStampsVec.reserve(images.size());
+    for (int i = 0; i < images.size(); i++){        
+        coord2DVec.push_back(trk.track(images[i]));
+        timeStampsVec.push_back(images[i].getTimeStamp());
     }
     
     //**************************Visualization Block *************************//
@@ -74,6 +74,18 @@ int main(){
     
     //Change images to VALID images so only the frames with the ball are shown?
     vis.visualize(images, true, true, true);
+
+    //**************************User Control Crop Block *************************//
+    int startFrame, endFrame;
+    std::cout<< "Enter the starting frame and then the ending frame (inclusive)" << std::endl;
+    std::cin >> startFrame >> endFrame;
+    coord2DVec.erase(coord2DVec.begin()+endFrame+1, coord2DVec.end());
+    timeStampsVec.erase(timeStampsVec.begin()+endFrame+1, timeStampsVec.end());
+    coord2DVec.erase(coord2DVec.begin(), coord2DVec.begin()+startFrame);
+    timeStampsVec.erase(timeStampsVec.begin(), timeStampsVec.begin()+startFrame);
+
+    //**************************Pixel to Positions Block *************************//
+    std::vector<std::vector<float>> positions3D = trk.convertTo3D(coord2DVec);
     
     //***********************Position Error Processing Block**********************//
     

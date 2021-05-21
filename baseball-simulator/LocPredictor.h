@@ -32,7 +32,7 @@ public:
         }
         else{
             coord2D predPos = pixelPosPredictor(timeStamp);
-            ROI = cv::Rect(predPos.x - ROISize*1.5, predPos.y - ROISize*1.5, ROISize*3, ROISize*3);
+            ROI = cv::Rect(predPos.x - ROISize*2, predPos.y - ROISize*2, ROISize*4, ROISize*4);
         }
         
         cv::Rect inBoundsROI = ROI & imageSize;

@@ -22,7 +22,7 @@ public:
         if (predDepth < 0.8){
             predDepth = 0.8;
         }
-        imgData.depthMat = threshFilter.filter(imgData.depthMat, 0.6096 ,(1.15*predDepth));
+        imgData.depthMat = threshFilter.filter(imgData.depthMat, 0.6096 ,(1.2*predDepth));
         imgData.depthVisMat = imgData.depthToVisual(imgData.depthMat);
 
         coord2D ballCoordDepth = findBallFromDepth(imgData);
@@ -64,7 +64,7 @@ public:
     }
     
     coord2D findBallFromIR(ImageData &imgData, cv::Vec3f ballCircleDepth, coord2D ballCoordDepth){
-        imgData.irMatCropped = cropIR(imgData, ballCircleDepth, 0.25);
+        imgData.irMatCropped = cropIR(imgData, ballCircleDepth, 0.5);
         //cv::equalizeHist(imgData.irMatCropped, imgData.irMatCropped);
 
         int radius = locPred.radiusPred(ballCoordDepth, &intrin);
@@ -84,6 +84,18 @@ public:
         else{
             return {0, 0, 0};
         }
+    }
+
+    std::vector<std::vector<float>> convertTo3D(std::vector<coord2D> coord2DVec){
+        std::vector<std::vector<float>> positions3DVec;
+        for (int i = 0; i < coord2DVec.size(); i++){
+            float pixel[2] = {coord2DVec[i].x, coord2DVec[i].y};
+            float point[3];
+            rs2_deproject_pixel_to_point(point, &intrin, pixel, coord2DVec[i].depth);
+            std::vector<float> position = {point[0], point[1], point[2]};
+            positions3DVec.push_back(position);
+        }
+        return positions3DVec;
     }
 
 
@@ -123,6 +135,7 @@ private:
         }
         else{
             imgData.depthVisMatCropped = imgData.depthVisMat;
+            //std::cout << "Resorted to entire depth image because couldn't find from cropped version/n";
             cv::HoughCircles(imgData.depthVisMatCropped, coords, cv::HOUGH_GRADIENT, 1.6, 4000, 50, 20, minRadius, maxRadius);
             if (!coords.empty()){
                 return coords[0];
