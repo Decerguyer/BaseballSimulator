@@ -12,31 +12,42 @@
 using json = nlohmann::json;
 using namespace std;
 
-struct DataStructure{
-    vector<vector<float>> positions;
-    vector<vector<float>> error;
-    vector<long long> timestamps;
-    float spin[3];
+class DataStructure{
+public:
+    DataStructure() {
+    }
+    /*data_struct getStruct(){
+        return data_struct;
+    }*/
+    
+    struct data_struct{
+        vector<vector<float>> positions;
+        vector<vector<float>> error;
+        vector<long long> timestamps;
+        float spin[3];
 
-    long serialNumber;
-    string username;
-
-    json jsonify(){
+        long serialNumber;
+        string username;
+    };
+    
+    json jsonify(data_struct data){
         if (!error.empty() && !positions.empty() && !timestamps.empty()){
             json out;
-            out["serial_number"] = serialNumber;
-            out["pitcher_id"] = username;
-            out["spin"] = spin;
-            out["error"] =error;
-            out["positions"] = positions;
-            out["timestamps"] = timestamps;
+            out["serial_number"] = data.serialNumber;
+            out["pitcher_id"] = data.username;
+            out["spin"] = data.spin;
+            out["error"] = data.error;
+            out["positions"] = data.positions;
+            out["timestamps"] = data.timestamps;
             return out;
         } else {
             json j = {};
             return j;
         }
     }
+    
+private:
+  
 };
 
-
-#endif /* DataStructure_h */
+#endif /* DataStructure */
