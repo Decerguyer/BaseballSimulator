@@ -18,13 +18,12 @@
 #include "ImageData.h"
 #include "CameraCalibration.h"
 #include "DataStructure.h"
-#include "Post.h"
 #include "LocPredictor.h"
 #include "Tracker.h"
 #include "ThresholdFilter.h"
-#include "Visualize.h"
+#include "Visualizer.h"
 #include "DataStructure.h"
-#include "Post.hpp"
+#include "sendPost.hpp"
 
 
 int main(){
@@ -38,7 +37,7 @@ int main(){
     std::cout << "Translation Matrix: " << translationMatrix << std::endl;
     
     //************************Data Structure Initialization***********************//
-    data DataStructure;
+    DataStructure data;
     //****************************Camera Initialization***************************//
     Camera cam;
     cam.enableStreams(848, 480, 90);
@@ -53,7 +52,7 @@ int main(){
     //****************************User Control Block***************************//
     int numFrames;
     std::cout << "Enter number of frames to record\n";
-    std::cin >> a;
+    std::cin >> numFrames;
     std::deque<ImageData> images = cam.recordImageData(numFrames);
 
     //****************************Image Processing***************************//
@@ -83,11 +82,13 @@ int main(){
     //****************************Spin Block***************************//
     
     //Deploy user input to input spin
-    float[3] spin;
+    float spin[3];
     std::cout<< "Enter Wb, Ws, Wg in order:" << std::endl;
     std::cin >> spin[0] >> spin[1] >> spin[2];
     std::cout << std::endl << "Spin values set: " << spin[0] << std::endl << spin[1] << std::endl << spin[2] << std::endl;
-    data.data_struct.spin = spin;
+    data.spin.push_back(spin[0]);
+    data.spin.push_back(spin[1]);
+    data.spin.push_back(spin[2]);
     
     //************************Populate Data Structure Block***********************//
     
@@ -97,13 +98,11 @@ int main(){
     
     //****************************JSONify data block***************************//
     //Jsonify the data using the jsonify method in DataStructure
-    data.jsonObj = data.jsonify();
     
     //****************************HTTP Post block***************************//
     //Pass the JSON object to a POST object that will send the pitch to be recorded in the backend API
-    Post httpPost;
-    httpPost.Post(data.jsonObj);
-    httpPost.sendRequest();
+    sendPost httpPost;
+    httpPost.sendRequest(data.jsonify());
     
     //****************************Completion Message***************************//
     std::cout<<"The Routine has completed" << std::endl;

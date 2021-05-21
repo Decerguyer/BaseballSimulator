@@ -5,13 +5,16 @@ cmake_minimum_required(VERSION 3.1.0)
 
 project(RealsenseExamplesBaseballSimulator)
 
+include(FindPkgConfig)
+pkg_check_modules(CURLPP REQUIRED curlpp)
+
 find_package( OpenCV REQUIRED )
 find_library(REALSENSE2_FOUND realsense2 HINTS ${LIBRARY_DIR} REQUIRED)
 
-add_executable(rs-baseball-simulator stagnantTestingWithCalib.cpp)
+add_executable(rs-baseball-simulator MainTestingRoutine.cpp)
 set_property(TARGET rs-baseball-simulator PROPERTY CXX_STANDARD 11)
 include_directories(rs-baseball-simulator ${OpenCV_INCLUDE_DIRS})
-target_link_libraries(rs-baseball-simulator ${DEPENDENCIES} ${OpenCV_LIBS} ${REALSENSE2_FOUND})
+target_link_libraries(rs-baseball-simulator ${DEPENDENCIES} ${OpenCV_LIBS} ${REALSENSE2_FOUND} ${CURLPP_LDFLAGS})
 set_target_properties (rs-baseball-simulator PROPERTIES FOLDER "Examples")
 install(TARGETS rs-baseball-simulator RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR})
 

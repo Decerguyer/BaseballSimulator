@@ -1,6 +1,6 @@
 
-#ifndef Post
-#define Post
+#ifndef sendPost_hpp
+#define sendPost_hpp
 
 #include <iostream>
 #include <curlpp/cURLpp.hpp>
@@ -8,24 +8,23 @@
 #include <curlpp/Options.hpp>
 #include <curlpp/Exception.hpp>
 #include "json.hpp"
+
 using namespace std;
 using json = nlohmann::json;
 
 /**
  * class used to send post requests
  */
-class Post{
+class sendPost{
 public:
-    json body;
+	sendPost(){
+	}
 
-    Post(json b){
-        body = b;
-    }
 
     /**
      * sends post request with header content-type: application/json, and a json body.
      */
-    void sendRequest() const {
+    void sendRequest(json body) const {
         std::string const str_json = body.dump();
         const char *tmp = str_json.c_str();
 
@@ -54,18 +53,7 @@ public:
 
 
 
-}
+};
 
-/**
-int main (){
-    json j;
-    j={
-            {"positions",{"1", "2", "5"}},
-            {"spin", "3"},
-            {"pitcher", "owen gay"}
-    };
-    Post post(j);
-    post.sendRequest();
-}
-*/
 #endif
+

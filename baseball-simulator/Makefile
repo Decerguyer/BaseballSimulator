@@ -169,32 +169,32 @@ rs-baseball-simulator/fast:
 	$(MAKE) -f CMakeFiles/rs-baseball-simulator.dir/build.make CMakeFiles/rs-baseball-simulator.dir/build
 .PHONY : rs-baseball-simulator/fast
 
-stagnantTestingWithCalib.o: stagnantTestingWithCalib.cpp.o
+MainTestingRoutine.o: MainTestingRoutine.cpp.o
 
-.PHONY : stagnantTestingWithCalib.o
+.PHONY : MainTestingRoutine.o
 
 # target to build an object file
-stagnantTestingWithCalib.cpp.o:
-	$(MAKE) -f CMakeFiles/rs-baseball-simulator.dir/build.make CMakeFiles/rs-baseball-simulator.dir/stagnantTestingWithCalib.cpp.o
-.PHONY : stagnantTestingWithCalib.cpp.o
+MainTestingRoutine.cpp.o:
+	$(MAKE) -f CMakeFiles/rs-baseball-simulator.dir/build.make CMakeFiles/rs-baseball-simulator.dir/MainTestingRoutine.cpp.o
+.PHONY : MainTestingRoutine.cpp.o
 
-stagnantTestingWithCalib.i: stagnantTestingWithCalib.cpp.i
+MainTestingRoutine.i: MainTestingRoutine.cpp.i
 
-.PHONY : stagnantTestingWithCalib.i
+.PHONY : MainTestingRoutine.i
 
 # target to preprocess a source file
-stagnantTestingWithCalib.cpp.i:
-	$(MAKE) -f CMakeFiles/rs-baseball-simulator.dir/build.make CMakeFiles/rs-baseball-simulator.dir/stagnantTestingWithCalib.cpp.i
-.PHONY : stagnantTestingWithCalib.cpp.i
+MainTestingRoutine.cpp.i:
+	$(MAKE) -f CMakeFiles/rs-baseball-simulator.dir/build.make CMakeFiles/rs-baseball-simulator.dir/MainTestingRoutine.cpp.i
+.PHONY : MainTestingRoutine.cpp.i
 
-stagnantTestingWithCalib.s: stagnantTestingWithCalib.cpp.s
+MainTestingRoutine.s: MainTestingRoutine.cpp.s
 
-.PHONY : stagnantTestingWithCalib.s
+.PHONY : MainTestingRoutine.s
 
 # target to generate assembly for a file
-stagnantTestingWithCalib.cpp.s:
-	$(MAKE) -f CMakeFiles/rs-baseball-simulator.dir/build.make CMakeFiles/rs-baseball-simulator.dir/stagnantTestingWithCalib.cpp.s
-.PHONY : stagnantTestingWithCalib.cpp.s
+MainTestingRoutine.cpp.s:
+	$(MAKE) -f CMakeFiles/rs-baseball-simulator.dir/build.make CMakeFiles/rs-baseball-simulator.dir/MainTestingRoutine.cpp.s
+.PHONY : MainTestingRoutine.cpp.s
 
 # Help Target
 help:
@@ -209,9 +209,9 @@ help:
 	@echo "... rebuild_cache"
 	@echo "... edit_cache"
 	@echo "... rs-baseball-simulator"
-	@echo "... stagnantTestingWithCalib.o"
-	@echo "... stagnantTestingWithCalib.i"
-	@echo "... stagnantTestingWithCalib.s"
+	@echo "... MainTestingRoutine.o"
+	@echo "... MainTestingRoutine.i"
+	@echo "... MainTestingRoutine.s"
 .PHONY : help
 
 
