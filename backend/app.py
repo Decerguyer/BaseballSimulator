@@ -154,5 +154,5 @@ def record_pitch():
             'success': 'recorded pitch with id: {}'.format(pitch_id)
         }), 201
     except(error):
-        return jsonify({'error': str(error)})
+        return jsonify({'error': error})
 
