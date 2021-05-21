@@ -123,33 +123,36 @@ def get_pitch_history():
 
 @app.route("/pitch", methods=["POST"])
 def record_pitch():
-    pitch_id = uuid.uuid4().hex
-    print(pitch_id)
-    time = str(datetime.datetime.now())
-    positions = []
-    for position in request.json.get('positions'):
-        positions.append(Vector3D(*position))
-    error_list = []
-    for error in request.json.get('error'):
-        error_list.append(Vector3D(*error))
+    try:
+        pitch_id = uuid.uuid4().hex
+        print(pitch_id)
+        time = str(datetime.datetime.now())
+        positions = []
+        for position in request.json.get('positions'):
+            positions.append(Vector3D(*position))
+        error_list = []
+        for error in request.json.get('error'):
+            error_list.append(Vector3D(*error))
 
-    timestamps= request.json.get('timestamps')
-    spin = Vector3D(*request.json.get('spin'))
-    pitcher_id = request.json.get('pitcher_id')
-    serial_number = request.json.get('serial_number')
-    pitch = Pitch(positions, timestamps, spin, pitcher_id, pitch_id, serial_number, error_list, time)
-    
+        timestamps= request.json.get('timestamps')
+        spin = Vector3D(*request.json.get('spin'))
+        pitcher_id = request.json.get('pitcher_id')
+        serial_number = request.json.get('serial_number')
+        pitch = Pitch(positions, timestamps, spin, pitcher_id, pitch_id, serial_number, error_list, time)
+        
 
-    name = request.json.get('name')
-    if not positions or not spin or not pitch_id:
-        return jsonify({'error': 'Please provide positions, spin, and user'}), 400
+        name = request.json.get('name')
+        if not positions or not spin or not pitch_id:
+            return jsonify({'error': 'Please provide positions, spin, and user'}), 400
 
-    resp = client.put_item(
-        TableName=PICHES_TABLE,
-        Item=pitch.to_dynamo_item()
-    )
+        resp = client.put_item(
+            TableName=PICHES_TABLE,
+            Item=pitch.to_dynamo_item()
+        )
 
-    return jsonify({
-        'success': 'recorded pitch with id: {}'.format(pitch_id)
-    }), 201
+        return jsonify({
+            'success': 'recorded pitch with id: {}'.format(pitch_id)
+        }), 201
+    except(error):
+        return jsonify({'error': str(error)})
 
