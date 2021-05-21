@@ -27,7 +27,7 @@ public:
         for (int i = 0; i < (int)imgData.size(); (i >= 0 ? i++ : i = 0)){
             std::cout << "TimeStamp = " << imgData[i].getTimeStamp() << "; ";
             //std::cout << "Depth = " << ballDepthVec[i] << "; ";
-            std::cout << "Frame = " << i + 1 << "/" << imgData.size() << "; ";
+            std::cout << "Frame = " << i << "/" << imgData.size() - 1 << "; ";
             std::cout << "Act Frame # = " << imgData[i].getFrameNumber() << std::endl;
             
             if (drawCircles){
