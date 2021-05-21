@@ -9,13 +9,13 @@ import json
 
 
 class Vector3D():
-    def __init__(self, x, y, z):
+    def __init__(self, x:float, y:float, z:float):
         self.x = x
         self.y = y
         self.z = z
 
     def to_dynamo_item(self):
-        return { 'M': { 'x': { 'N': self.x }, 'y': { 'N': self.y }, 'z': { 'N': self.z } } }
+        return { 'M': { 'x': { 'N': str(self.x) }, 'y': { 'N': str(self.y) }, 'z': { 'N': str(self.z) } } }
 class Pitch:
     def __init__(self, positions: List[Vector3D], timestamps: List[float], spin: Vector3D, pitcher_id: str, pitch_id: str, serial_number: int, error: List[Vector3D], time: str):
         self.positions = positions
@@ -37,15 +37,15 @@ class Pitch:
         for err in self.error:
             dynamo_error.append(err.to_dynamo_item())
         for timestamp in self.timestamps:
-            dynamo_timestamps.append({ 'N': timestamp })
+            dynamo_timestamps.append({ 'N': str(timestamp) })
         return {
             'positions': { 'L': dynamo_positions },
             'timestamps': { 'L': dynamo_timestamps },
             'spin': self.spin.to_dynamo_item(),
             'error': { 'L': dynamo_error },
-            'serial_number': { 'N': self.serial_number },
-            'pitcher_id': { 'S': self.pitcher_id },
-            'pitch_id': { 'S': self.pitch_id }            
+            'serial_number': { 'N': str(self.serial_number) },
+            'pitcher_id': { 'S': str(self.pitcher_id) },
+            'pitch_id': { 'S': str(self.pitch_id) }            
         }
         
 
@@ -123,33 +123,36 @@ def get_pitch_history():
 
 @app.route("/pitch", methods=["POST"])
 def record_pitch():
-    pitch_id = uuid.uuid4().hex
-    print(pitch_id)
-    time = str(datetime.datetime.now())
-    positions = []
-    for position in request.json.get('positions'):
-        positions.append(Vector3D(*position))
-    error_list = []
-    for error in request.json.get('error'):
-        error_list.append(Vector3D(*error))
+    try:
+        pitch_id = uuid.uuid4().hex
+        print(pitch_id)
+        time = str(datetime.datetime.now())
+        positions = []
+        for position in request.json.get('positions'):
+            positions.append(Vector3D(*position))
+        error_list = []
+        for error in request.json.get('error'):
+            error_list.append(Vector3D(*error))
 
-    timestamps= request.json.get('timestamps')
-    spin = Vector3D(*request.json.get('spin'))
-    pitcher_id = request.json.get('pitcher_id')
-    serial_number = request.json.get('serial_number')
-    pitch = Pitch(positions, timestamps, spin, pitcher_id, pitch_id, serial_number, error_list, time)
-    
+        timestamps= request.json.get('timestamps')
+        spin = Vector3D(*request.json.get('spin'))
+        pitcher_id = request.json.get('pitcher_id')
+        serial_number = request.json.get('serial_number')
+        pitch = Pitch(positions, timestamps, spin, pitcher_id, pitch_id, serial_number, error_list, time)
+        
 
-    name = request.json.get('name')
-    if not positions or not spin or not pitch_id:
-        return jsonify({'error': 'Please provide positions, spin, and user'}), 400
+        name = request.json.get('name')
+        if not positions or not spin or not pitch_id:
+            return jsonify({'error': 'Please provide positions, spin, and user'}), 400
 
-    resp = client.put_item(
-        TableName=PICHES_TABLE,
-        Item=pitch.to_dynamo_item()
-    )
+        resp = client.put_item(
+            TableName=PICHES_TABLE,
+            Item=pitch.to_dynamo_item()
+        )
 
-    return jsonify({
-        'success': 'recorded pitch with id: {}'.format(pitch_id)
-    }), 201
+        return jsonify({
+            'success': 'recorded pitch with id: {}'.format(pitch_id)
+        }), 201
+    except Exception as e:
+        return jsonify({'error': str(e)}), 400
 
