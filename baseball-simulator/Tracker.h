@@ -22,14 +22,14 @@ public:
         if (predDepth < 0.8){
             predDepth = 0.8;
         }
-        imgData.depthMat = threshFilter.filter(imgData.depthMat, 0.6096 ,(1.1*predDepth));
+        imgData.depthMat = threshFilter.filter(imgData.depthMat, 0.6096 ,(1.15*predDepth));
         imgData.depthVisMat = imgData.depthToVisual(imgData.depthMat);
 
         coord2D ballCoordDepth = findBallFromDepth(imgData);
         coord2D ballCoordIR = {0, 0 , 0};
         if (ballCoordDepth.depth){
             std::cout << "here Depth = " << ballCoordDepth.depth << std::endl;
-            ballCoordIR = findBallFromIR(imgData, imgData.depthVisBallLoc, ballCoordDepth.depth);
+            ballCoordIR = findBallFromIR(imgData, imgData.depthVisBallLoc, ballCoordDepth);
         }
         if (ballCoordIR.depth){
             locPred.updateROIPredictor(ballCoordIR, imgData.getTimeStamp(), imgData.IRBallLoc[2]);
@@ -63,12 +63,11 @@ public:
         return ball2DCoord;
     }
     
-    coord2D findBallFromIR(ImageData &imgData, cv::Vec3f ballCircleDepth, float meanDepth){
+    coord2D findBallFromIR(ImageData &imgData, cv::Vec3f ballCircleDepth, coord2D ballCoordDepth){
         imgData.irMatCropped = cropIR(imgData, ballCircleDepth, 0.25);
         //cv::equalizeHist(imgData.irMatCropped, imgData.irMatCropped);
 
-        std::cout << "Intrinsics = " << intrin.ppx << " " << intrin.ppy << std::endl;
-        int radius = locPred.radiusPred(meanDepth, &intrin);
+        int radius = locPred.radiusPred(ballCoordDepth, &intrin);
 
         cv::Vec3f ballCircleIR = irHoughCircle(imgData, radius, 0.02);
         
@@ -80,7 +79,7 @@ public:
         if (ballCircleIR[2]){
             imgData.irMatCropped = cropIR(imgData, ballCircleIR, 0.05);
         
-        return {ballCircleIR[0], ballCircleIR[1], meanDepth};
+        return {ballCircleIR[0], ballCircleIR[1], ballCoordDepth.depth};
         }
         else{
             return {0, 0, 0};
@@ -146,20 +145,23 @@ private:
         cv::HoughCircles(imgData.irMatCropped, coords, cv::HOUGH_GRADIENT, 1.6, 4000, 50, 5, minRadius, maxRadius);
         
         if (!coords.empty()){
-            std::cout << "Actual Found radius is " << coords[0][2] << std::endl;
+            std::cout << "Radius Through depth hough is " << coords[0][2] << std::endl;
             return coords[0];
         }
-        else{
+        else if (locPred.isSecondMeas()){
             imgData.irMatCropped = cropFromPred(imgData.getIRMat(), imgData.getTimeStamp());
             cv::HoughCircles(imgData.irMatCropped, coords, cv::HOUGH_GRADIENT, 1.6, 4000, 50, 5, minRadius, maxRadius);
             if (!coords.empty()){
-                std::cout << "Actual Found radius is " << coords[0][2] << std::endl;
+                std::cout << "Radius Through Crop Prediction is " << coords[0][2] << std::endl;
                 return coords[0];
             }
             else{
                 std::cout << "Radius not found " << std::endl;
                 return cv::Vec3f(0, 0, 0);
             }
+        }
+        else{
+            return cv::Vec3f(0, 0, 0);
         }
     }
     

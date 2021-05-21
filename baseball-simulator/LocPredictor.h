@@ -21,6 +21,10 @@ public:
         imageSize = cv::Rect(0, 0, width - 1, height - 1);
         ROISize = 0;
     }
+
+    bool isSecondMeas(){
+        return secondMeas >= 2;
+    }
     
     cv::Rect ROIPrediction(float timeStamp){
         if (secondMeas < 2){
@@ -78,20 +82,30 @@ public:
         return tempROI & imageSize;
     }
     
-    float radiusPred(float depth, const struct rs2_intrinsics * intrin){
+    float radiusPred(coord2D ballLocDepth, const struct rs2_intrinsics * intrin){
         float point[3];
-        float pixel[2] = {intrin->ppx, intrin->ppy};
+        float origPixel[2] = {ballLocDepth.x, ballLocDepth.y};
 
-        rs2_deproject_pixel_to_point(point, intrin, pixel, depth);
+        rs2_deproject_pixel_to_point(point, intrin, origPixel, ballLocDepth.depth);
         point[2] += BASEBALL_RADIUS;
 
 
         float topEdge[3] =  {point[0], point[1] + (float)BASEBALL_RADIUS, point[2]};
+        float rightEdge[3] = {point[0] + (float)BASEBALL_RADIUS, point[1], point[2]};
+        float bottomEdge[3] = {point[0], point[1] - (float)BASEBALL_RADIUS, point[2]};
+        float leftEdge[3] = {point[0] - (float)BASEBALL_RADIUS, point[1], point[2]};
 
+        float pixelTop[2];
+        float pixelRight[2];
+        float pixelBottom[2];
+        float pixelLeft[2];
 
-        rs2_project_point_to_pixel(pixel, intrin, topEdge);
-        
-        return pixel[1]-(intrin->ppy);
+        rs2_project_point_to_pixel(pixelTop, intrin, topEdge);
+        rs2_project_point_to_pixel(pixelRight, intrin, rightEdge);
+        rs2_project_point_to_pixel(pixelBottom, intrin, bottomEdge);
+        rs2_project_point_to_pixel(pixelLeft, intrin, leftEdge);
+
+        return ((pixelTop[1]-pixelBottom[1])/2.f + (pixelRight[0]-pixelLeft[0])/2.f)/2.f;
     }
 
     // void findEdge(float pixel[2], float changeX, float changeY, float point[3]){

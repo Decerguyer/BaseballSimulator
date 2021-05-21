@@ -7,14 +7,12 @@
 #include <deque>
 #include <cmath>
 
-#define BASEBALL_RADIUS 0.0365
-
 class ThresholdFilter{
 public:
     // ThresholdFilter() {
     //     createThresholdFrame();
     // }
-    ThresholdFilter(Camera &cam) : camera{cam} {
+    ThresholdFilter(Camera &cam) : camera(cam) {
         createThresholdFrame();
     }
     

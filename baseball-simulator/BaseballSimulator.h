@@ -11,7 +11,7 @@
 #include <deque>
 #include <cmath>
 
-#define BASEBALL_RADIUS 0.0365
+#define BASEBALL_RADIUS 0.036888
 
 
 struct coord2D{
