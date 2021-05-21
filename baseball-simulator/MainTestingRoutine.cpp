@@ -12,24 +12,18 @@
 #include <stdio.h>
 #include <iostream>
 
-#include <vector> //I don't think we even use this in the main. Remove?
-
-//OpenCV libraries. Remove?
-#include <opencv2/calib3d/calib3d.hpp> //These should exist only in the headers of
-#include <opencv2/highgui/highgui.hpp> //the classes where they are used. Remove?
-#include <opencv2/imgproc/imgproc.hpp>
-#include "opencv2/aruco.hpp"
-
-//Custom Intel Realsense Header
-//This too can likely be removed and only exist in the Camera class that utilizes it?
-#include <librealsense2/rsutil.h> // Include RealSense Cross Platform API
-
 //Custom JEY Solutions headers
 #include "BaseballSimulator.h"
+#include "Camera.h"
+#include "ImageData.h"
 #include "CameraCalibration.h"
 #include "DataStructure.h"
-#include "JsonifyData.h"
-#include "Post.h"
+#include "LocPredictor.h"
+#include "Tracker.h"
+#include "ThresholdFilter.h"
+#include "Visualizer.h"
+#include "DataStructure.h"
+#include "sendPost.hpp"
 
 
 int main(){
@@ -42,6 +36,8 @@ int main(){
     std::cout << "Rotation Matrix: " << rotationMatrix << std::endl;
     std::cout << "Translation Matrix: " << translationMatrix << std::endl;
     
+    //************************Data Structure Initialization***********************//
+    DataStructure data;
     //****************************Camera Initialization***************************//
     Camera cam;
     cam.enableStreams(848, 480, 90);
@@ -51,12 +47,12 @@ int main(){
     ThresholdFilter threshFilter(cam);
     
     //**************************Tracker Initialization*************************//
-    Tracker trk(848, 480, cam.getIntrinsics());
+    Tracker trk(848, 480, cam.getIntrinsics(), threshFilter);
 
     //****************************User Control Block***************************//
     int numFrames;
     std::cout << "Enter number of frames to record\n";
-    std::cin >> a;
+    std::cin >> numFrames;
     std::deque<ImageData> images = cam.recordImageData(numFrames);
 
     //****************************Image Processing***************************//
@@ -81,19 +77,34 @@ int main(){
     
     //***********************Position Error Processing Block**********************//
     
+    //*********************Position&Error Transformation Block********************//
+    
     //****************************Spin Block***************************//
     
     //Deploy user input to input spin
+    float spin[3];
+    std::cout<< "Enter Wb, Ws, Wg in order:" << std::endl;
+    std::cin >> spin[0] >> spin[1] >> spin[2];
+    std::cout << std::endl << "Spin values set: " << spin[0] << std::endl << spin[1] << std::endl << spin[2] << std::endl;
+    data.spin.push_back(spin[0]);
+    data.spin.push_back(spin[1]);
+    data.spin.push_back(spin[2]);
     
     //************************Populate Data Structure Block***********************//
     
-    //We may have already filled in position, error, and spin at this point?
+    //We have already filled in position, error, and spin at this point
     //Add Camera serial number and a temoprary pitcher name to the data structure
     
+    
     //****************************JSONify data block***************************//
-    //Pass data structure to a JSONify data object which will return a JSON object
+    //Jsonify the data using the jsonify method in DataStructure
     
     //****************************HTTP Post block***************************//
     //Pass the JSON object to a POST object that will send the pitch to be recorded in the backend API
+    sendPost httpPost;
+    httpPost.sendRequest(data.jsonify());
+    
+    //****************************Completion Message***************************//
+    std::cout<<"The Routine has completed" << std::endl;
 }
 

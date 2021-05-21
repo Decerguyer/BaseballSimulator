@@ -9,7 +9,7 @@
 #define FeatureAnalysis_h
 
 #include <opencv2/features2d.hpp> //This is used for SIFT
-
+#include "opencv2/aruco.hpp"
 
 class FeatureAnalysis{
 public:

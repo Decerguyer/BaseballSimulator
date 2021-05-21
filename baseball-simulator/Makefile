@@ -169,32 +169,32 @@ rs-baseball-simulator/fast:
 	$(MAKE) -f CMakeFiles/rs-baseball-simulator.dir/build.make CMakeFiles/rs-baseball-simulator.dir/build
 .PHONY : rs-baseball-simulator/fast
 
-stagnantTestingWithCalib.o: stagnantTestingWithCalib.cpp.o
+Test.o: Test.cpp.o
 
-.PHONY : stagnantTestingWithCalib.o
+.PHONY : Test.o
 
 # target to build an object file
-stagnantTestingWithCalib.cpp.o:
-	$(MAKE) -f CMakeFiles/rs-baseball-simulator.dir/build.make CMakeFiles/rs-baseball-simulator.dir/stagnantTestingWithCalib.cpp.o
-.PHONY : stagnantTestingWithCalib.cpp.o
+Test.cpp.o:
+	$(MAKE) -f CMakeFiles/rs-baseball-simulator.dir/build.make CMakeFiles/rs-baseball-simulator.dir/Test.cpp.o
+.PHONY : Test.cpp.o
 
-stagnantTestingWithCalib.i: stagnantTestingWithCalib.cpp.i
+Test.i: Test.cpp.i
 
-.PHONY : stagnantTestingWithCalib.i
+.PHONY : Test.i
 
 # target to preprocess a source file
-stagnantTestingWithCalib.cpp.i:
-	$(MAKE) -f CMakeFiles/rs-baseball-simulator.dir/build.make CMakeFiles/rs-baseball-simulator.dir/stagnantTestingWithCalib.cpp.i
-.PHONY : stagnantTestingWithCalib.cpp.i
+Test.cpp.i:
+	$(MAKE) -f CMakeFiles/rs-baseball-simulator.dir/build.make CMakeFiles/rs-baseball-simulator.dir/Test.cpp.i
+.PHONY : Test.cpp.i
 
-stagnantTestingWithCalib.s: stagnantTestingWithCalib.cpp.s
+Test.s: Test.cpp.s
 
-.PHONY : stagnantTestingWithCalib.s
+.PHONY : Test.s
 
 # target to generate assembly for a file
-stagnantTestingWithCalib.cpp.s:
-	$(MAKE) -f CMakeFiles/rs-baseball-simulator.dir/build.make CMakeFiles/rs-baseball-simulator.dir/stagnantTestingWithCalib.cpp.s
-.PHONY : stagnantTestingWithCalib.cpp.s
+Test.cpp.s:
+	$(MAKE) -f CMakeFiles/rs-baseball-simulator.dir/build.make CMakeFiles/rs-baseball-simulator.dir/Test.cpp.s
+.PHONY : Test.cpp.s
 
 # Help Target
 help:
@@ -209,9 +209,9 @@ help:
 	@echo "... rebuild_cache"
 	@echo "... edit_cache"
 	@echo "... rs-baseball-simulator"
-	@echo "... stagnantTestingWithCalib.o"
-	@echo "... stagnantTestingWithCalib.i"
-	@echo "... stagnantTestingWithCalib.s"
+	@echo "... Test.o"
+	@echo "... Test.i"
+	@echo "... Test.s"
 .PHONY : help
 
 

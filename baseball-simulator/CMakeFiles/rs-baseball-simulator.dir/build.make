@@ -57,27 +57,27 @@ include CMakeFiles/rs-baseball-simulator.dir/progress.make
 # Include the compile flags for this target's objects.
 include CMakeFiles/rs-baseball-simulator.dir/flags.make
 
-CMakeFiles/rs-baseball-simulator.dir/stagnantTestingWithCalib.cpp.o: CMakeFiles/rs-baseball-simulator.dir/flags.make
-CMakeFiles/rs-baseball-simulator.dir/stagnantTestingWithCalib.cpp.o: stagnantTestingWithCalib.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/ubuntu/BaseballSimulator/baseball-simulator/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/rs-baseball-simulator.dir/stagnantTestingWithCalib.cpp.o"
-	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/rs-baseball-simulator.dir/stagnantTestingWithCalib.cpp.o -c /home/ubuntu/BaseballSimulator/baseball-simulator/stagnantTestingWithCalib.cpp
+CMakeFiles/rs-baseball-simulator.dir/Test.cpp.o: CMakeFiles/rs-baseball-simulator.dir/flags.make
+CMakeFiles/rs-baseball-simulator.dir/Test.cpp.o: Test.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/ubuntu/BaseballSimulator/baseball-simulator/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/rs-baseball-simulator.dir/Test.cpp.o"
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/rs-baseball-simulator.dir/Test.cpp.o -c /home/ubuntu/BaseballSimulator/baseball-simulator/Test.cpp
 
-CMakeFiles/rs-baseball-simulator.dir/stagnantTestingWithCalib.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/rs-baseball-simulator.dir/stagnantTestingWithCalib.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/ubuntu/BaseballSimulator/baseball-simulator/stagnantTestingWithCalib.cpp > CMakeFiles/rs-baseball-simulator.dir/stagnantTestingWithCalib.cpp.i
+CMakeFiles/rs-baseball-simulator.dir/Test.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/rs-baseball-simulator.dir/Test.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/ubuntu/BaseballSimulator/baseball-simulator/Test.cpp > CMakeFiles/rs-baseball-simulator.dir/Test.cpp.i
 
-CMakeFiles/rs-baseball-simulator.dir/stagnantTestingWithCalib.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/rs-baseball-simulator.dir/stagnantTestingWithCalib.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/ubuntu/BaseballSimulator/baseball-simulator/stagnantTestingWithCalib.cpp -o CMakeFiles/rs-baseball-simulator.dir/stagnantTestingWithCalib.cpp.s
+CMakeFiles/rs-baseball-simulator.dir/Test.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/rs-baseball-simulator.dir/Test.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/ubuntu/BaseballSimulator/baseball-simulator/Test.cpp -o CMakeFiles/rs-baseball-simulator.dir/Test.cpp.s
 
 # Object files for target rs-baseball-simulator
 rs__baseball__simulator_OBJECTS = \
-"CMakeFiles/rs-baseball-simulator.dir/stagnantTestingWithCalib.cpp.o"
+"CMakeFiles/rs-baseball-simulator.dir/Test.cpp.o"
 
 # External object files for target rs-baseball-simulator
 rs__baseball__simulator_EXTERNAL_OBJECTS =
 
-rs-baseball-simulator: CMakeFiles/rs-baseball-simulator.dir/stagnantTestingWithCalib.cpp.o
+rs-baseball-simulator: CMakeFiles/rs-baseball-simulator.dir/Test.cpp.o
 rs-baseball-simulator: CMakeFiles/rs-baseball-simulator.dir/build.make
 rs-baseball-simulator: /usr/lib/aarch64-linux-gnu/libopencv_stitching.so.4.2.0
 rs-baseball-simulator: /usr/lib/aarch64-linux-gnu/libopencv_aruco.so.4.2.0

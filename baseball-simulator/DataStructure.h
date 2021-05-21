@@ -8,23 +8,37 @@
 #ifndef DataStructure_h
 #define DataStructure_h
 
-class DataStructure{
-public:
-    DataStructure() {
-    }
-    data_struct getStruct(){
-        return data_struct;
-    }
-private:
-    struct data_struct{
-        std::vector<float[3]> positions;
-        std::vector<float[3]> error;
-        std::vector<long long> timestamps;
-        
-        float[3] spin;
-        long serialNumber;
-        std::string username;
-    };
-};
+#include "json.hpp"
+using json = nlohmann::json;
+using namespace std;
 
+struct DataStructure{
+     vector<vector<float>> positions;
+     vector<vector<float>> error;
+     vector<long long> timestamps;
+     vector <float> spin;
+
+     long serialNumber;
+     string username;
+
+     json jsonify(){
+         if (!error.empty() && !positions.empty() && !timestamps.empty()){
+             json out;
+             out["serial_number"] = serialNumber;
+             out["pitcher_id"] = username;
+             out["spin"] = spin;
+             out["error"] = error;
+             out["positions"] = positions;
+             out["timestamps"] = timestamps;
+             return out;
+         } else {
+             json j = {};
+             return j;
+         }
+     }
+ 
+};
+    
+    
+   
 #endif /* DataStructure */

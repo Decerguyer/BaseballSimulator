@@ -1,5 +1,5 @@
 file(REMOVE_RECURSE
-  "CMakeFiles/rs-baseball-simulator.dir/stagnantTestingWithCalib.cpp.o"
+  "CMakeFiles/rs-baseball-simulator.dir/Test.cpp.o"
   "rs-baseball-simulator"
   "rs-baseball-simulator.pdb"
 )

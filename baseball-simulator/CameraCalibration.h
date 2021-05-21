@@ -13,7 +13,7 @@
 #include <opencv2/imgproc/imgproc.hpp>
 #include <string>
 #include <climits>
-#include "BaseballSimulator.h"
+//#include "BaseballSimulator.h" you need a camera object to run the calibration
 
 
 class CameraCalibration{
@@ -210,7 +210,7 @@ private:
             double y = point3D.at<double>(1);
             double z = point3D.at<double>(2);
 
-            double r = 0.036888 //Baseball radius in meters approximation
+            double r = 0.036888; //Baseball radius in meters approximation
 
             double _x, _y, _z;
 
@@ -223,9 +223,9 @@ private:
     }
 
     cv::Mat pointTransform(cv::Mat untransformedPoint){
-        cv::Mat untransformedPointmm = (cv::Mat_<double>(3,1) << untransformedPoint[0]*1000,untransformedPoint[1]*1000,untransformedPoint[2]*1000); //Converting m to mm
+        cv::Mat untransformedPointmm = (cv::Mat_<double>(3,1) << untransformedPoint.at<double>(0)*1000,untransformedPoint.at<double>(1)*1000,untransformedPoint.at<double>(2)*1000); //Converting m to mm
         cv::Mat transformedPointmm=rotationMatrix*(untransformedPointmm-translationMatrix);
-        cv::Mat transformedPoint = cv::Mat_<double>(3,1) << transformedPointmm.at<double>(0)/1000,transformedPointmm.at<double>(1)/1000,transformedPointmm.at<double>(2)/1000); //Converting m to mm
+        cv::Mat transformedPoint = (cv::Mat_<double>(3,1) << transformedPointmm.at<double>(0)/1000,transformedPointmm.at<double>(1)/1000,transformedPointmm.at<double>(2)/1000); //Converting m to mm
         return transformedPoint;
     }
 
