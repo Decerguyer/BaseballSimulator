@@ -31,6 +31,17 @@ public:
     cv::Mat getTranslationMatrix(){
         return translationMatrix;
     }
+    cv::Mat convertPosVecMat(std::vector<float> unconverted){
+        cv::Mat converted = (cv::Mat_<double>(3,1) << unconverted[0],unconverted[1],unconverted[2]);
+        return converted;
+    }
+    cv::Mat convertPosMatVec(cv::Mat unconverted){
+        std::vector<float> converted;
+        converted.push_back(uncoverted.at<double>(0));
+        converted.push_back(uncoverted.at<double>(1));
+        converted.push_back(uncoverted.at<double>(2));
+        return converted;
+    }
     cv::Mat centerPointAdjust(cv::Mat point3D){
         cv::Mat adjustedPoint = geometricCenterAdjuster(point3D);
         return adjustedPoint;

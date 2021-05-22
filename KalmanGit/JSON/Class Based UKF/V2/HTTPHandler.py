@@ -18,12 +18,13 @@ class HTTPHandler:
         print("Status Code for All Pitches Get Request:")
         print(requested_json.status_code)
         all_pitches = requested_json.json()
-        all_pitches.sort(key=lambda x: x['timestamp'])
+        all_pitches.sort(key=lambda x: x['time'])
         # print(all_pitches)
         return all_pitches
 
     def get_user_pitches(self):
-        url = "https://2342hbqxca.execute-api.us-east-1.amazonaws.com/dev/pitch?pitcher=" + self.username
+        #url = "https://2342hbqxca.execute-api.us-east-1.amazonaws.com/dev/pitch?pitcher=" + self.username
+        url = "https://2342hbqxca.execute-api.us-east-1.amazonaws.com/dev/pitch"
         # print(url)
         user_pitches = self.get_requested_pitches(url)
         return user_pitches

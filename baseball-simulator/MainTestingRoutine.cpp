@@ -36,8 +36,6 @@ int main(){
     std::cout << "Rotation Matrix: " << rotationMatrix << std::endl;
     std::cout << "Translation Matrix: " << translationMatrix << std::endl;
     
-    //************************Data Structure Initialization***********************//
-    DataStructure data;
     //****************************Camera Initialization***************************//
     Camera cam;
     cam.enableStreams(848, 480, 90);
@@ -54,6 +52,9 @@ int main(){
     std::cout << "Enter number of frames to record\n";
     std::cin >> numFrames;
     std::deque<ImageData> images = cam.recordImageData(numFrames);
+    
+    //************************Data Structure Initialization***********************//
+    DataStructure data;
 
     //****************************Image Processing***************************//
     
@@ -86,10 +87,21 @@ int main(){
 
     //**************************Pixel to Positions Block *************************//
     std::vector<std::vector<float>> positions3D = trk.convertTo3D(coord2DVec);
+    for (int i = 0; i < positions3D.size(); i++){
+        if(positions3D[i]){ //If the position wasn't an accidental 0,0,0
+            data.uncenteredPositions.push_back(positions3D[i]);
+            data.timestamps.push_back(timeStampsVec[i]);
+        }
+    }
     
     //***********************Position Error Processing Block**********************//
     
+    data.centerPositions(calibrationParameters);
+    
     //*********************Position&Error Transformation Block********************//
+    
+    data.transformPositions(calibrationParameters);
+    data.setError();
     
     //****************************Spin Block***************************//
     
@@ -106,11 +118,9 @@ int main(){
     
     //We have already filled in position, error, and spin at this point
     //Add Camera serial number and a temoprary pitcher name to the data structure
-    
-    
-    //****************************JSONify data block***************************//
-    //Jsonify the data using the jsonify method in DataStructure
-    
+     
+    data.username = "JEYsolutions";
+    data.serialNumber = 99999999;
     //****************************HTTP Post block***************************//
     //Pass the JSON object to a POST object that will send the pitch to be recorded in the backend API
     sendPost httpPost;

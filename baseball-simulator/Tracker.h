@@ -88,13 +88,13 @@ public:
     std::vector<std::vector<float>> convertTo3D(std::vector<coord2D> coord2DVec){
         std::vector<std::vector<float>> positions3DVec;
         for (int i = 0; i < coord2DVec.size(); i++){
-            if (coord2DVec[i].depth){
+            //if (coord2DVec[i].depth){
                 float pixel[2] = {coord2DVec[i].x, coord2DVec[i].y};
                 float point[3];
                 rs2_deproject_pixel_to_point(point, &intrin, pixel, coord2DVec[i].depth);
                 std::vector<float> position = {point[0], point[1], point[2]};
                 positions3DVec.push_back(position);
-            }
+            //}
         }
         return positions3DVec;
     }
