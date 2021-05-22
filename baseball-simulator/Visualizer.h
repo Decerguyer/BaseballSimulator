@@ -31,8 +31,10 @@ public:
             std::cout << "Act Frame # = " << imgData[i].getFrameNumber() << std::endl;
             
             if (drawCircles){
-                drawCircle(imgData[i].depthVisMat, imgData[i].depthVisBallLoc);
-                drawCircle(imgData[i].irMat, imgData[i].IRBallLoc);
+                if (imgData[i].depthVisBallLoc[2])
+                    drawCircle(imgData[i].depthVisMat, imgData[i].depthVisBallLoc);
+                if (imgData[i].IRBallLoc[2])
+                    drawCircle(imgData[i].irMat, imgData[i].IRBallLoc);
             }
             
             if (showDepth){

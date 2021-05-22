@@ -27,7 +27,7 @@ int main(){
   //****************************Camera Initialization***************************//
     Camera cam;
     cam.enableStreams(848, 480, 90);
-    cam.setExposure(1500); //Add method to change this from hard coded value?
+    cam.setExposure(10000); //Add method to change this from hard coded value?
     
     //**************************Threshold Initialization*************************//
     ThresholdFilter threshFilter(cam);
@@ -53,7 +53,9 @@ int main(){
     for (int i = 0; i < images.size(); i++){        
         coord2DVec.push_back(trk.track(images[i]));
         timeStampsVec.push_back(images[i].getTimeStamp());
+        std::cout << i << "\n";
     }
+    std::cout << std::endl;
     
     //**************************Visualization Block *************************//
     Visualizer vis;
@@ -74,7 +76,7 @@ int main(){
     std::vector<std::vector<float>> positions3D = trk.convertTo3D(coord2DVec);
 
     //**************************Print Ball Positions *************************//
-    std::cout << positions3D.size() << "Ball positions found; Ball Positions Are: \n";
+    std::cout << positions3D.size() << " Ball positions found; Ball Positions Are: \n";
     for (int i = 0; i < positions3D.size(); i++){
         for (int k = 0; k < 3; k++){
             std::cout << positions3D[i][k] << " ";

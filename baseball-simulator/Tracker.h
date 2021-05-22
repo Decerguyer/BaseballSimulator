@@ -78,8 +78,7 @@ public:
         
         if (ballCircleIR[2]){
             imgData.irMatCropped = cropIR(imgData, ballCircleIR, 0.05);
-        
-        return {ballCircleIR[0], ballCircleIR[1], ballCoordDepth.depth};
+            return {ballCircleIR[0], ballCircleIR[1], ballCoordDepth.depth};
         }
         else{
             return {0, 0, 0};
@@ -89,11 +88,13 @@ public:
     std::vector<std::vector<float>> convertTo3D(std::vector<coord2D> coord2DVec){
         std::vector<std::vector<float>> positions3DVec;
         for (int i = 0; i < coord2DVec.size(); i++){
-            float pixel[2] = {coord2DVec[i].x, coord2DVec[i].y};
-            float point[3];
-            rs2_deproject_pixel_to_point(point, &intrin, pixel, coord2DVec[i].depth);
-            std::vector<float> position = {point[0], point[1], point[2]};
-            positions3DVec.push_back(position);
+            if (coord2DVec[i].depth){
+                float pixel[2] = {coord2DVec[i].x, coord2DVec[i].y};
+                float point[3];
+                rs2_deproject_pixel_to_point(point, &intrin, pixel, coord2DVec[i].depth);
+                std::vector<float> position = {point[0], point[1], point[2]};
+                positions3DVec.push_back(position);
+            }
         }
         return positions3DVec;
     }
@@ -128,7 +129,7 @@ private:
         if (maxRadius > 40 || maxRadius == 0)
             maxRadius = 40;
 
-        cv::HoughCircles(imgData.depthVisMatCropped, coords, cv::HOUGH_GRADIENT, 1.6, 4000, 50, 20, minRadius, maxRadius);
+        cv::HoughCircles(imgData.depthVisMatCropped, coords, cv::HOUGH_GRADIENT, 1.6, 4000, 50, 17, minRadius, maxRadius);
         
         if (!coords.empty()){
             return coords[0];
@@ -136,7 +137,7 @@ private:
         else{
             imgData.depthVisMatCropped = imgData.depthVisMat;
             //std::cout << "Resorted to entire depth image because couldn't find from cropped version/n";
-            cv::HoughCircles(imgData.depthVisMatCropped, coords, cv::HOUGH_GRADIENT, 1.6, 4000, 50, 20, minRadius, maxRadius);
+            cv::HoughCircles(imgData.depthVisMatCropped, coords, cv::HOUGH_GRADIENT, 1.6, 4000, 50, 17, minRadius, maxRadius);
             if (!coords.empty()){
                 return coords[0];
             }
