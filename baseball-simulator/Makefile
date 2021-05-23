@@ -169,32 +169,32 @@ rs-baseball-simulator/fast:
 	$(MAKE) -f CMakeFiles/rs-baseball-simulator.dir/build.make CMakeFiles/rs-baseball-simulator.dir/build
 .PHONY : rs-baseball-simulator/fast
 
-Test.o: Test.cpp.o
+MainTestingRoutine.o: MainTestingRoutine.cpp.o
 
-.PHONY : Test.o
+.PHONY : MainTestingRoutine.o
 
 # target to build an object file
-Test.cpp.o:
-	$(MAKE) -f CMakeFiles/rs-baseball-simulator.dir/build.make CMakeFiles/rs-baseball-simulator.dir/Test.cpp.o
-.PHONY : Test.cpp.o
+MainTestingRoutine.cpp.o:
+	$(MAKE) -f CMakeFiles/rs-baseball-simulator.dir/build.make CMakeFiles/rs-baseball-simulator.dir/MainTestingRoutine.cpp.o
+.PHONY : MainTestingRoutine.cpp.o
 
-Test.i: Test.cpp.i
+MainTestingRoutine.i: MainTestingRoutine.cpp.i
 
-.PHONY : Test.i
+.PHONY : MainTestingRoutine.i
 
 # target to preprocess a source file
-Test.cpp.i:
-	$(MAKE) -f CMakeFiles/rs-baseball-simulator.dir/build.make CMakeFiles/rs-baseball-simulator.dir/Test.cpp.i
-.PHONY : Test.cpp.i
+MainTestingRoutine.cpp.i:
+	$(MAKE) -f CMakeFiles/rs-baseball-simulator.dir/build.make CMakeFiles/rs-baseball-simulator.dir/MainTestingRoutine.cpp.i
+.PHONY : MainTestingRoutine.cpp.i
 
-Test.s: Test.cpp.s
+MainTestingRoutine.s: MainTestingRoutine.cpp.s
 
-.PHONY : Test.s
+.PHONY : MainTestingRoutine.s
 
 # target to generate assembly for a file
-Test.cpp.s:
-	$(MAKE) -f CMakeFiles/rs-baseball-simulator.dir/build.make CMakeFiles/rs-baseball-simulator.dir/Test.cpp.s
-.PHONY : Test.cpp.s
+MainTestingRoutine.cpp.s:
+	$(MAKE) -f CMakeFiles/rs-baseball-simulator.dir/build.make CMakeFiles/rs-baseball-simulator.dir/MainTestingRoutine.cpp.s
+.PHONY : MainTestingRoutine.cpp.s
 
 # Help Target
 help:
@@ -209,9 +209,9 @@ help:
 	@echo "... rebuild_cache"
 	@echo "... edit_cache"
 	@echo "... rs-baseball-simulator"
-	@echo "... Test.o"
-	@echo "... Test.i"
-	@echo "... Test.s"
+	@echo "... MainTestingRoutine.o"
+	@echo "... MainTestingRoutine.i"
+	@echo "... MainTestingRoutine.s"
 .PHONY : help
 
 

@@ -46,17 +46,17 @@ struct DataStructure{
     }
     
     void centerPositions(CameraCalibration calib){
-        for(i=0;i<uncenteredPositions.size();i++){
+        for(int i=0;i<uncenteredPositions.size();i++){
             untransformedPositions.push_back(calib.convertPosMatVec(calib.centerPointAdjust(calib.convertPosVecMat(uncenteredPositions[i]))));
         }
     }
     void transformPositions(CameraCalibration calib){
-        for(i=0;i<untransformedPositions.size();i++){
+        for(int i=0;i<untransformedPositions.size();i++){
             positions.push_back(calib.convertPosMatVec(calib.transformPoint(calib.convertPosVecMat(untransformedPositions[i]))));
         }
     }
     void setError(){
-        for(i = 0; i < positions.size(); i++){
+        for(int i = 0; i < positions.size(); i++){
             std::vector<float> errorSet;
             errorSet.push_back(0.01);
             errorSet.push_back(0.01);

@@ -39,7 +39,7 @@ int main(){
     //****************************Camera Initialization***************************//
     Camera cam;
     cam.enableStreams(848, 480, 90);
-    cam.setExposure(1500); //Add method to change this from hard coded value?
+    cam.setExposure(15000); //Add method to change this from hard coded value?
     
     //**************************Threshold Initialization*************************//
     ThresholdFilter threshFilter(cam);
@@ -88,7 +88,7 @@ int main(){
     //**************************Pixel to Positions Block *************************//
     std::vector<std::vector<float>> positions3D = trk.convertTo3D(coord2DVec);
     for (int i = 0; i < positions3D.size(); i++){
-        if(positions3D[i]){ //If the position wasn't an accidental 0,0,0
+        if(positions3D[i][2]){ //If the position wasn't an accidental 0,0,0
             data.uncenteredPositions.push_back(positions3D[i]);
             data.timestamps.push_back(timeStampsVec[i]);
         }

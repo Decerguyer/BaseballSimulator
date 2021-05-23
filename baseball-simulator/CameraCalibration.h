@@ -32,14 +32,14 @@ public:
         return translationMatrix;
     }
     cv::Mat convertPosVecMat(std::vector<float> unconverted){
-        cv::Mat converted = (cv::Mat_<double>(3,1) << unconverted[0],unconverted[1],unconverted[2]);
+        cv::Mat converted = (cv::Mat_<double>(3,1) <<double(unconverted[0]),double(unconverted[1]),double(unconverted[2]));
         return converted;
     }
-    cv::Mat convertPosMatVec(cv::Mat unconverted){
+    std::vector<float> convertPosMatVec(cv::Mat unconverted){
         std::vector<float> converted;
-        converted.push_back(uncoverted.at<double>(0));
-        converted.push_back(uncoverted.at<double>(1));
-        converted.push_back(uncoverted.at<double>(2));
+        converted.push_back(float(unconverted.at<double>(0)));
+        converted.push_back(float(unconverted.at<double>(1)));
+        converted.push_back(float(unconverted.at<double>(2)));
         return converted;
     }
     cv::Mat centerPointAdjust(cv::Mat point3D){
@@ -86,11 +86,19 @@ private:
     */
     
     //Yoni Hallway Cedar
-    ///*
+    /*
     int rows = 3;
     int columns = 3;
     int CHECKERBOARD[2] = {columns, rows};
     float squareSize = 104.775;
+    */
+
+    //Poster Board
+    ///*
+    int rows = 3;
+    int columns = 3;
+    int CHECKERBOARD[2] = {columns, rows};
+    float squareSize = 152.4;
     //*/
     void createCalibration(){
         camera.setDefaultSettings();
