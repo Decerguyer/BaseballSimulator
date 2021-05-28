@@ -203,13 +203,13 @@ class UKFB:
             #Convert meters to feet
             #Add 60-mound_offset to the Y value (was Z)
             offset = 60-mound_offset
-            position_set = [(position[0]*-1)*0.3048, (position[2]*-1)*0.3048+offset, (position[1]*-1)*0.3048]
+            position_set = [(position[0]*-1)/0.3048, (position[2]*-1)/0.3048+offset, (position[1]*-1)/0.3048]
             zs.append(position_set)
 
         r = []
         for error in error_dictionary:
             #Scale down error to feet
-            error_set = [(error[0]*-1)*0.3048, (error[2]*-1)*0.3048, (error[1]*-1)*0.3048]
+            error_set = [(error[0]*-1)/0.3048, (error[2]*-1)/0.3048, (error[1]*-1)/0.3048]
             r.append(error_set)
 
         time_stamps = []
