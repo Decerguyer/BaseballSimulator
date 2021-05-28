@@ -179,6 +179,7 @@ class UKFB:
             self.var = 0
             self.ukf.R = np.diag([(self.error[self.counter][0] / 3) ** 2, (self.error[self.counter][1] / 3) ** 2, (self.error[self.counter][2]/3) ** 2])
             self.ukf.update(z)
+            print("Updated")
             self.xs.append(self.ukf.x.copy())
             self.ps.append(self.ukf.P.copy())
             self.counter += 1
@@ -213,8 +214,9 @@ class UKFB:
             r.append(error_set)
 
         time_stamps = []
+        first_time_stamp = time_stamp_dict[0]
         for timestamp in time_stamp_dict:
-            time_stamps.append(timestamp)
+            time_stamps.append(timestamp-first_time_stamp)
 
         spin = [spin_dictionary[0], spin_dictionary[1], spin_dictionary[2]]
 
