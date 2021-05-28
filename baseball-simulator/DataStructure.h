@@ -45,9 +45,23 @@ struct DataStructure{
         }
     }
     
+    void setError(){
+        for(int i = 0; i < positions.size(); i++){
+            std::vector<float> errorSet;
+            errorSet.push_back(positions[i][0]*0.02);
+            errorSet.push_back(positions[i][1]*0.02);
+            errorSet.push_back(positions[i][2]*0.02);
+            uncenteredError.push_back(errorSet);
+        }
+    }
     void centerPositions(CameraCalibration calib){
         for(int i=0;i<uncenteredPositions.size();i++){
             untransformedPositions.push_back(calib.convertPosMatVec(calib.centerPointAdjust(calib.convertPosVecMat(uncenteredPositions[i]))));
+        }
+    }
+    void centerError(CameraCalibration calib){
+        for(int i=0;i<uncenteredError.size();i++){
+            untransformedError.push_back(calib.convertPosMatVec(calib.centerPointAdjust(calib.convertPosVecMat(uncenteredError[i]))));
         }
     }
     void transformPositions(CameraCalibration calib){
@@ -55,13 +69,9 @@ struct DataStructure{
             positions.push_back(calib.convertPosMatVec(calib.transformPoint(calib.convertPosVecMat(untransformedPositions[i]))));
         }
     }
-    void setError(){
-        for(int i = 0; i < positions.size(); i++){
-            std::vector<float> errorSet;
-            errorSet.push_back(0.01);
-            errorSet.push_back(0.01);
-            errorSet.push_back(0.01);
-            error.push_back(errorSet);
+    void transformError(CameraCalibration calib){
+        for(int i=0;i<untransformedPositions.size();i++){
+            error.push_back(calib.convertPosMatVec(calib.transformPoint(calib.convertPosVecMat(untransformedError[i]))));
         }
     }
  

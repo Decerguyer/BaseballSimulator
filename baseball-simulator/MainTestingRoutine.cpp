@@ -39,7 +39,10 @@ int main(){
     //****************************Camera Initialization***************************//
     Camera cam;
     cam.enableStreams(848, 480, 90);
-    cam.setExposure(15000); //Add method to change this from hard coded value?
+    int exposure;
+    std::cout << "Enter Exposure Value: ";
+    std::cin >> exposure;
+    cam.setExposure(exposure); //Add method to change this from hard coded value?
     
     //**************************Threshold Initialization*************************//
     ThresholdFilter threshFilter(cam);
@@ -95,13 +98,13 @@ int main(){
     }
     
     //***********************Position Error Processing Block**********************//
-    
-    data.centerPositions(calibrationParameters);
+    data.setError();
     
     //*********************Position&Error Transformation Block********************//
-    
+    data.centerPositions(calibrationParameters);
+    data.centerError(calibrationParameters);
     data.transformPositions(calibrationParameters);
-    data.setError();
+    data.transformError(calibrationParameters);
     
     //****************************Spin Block***************************//
     
