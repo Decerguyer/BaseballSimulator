@@ -209,14 +209,16 @@ class UKFB:
 
         r = []
         for error in error_dictionary:
-            #Scale down error to feet
+            # Z becomes Y and is inverted. Y becomes Z and is inverted. X is inverted
+            # Convert meters to feet
             error_set = [(error[0]*-1)/0.3048, (error[2]*-1)/0.3048, (error[1]*-1)/0.3048]
             r.append(error_set)
 
         time_stamps = []
         first_time_stamp = time_stamp_dict[0]
         for timestamp in time_stamp_dict:
-            time_stamps.append(timestamp-first_time_stamp)
+            #Offset all the timestamps to the first
+            time_stamps.append((timestamp-first_time_stamp)/1000000)
 
         spin = [spin_dictionary[0], spin_dictionary[1], spin_dictionary[2]]
 
