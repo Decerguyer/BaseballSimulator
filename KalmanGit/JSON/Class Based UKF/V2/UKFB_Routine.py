@@ -3,13 +3,16 @@ from UKFB import UKFB
 from BaseballPhysicalModel import BaseballPhysicalModel
 from JSONControl import JSONControl
 
-http_handler = HTTPHandler("owen gay")
+
+mount_offset = float(input("Enter the distance from the mount to the Target in feet: "))
+
+http_handler = HTTPHandler("JEYSolutions")
 json_data = http_handler.get_most_recent_pitch()
 
 print(json_data)
-print(json_data["positions"])
-'''
-UKF = UKFB(json_data)
+#print(json_data["positions"])
+
+UKF = UKFB(json_data, mount_offset)
 UKF.control_loop()
 kalman_output = UKF.output_dict()
 
@@ -19,4 +22,3 @@ PM.print_output()
 
 json_manager = JSONControl()
 json_manager.write_output_json("OutputFile.json", PM.positionVector)
-'''

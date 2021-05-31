@@ -64,7 +64,7 @@ deque
 cmath
 -
 
-/home/ubuntu/BaseballSimulator/baseball-simulator/Test.cpp
+/home/ubuntu/BaseballSimulator/baseball-simulator/MainTestingRoutine.cpp
 stdio.h
 -
 iostream

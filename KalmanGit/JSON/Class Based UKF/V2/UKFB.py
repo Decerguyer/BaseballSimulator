@@ -21,7 +21,7 @@ from numpy.random import randn
 class UKFB:
 
     # Constructor, takes file path
-    def __init__(self, input_dict):
+    def __init__(self, input_dict, mound_offset):
 
         # FilterPy UKF class initializations
         self.dt = 0.0001
@@ -33,7 +33,7 @@ class UKFB:
         self.ukf.Q = Q_discrete_white_noise(dim=3, dt=self.dt, var=0.0000001, block_size=3)
 
         # Input Dictionary declarations
-        self.zs, self.timeStamps, self.spin = self.json_manager(input_dict)
+        self.zs, self.timeStamps, self.spin, self.error = self.json_manager(input_dict, mound_offset)
 
         # UKFB Control Loop Variable Declarations
         self.counter = 0
@@ -177,37 +177,57 @@ class UKFB:
             # print("update")
             print(self.var)
             self.var = 0
-
-            self.ukf.R = np.diag([(0.1 / 3) ** 2, (((55 - z[2]) * 0.01) / 3) ** 2, (0.1 / 3) ** 2])
-
-            # ukf.R = np.diag([(0.01/3)**2,(0.01/3)**2,(0.01/3)**2])
-            # print(ukf.R)
+            self.ukf.R = np.diag([(self.error[self.counter][0] / 3) ** 2, (self.error[self.counter][1] / 3) ** 2, (self.error[self.counter][2]/3) ** 2])
             self.ukf.update(z)
+            print("Updated")
             self.xs.append(self.ukf.x.copy())
             self.ps.append(self.ukf.P.copy())
-            # print(ukf.x)
-            # print(counter)
             self.counter += 1
 
     @staticmethod
-    def json_manager(input_dict: dict):
+    def json_manager(input_dict: dict, mound_offset):
         """
         :param input_dict: The JSON Dictionary returned from the Generic JSON Control class
         :type input_dict: dict
+        :param mound_offset: distance from mound to target
+        :type mound_offset: float
         """
-        data_dictionary = input_dict["positions"]
+        position_dictionary = input_dict["positions"]
         spin_dictionary = input_dict["spin"]
-        pitcher = input_dict["pitcherId"]
+        error_dictionary = input_dict["error"]
+        pitcher = input_dict["pitcher_id"]
+        time_stamp_dict = input_dict["timestamps"]
 
         zs = []
-        time_stamps = []
-        for position in data_dictionary:
-            position_set = [position["x"], position["y"], position["z"]]
+        for position in position_dictionary:
+            #Z becomes Y and is inverted. Y becomes Z and is inverted. X is inverted
+            #Convert meters to feet
+            #Add 60-mound_offset to the Y value (was Z)
+            offset = 60-mound_offset
+            position_set = [(position[0]*-1)/0.3048, (position[2]*-1)/0.3048+offset, (position[1]*-1)/0.3048]
             zs.append(position_set)
-            time_stamps.append(position["timestamp"])
 
-        spin = [spin_dictionary["x"], spin_dictionary["y"], spin_dictionary["z"]]
-        return zs, time_stamps, spin
+        r = []
+        for error in error_dictionary:
+            # Z becomes Y and is inverted. Y becomes Z and is inverted. X is inverted
+            # Convert meters to feet
+            error_set = [(error[0]*-1)/0.3048, (error[2]*-1)/0.3048, (error[1]*-1)/0.3048]
+            r.append(error_set)
+
+        time_stamps = []
+        first_time_stamp = time_stamp_dict[0]
+        for timestamp in time_stamp_dict:
+            #Offset all the timestamps to the first
+            time_stamps.append((timestamp-first_time_stamp)/1000000)
+
+        spin = [spin_dictionary[0], spin_dictionary[1], spin_dictionary[2]]
+
+        print(zs)
+        print(time_stamps)
+        print(spin)
+        print(r)
+
+        return zs, time_stamps, spin, r
 
     def print_output(self):
         print(self.xs[-1])
