@@ -27,10 +27,10 @@ int main(){
   //****************************Camera Initialization***************************//
     Camera cam;
     cam.enableStreams(848, 480, 90);
-    cam.setExposure(10000); //Add method to change this from hard coded value?
     
     //**************************Threshold Initialization*************************//
     ThresholdFilter threshFilter(cam);
+    cam.setExposure(300); //Add method to change this from hard coded value?
     
     //**************************Tracker Initialization*************************//
     Tracker trk(848, 480, cam.getIntrinsics(), threshFilter);

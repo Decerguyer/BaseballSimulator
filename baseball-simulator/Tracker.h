@@ -7,14 +7,14 @@
 #include <deque>
 #include <cmath>
 #include "ThresholdFilter.h"
+#include "ImageReconditioning.h"
 
 class Tracker{
 public:
     Tracker(int width, int height, struct rs2_intrinsics intrinsics, ThresholdFilter &threshFilter)
     : intrin(intrinsics), threshFilter(threshFilter)
     {
-        locPred = LocPredictor(width, height);
-        Clahe = cv::createCLAHE();
+        locPred = LocPredictor(width, height);        
     }
     
     coord2D track(ImageData &imgData){
@@ -65,7 +65,18 @@ public:
     
     coord2D findBallFromIR(ImageData &imgData, cv::Vec3f ballCircleDepth, coord2D ballCoordDepth){
         imgData.irMatCropped = cropIR(imgData, ballCircleDepth, 0.5);
-        //cv::equalizeHist(imgData.irMatCropped, imgData.irMatCropped);
+
+        //imgRecondition.medianBlur(imgData.irMatCropped, imgData.irMatCropped, 3);
+        //imgRecondition.clahe(imgData.irMatCropped, imgData.irMatCropped, 5);
+        //imgRecondition.contrast(imgData.irMatCropped, imgData.irMatCropped, 5);
+        //imgRecondition.sharpen(imgData.irMatCropped, imgData.irMatCropped);
+        imgRecondition.equalizeHist(imgData.irMatCropped, imgData.irMatCropped);
+        //imgRecondition.clahe(imgData.irMatCropped, imgData.irMatCropped, 30);
+        //imgRecondition.adaptiveThreshold(imgData.irMatCropped, imgData.irMatCropped, 41);
+        //imgRecondition.canny(imgData.irMatCropped, imgData.irMatCropped, 25, 50);
+
+
+
 
         int radius = locPred.radiusPred(ballCoordDepth, &intrin);
 
@@ -111,9 +122,9 @@ private:
     
     LocPredictor locPred;
 
-    cv::Ptr<cv::CLAHE> Clahe;
+    ThresholdFilter &threshFilter;
 
-    ThresholdFilter threshFilter;
+    ImageReconditioning imgRecondition;
 
     
     
@@ -126,10 +137,10 @@ private:
         if (minRadius < 5)
             minRadius = 5;
         int maxRadius = std::ceil(prevRadius+prevRadius*error);
-        if (maxRadius > 40 || maxRadius == 0)
-            maxRadius = 40;
+        if (maxRadius > 60 || maxRadius == 0)
+            maxRadius = 60;
 
-        cv::HoughCircles(imgData.depthVisMatCropped, coords, cv::HOUGH_GRADIENT, 1.6, 4000, 50, 17, minRadius, maxRadius);
+        cv::HoughCircles(imgData.depthVisMatCropped, coords, cv::HOUGH_GRADIENT, 1.5, 4000, 50, 15, minRadius, maxRadius);
         
         if (!coords.empty()){
             return coords[0];
@@ -137,7 +148,7 @@ private:
         else{
             imgData.depthVisMatCropped = imgData.depthVisMat;
             //std::cout << "Resorted to entire depth image because couldn't find from cropped version/n";
-            cv::HoughCircles(imgData.depthVisMatCropped, coords, cv::HOUGH_GRADIENT, 1.6, 4000, 50, 17, minRadius, maxRadius);
+            cv::HoughCircles(imgData.depthVisMatCropped, coords, cv::HOUGH_GRADIENT, 1.5, 4000, 50, 15, minRadius, maxRadius);
             if (!coords.empty()){
                 return coords[0];
             }
@@ -156,7 +167,8 @@ private:
         std::cout << minRadius << " < Radius < " << maxRadius << " and rad = " << radius << std::endl;
         
         //Should eventually refine parameters again
-        cv::HoughCircles(imgData.irMatCropped, coords, cv::HOUGH_GRADIENT, 1.6, 4000, 50, 5, minRadius, maxRadius);
+        double param2 = 6;
+        cv::HoughCircles(imgData.irMatCropped, coords, cv::HOUGH_GRADIENT, 1.1, 4000, 100, param2, minRadius, maxRadius);
         
         if (!coords.empty()){
             std::cout << "Radius Through depth hough is " << coords[0][2] << std::endl;
@@ -164,7 +176,7 @@ private:
         }
         else if (locPred.isSecondMeas()){
             imgData.irMatCropped = cropFromPred(imgData.getIRMat(), imgData.getTimeStamp());
-            cv::HoughCircles(imgData.irMatCropped, coords, cv::HOUGH_GRADIENT, 1.6, 4000, 50, 5, minRadius, maxRadius);
+            cv::HoughCircles(imgData.irMatCropped, coords, cv::HOUGH_GRADIENT, 1.1, 4000, 100, param2, minRadius, maxRadius);
             if (!coords.empty()){
                 std::cout << "Radius Through Crop Prediction is " << coords[0][2] << std::endl;
                 return coords[0];
@@ -208,13 +220,6 @@ private:
         float meanDepth = numMeas ? (sum / numMeas) : 0;
         
         return meanDepth;
-    }
-
-    cv::Mat clahe(cv::Mat src, int clipLimit = 4){ //Constrast Limited Adaptive Histogram Equalization
-    	cv::Mat dst = src;
-        Clahe->setClipLimit(clipLimit);
-    	Clahe->apply(src,dst);
-        return dst;
     }
 };
 
