@@ -166,7 +166,7 @@ class UKFB:
         for z in self.zs:
             time_stamp = self.timeStamps[self.counter]
             # aprint(timeStamp)
-            # print("Predict")
+            print("Predict")
             while self.time[0] <= time_stamp:
                 self.ukf.predict()
                 self.time[0] += self.dt

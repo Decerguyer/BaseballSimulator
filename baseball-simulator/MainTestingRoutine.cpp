@@ -114,8 +114,8 @@ int main(){
         //*********************Position&Error Transformation Block********************//
         data.centerPositions(calibrationParameters);
         std::cout << "Center Positions good\n";
-        data.centerError(calibrationParameters);
-        std::cout << "Center error good\n";
+        //data.centerError(calibrationParameters);
+        //std::cout << "Center error good\n";
         data.transformPositions(calibrationParameters);
         std::cout << "transform positions good\n";
         data.transformError(calibrationParameters);
