@@ -50,6 +50,10 @@ public:
         cv::Mat transformedPoint = pointTransform(adjustedPoint3D);
         return transformedPoint;
     }
+    cv::Mat transformError(){
+        cv::Mat transformedError = errorTransform(adjustedPoint3D);
+        return transformedError;
+    }
     void writeMat(cv::Mat mat, std::string fileName){
         fileName.append(".xml");
         cv::FileStorage file(fileName, cv::FileStorage::WRITE);
