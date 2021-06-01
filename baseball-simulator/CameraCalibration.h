@@ -247,6 +247,13 @@ private:
         cv::Mat transformedPoint = (cv::Mat_<double>(3,1) << transformedPointmm.at<double>(0)/1000,transformedPointmm.at<double>(1)/1000,transformedPointmm.at<double>(2)/1000); //Converting m to mm
         return transformedPoint;
     }
+    //Only rotates doesn't translate
+    cv::Mat errorTransform(cv::Mat untransformedPoint){
+        cv::Mat untransformedPointmm = (cv::Mat_<double>(3,1) << untransformedPoint.at<double>(0)*1000,untransformedPoint.at<double>(1)*1000,untransformedPoint.at<double>(2)*1000); //Converting m to mm
+        cv::Mat transformedPointmm=rotationMatrix*(untransformedPointmm);
+        cv::Mat transformedPoint = (cv::Mat_<double>(3,1) << transformedPointmm.at<double>(0)/1000,transformedPointmm.at<double>(1)/1000,transformedPointmm.at<double>(2)/1000); //Converting m to mm
+        return transformedPoint;
+    }
 
 };
 

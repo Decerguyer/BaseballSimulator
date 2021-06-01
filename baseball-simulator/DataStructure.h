@@ -82,7 +82,7 @@ struct DataStructure{
         //for(int i=0;i<untransformedError.size();i++){
         for(int i=0;i<uncenteredError.size();i++){
             //error.push_back(calib.convertPosMatVec(calib.transformPoint(calib.convertPosVecMat(untransformedError[i]))));
-            error.push_back(calib.convertPosMatVec(calib.transformPoint(calib.convertPosVecMat(uncenteredError[i]))));
+            error.push_back(calib.convertPosMatVec(calib.transformError(calib.convertPosVecMat(uncenteredError[i]))));
             for (int k = 0; k < 3; k++){
                 std::cout << error[i][k] << " ";
             }
