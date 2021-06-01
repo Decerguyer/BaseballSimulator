@@ -70,7 +70,7 @@ public:
         //imgRecondition.clahe(imgData.irMatCropped, imgData.irMatCropped, 5);
         //imgRecondition.contrast(imgData.irMatCropped, imgData.irMatCropped, 5);
         //imgRecondition.sharpen(imgData.irMatCropped, imgData.irMatCropped);
-        imgRecondition.equalizeHist(imgData.irMatCropped, imgData.irMatCropped);
+        //imgRecondition.equalizeHist(imgData.irMatCropped, imgData.irMatCropped);
         //imgRecondition.clahe(imgData.irMatCropped, imgData.irMatCropped, 30);
         //imgRecondition.adaptiveThreshold(imgData.irMatCropped, imgData.irMatCropped, 41);
         //imgRecondition.canny(imgData.irMatCropped, imgData.irMatCropped, 25, 50);

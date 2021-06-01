@@ -30,7 +30,7 @@ int main(){
     
     //**************************Threshold Initialization*************************//
     ThresholdFilter threshFilter(cam);
-    cam.setExposure(300); //Add method to change this from hard coded value?
+    cam.setExposure(50); //Add method to change this from hard coded value?
     
     //**************************Tracker Initialization*************************//
     Tracker trk(848, 480, cam.getIntrinsics(), threshFilter);

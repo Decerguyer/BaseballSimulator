@@ -46,7 +46,7 @@ public:
     
     void setDefaultSettings(){
         depthSensor.set_option(RS2_OPTION_ENABLE_AUTO_EXPOSURE, true);
-        depthSensor.set_option(RS2_OPTION_GAIN, 16.f);
+        //depthSensor.set_option(RS2_OPTION_GAIN, 16.f);
         depthSensor.set_option(RS2_OPTION_EMITTER_ENABLED, true);
         depthSensor.set_option(RS2_OPTION_EMITTER_ON_OFF, false);
         enableDepthStream(848, 480, 90);
