@@ -180,6 +180,7 @@ class UKFB:
             self.ukf.R = np.diag([(self.error[self.counter][0] / 3) ** 2, (self.error[self.counter][1] / 3) ** 2, (self.error[self.counter][2]/3) ** 2])
             self.ukf.update(z)
             print("Updated")
+            print(self.xs[-1])
             self.xs.append(self.ukf.x.copy())
             self.ps.append(self.ukf.P.copy())
             self.counter += 1

@@ -110,7 +110,7 @@ class BaseballPhysicalModel:
         state = input_dict["state"]
         spin_dictionary = input_dict["spin"]
         position = [state["x"], state["y"], state["z"]]
-        velocity = [state["Vz"], state["Vy"], state["Vz"]]
+        velocity = [state["Vx"], state["Vy"], state["Vz"]]
         spin = [spin_dictionary["x"], spin_dictionary["y"], spin_dictionary["z"]]
 
         return position, velocity, spin
