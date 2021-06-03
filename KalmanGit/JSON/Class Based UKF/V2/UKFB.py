@@ -21,7 +21,7 @@ from numpy.random import randn
 class UKFB:
 
     # Constructor, takes file path
-    def __init__(self, input_dict, mound_offset):
+    def __init__(self, input_dict, mound_offset, height_offset):
 
         # FilterPy UKF class initializations
         self.dt = 0.0001
@@ -33,7 +33,7 @@ class UKFB:
         self.ukf.Q = Q_discrete_white_noise(dim=3, dt=self.dt, var=0.0000001, block_size=3)
 
         # Input Dictionary declarations
-        self.zs, self.timeStamps, self.spin, self.error = self.json_manager(input_dict, mound_offset)
+        self.zs, self.timeStamps, self.spin, self.error = self.json_manager(input_dict, mound_offset, height_offset)
 
         # UKFB Control Loop Variable Declarations
         self.counter = 0
@@ -186,12 +186,14 @@ class UKFB:
             self.counter += 1
 
     @staticmethod
-    def json_manager(input_dict: dict, mound_offset):
+    def json_manager(input_dict: dict, mound_offset, height_offset):
         """
         :param input_dict: The JSON Dictionary returned from the Generic JSON Control class
         :type input_dict: dict
         :param mound_offset: distance from mound to target
         :type mound_offset: float
+        :param height_offset: Height of inner top left corner of target above the ground
+        :type height_offset: float
         """
         position_dictionary = input_dict["positions"]
         spin_dictionary = input_dict["spin"]
@@ -205,7 +207,7 @@ class UKFB:
             #Convert meters to feet
             #Add 60-mound_offset to the Y value (was Z)
             offset = 60-mound_offset
-            position_set = [(position[0]*-1)/0.3048, (position[2]*-1)/0.3048+offset, (position[1]*-1)/0.3048]
+            position_set = [(position[0]*-1)/0.3048, (position[2]*-1)/0.3048+offset, (position[1]*-1)/0.3048+height_offset]
             zs.append(position_set)
 
         r = []

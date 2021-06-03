@@ -60,8 +60,8 @@ class BaseballPhysicalModel:
         t = 0.
         dt = 0.0001
         tau = 10000  # Spin decay constant. Set large so spin doesn't decay much
-        while (self.positionVector[-1][1] > 1.4 and self.positionVector[-1][
-            2] > 0.4):  # Run trajectory while the ball is front of home plate and the ball is 4.8 inches above the ground
+        # Run trajectory while the ball is front of home plate and the ball is 4.8 inches above the ground
+        while (self.positionVector[-1][1] > 1.4 and self.positionVector[-1][2] > 0.4):
 
             vw = math.sqrt((velocityVector[-1][0] - vxw) ** 2 + (velocityVector[-1][1] - vyw) ** 2 + (
             velocityVector[-1][2]) ** 2)  # Wind adjusted Velocity

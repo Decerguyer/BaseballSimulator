@@ -5,6 +5,7 @@ from JSONControl import JSONControl
 
 
 mount_offset = float(input("Enter the distance from the mount to the Target in feet: "))
+height_offset = float(input("Enter the height of the inner top right corner relative to the ground: "))
 
 http_handler = HTTPHandler("JEYSolutions")
 json_data = http_handler.get_most_recent_pitch()
@@ -12,7 +13,7 @@ json_data = http_handler.get_most_recent_pitch()
 print(json_data)
 #print(json_data["positions"])
 
-UKF = UKFB(json_data, mount_offset)
+UKF = UKFB(json_data, mount_offset, height_offset)
 UKF.control_loop()
 kalman_output = UKF.output_dict()
 
