@@ -21,7 +21,7 @@ from numpy.random import randn
 class UKFB:
 
     # Constructor, takes file path
-    def __init__(self, input_dict, mound_offset, height_offset):
+    def __init__(self, input_dict, mound_offset=0, height_offset=0):
 
         # FilterPy UKF class initializations
         self.dt = 0.0001
@@ -186,7 +186,7 @@ class UKFB:
             self.counter += 1
 
     @staticmethod
-    def json_manager(input_dict: dict, mound_offset, height_offset):
+    def json_manager(input_dict: dict, mound_offset=0, height_offset=0):
         """
         :param input_dict: The JSON Dictionary returned from the Generic JSON Control class
         :type input_dict: dict
