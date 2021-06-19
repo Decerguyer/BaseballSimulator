@@ -57,37 +57,47 @@ struct DataStructure{
 
         std::cout << "\n\n\n\n\n\n\n";
     }
-    void centerPositions(CameraCalibration calib){
+    void centerPositions(){
         for(int i=0;i<uncenteredPositions.size();i++){
-            untransformedPositions.push_back(calib.convertPosMatVec(calib.centerPointAdjust(calib.convertPosVecMat(uncenteredPositions[i]))));
+            untransformedPositions.push_back(geometricCenterAdjuster(uncenteredPositions[i]));
         }
     }
-    /*
-    void centerError(CameraCalibration calib){
-        for(int i=0;i<uncenteredError.size();i++){
-            untransformedError.push_back(calib.convertPosMatVec(calib.centerPointAdjust(calib.convertPosVecMat(uncenteredError[i]))));
-            for (int k = 0; k < 3; k++){
-                std::cout << untransformedError[i][k] << " ";
-            }
-            std::cout << "\n\n\n\n\n";
-        }
-    }
-    */
-    void transformPositions(CameraCalibration calib){
+    void transformPositions(D400 camera){
         for(int i=0;i<untransformedPositions.size();i++){
-            positions.push_back(calib.convertPosMatVec(calib.transformPoint(calib.convertPosVecMat(untransformedPositions[i]))));
+            positions.push_back(camera.transformPoint(untransformedPositions[i]));
         }
     }
-    void transformError(CameraCalibration calib){
+    void transformError(D400 camera){
         //for(int i=0;i<untransformedError.size();i++){
         for(int i=0;i<uncenteredError.size();i++){
-            //error.push_back(calib.convertPosMatVec(calib.transformPoint(calib.convertPosVecMat(untransformedError[i]))));
-            error.push_back(calib.convertPosMatVec(calib.transformError(calib.convertPosVecMat(uncenteredError[i]))));
+            error.push_back(camera.transformError(uncenteredError[i]));
+            /*
             for (int k = 0; k < 3; k++){
                 std::cout << error[i][k] << " ";
             }
-            std::cout << "\n\n\n\n\n";
+            std::cout << "\n\n\n\n\n";*/
         }
+    }
+    
+    std::vector<float> geometricCenterAdjuster(std::vector<float> point3D){
+        
+        double x = point3D[0];
+        double y = point3D[1];
+        double z = point3D[2];
+
+        double r = BASEBALL_RADIUS; //Baseball radius in meters approximation
+
+        double _x, _y, _z;
+
+        _x = (x*std::sqrt(x*x + y*y + z*z + r))/std::sqrt(x*x + y*y + z*z); //Similar Triangles
+        _y = (y*(x*x + y*y + z*z + r))/(x*x + y*y + z*z);
+        _z = (z*(x*x + y*y + z*z + r))/(x*x + y*y + z*z);
+
+        std::vector<float> adjustedPoint;
+        adjustedPoint.push_back(_x);
+        adjustedPoint.push_back(_y);
+        adjustedPoint.push_back(_z);
+        return adjustedPoint;
     }
  
 };
