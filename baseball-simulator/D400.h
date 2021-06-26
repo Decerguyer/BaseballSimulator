@@ -55,7 +55,17 @@ public:
     
     void setCalibrationSettings(){
         depthSensor.setDefaultSettings();
-        camera.disableEmitter();
+        depthSensor.disableEmitter();
+    }
+    
+    void calibrate(){
+        std::deque<ImageData> calibFrameSets = recordImage(NUM_CALIBRATION_FRAMES);
+        std::deque<ImageData> calibrationFrames;
+        while(!calibFrameSets.empty()){
+            calibrationFrames.emplace_back(calibFrameSets.front());
+            calibFrameSets.pop_front();
+        }
+        createCalibration(calibrationFrames);
     }
     /*Takes specified number of frames and
      returns a deque of the collected frames
@@ -123,6 +133,7 @@ private:
     bool isStreaming = false;
     
     struct rs2_intrinsics intrin;
+
 };
 
 #endif /* D400_h */

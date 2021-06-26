@@ -14,10 +14,10 @@
 #define BASEBALL_RADIUS 0.036888
 //Baseball radius in meters
 
-#define numCalibrationFrames 100
+#define NUM_CALIBRATION_FRAMES 100
 //Number of frames per camera for chessboard calibration
 
-#define squareSize 152.4
+#define SQUARE_SIZE 152.4
 //Length of singular square on chessboard in mm
 
 

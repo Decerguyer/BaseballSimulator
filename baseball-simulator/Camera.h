@@ -72,7 +72,7 @@ protected:
         std::vector<cv::Point3f> objp; // Defining the world coordinates for 3D points
         for(int i=0; i<CHECKERBOARD[1]; i++){
             for(int j=0; j<CHECKERBOARD[0]; j++)
-                objp.push_back(cv::Point3f(j*squareSize,i*squareSize,0));
+                objp.push_back(cv::Point3f(j*SQUARE_SIZE,i*SQUARE_SIZE,0));
         }
         
         // vector to store the pixel coordinates of detected checker board corners
@@ -133,8 +133,8 @@ protected:
             rotationMatrix += rotationInverse;
             translationMatrix += T;
         }
-        rotationMatrix /= numCalibrationFrames;
-        translationMatrix /= numCalibrationFrames;
+        rotationMatrix /= NUM_CALIBRATION_FRAMES;
+        translationMatrix /= NUM_CALIBRATION_FRAMES;
         //Delete Block Below
         cv::imshow("Image",frames[0].getIRMat());
         cv::waitKey(0);
