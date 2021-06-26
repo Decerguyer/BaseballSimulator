@@ -1,7 +1,0 @@
-/home/ubuntu/BaseballSimulator/baseball-simulator/CMakeFiles/install/strip.dir
-/home/ubuntu/BaseballSimulator/baseball-simulator/CMakeFiles/install/local.dir
-/home/ubuntu/BaseballSimulator/baseball-simulator/CMakeFiles/install.dir
-/home/ubuntu/BaseballSimulator/baseball-simulator/CMakeFiles/list_install_components.dir
-/home/ubuntu/BaseballSimulator/baseball-simulator/CMakeFiles/rebuild_cache.dir
-/home/ubuntu/BaseballSimulator/baseball-simulator/CMakeFiles/edit_cache.dir
-/home/ubuntu/BaseballSimulator/baseball-simulator/CMakeFiles/rs-baseball-simulator.dir
