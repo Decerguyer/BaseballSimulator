@@ -8,23 +8,8 @@
 #ifndef BaseballSimulator_h
 #define BaseballSimulator_h
 
-#include <deque>
-#include <cmath>
+#include "V2.h"
 
-#define BASEBALL_RADIUS 0.036888
-
-
-struct coord2D{
-    float x;
-    float y;
-    float depth;
-};
-
-struct coord3D{
-    float x;
-    float y;
-    float z;
-};
 
 #endif /* BaseballSimulator_h */
 

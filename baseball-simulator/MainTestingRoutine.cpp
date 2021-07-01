@@ -16,7 +16,8 @@
 #include "BaseballSimulator.h"
 #include "Camera.h"
 #include "ImageData.h"
-#include "CameraCalibration.h"
+#include "Camera.h"
+#include "D400.h"
 #include "DataStructure.h"
 #include "LocPredictor.h"
 #include "Tracker.h"
@@ -29,7 +30,7 @@
 int main(){
 
     //****************************Camera Calibration***************************//
-    CameraCalibration calibrationParameters;
+    Camera calibrationParameters;
     cv::Mat rotationMatrix,translationMatrix;
     rotationMatrix = calibrationParameters.getRotationMatrix();
     translationMatrix = calibrationParameters.getTranslationMatrix();
@@ -44,7 +45,7 @@ int main(){
             break;
 
         //****************************Camera Initialization***************************//
-        Camera cam;
+        D400 cam;
         cam.enableStreams(848, 480, 90);
         int exposure;
         std::cout << "Enter Exposure Value: ";
