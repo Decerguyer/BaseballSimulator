@@ -8,6 +8,9 @@
 #ifndef V2_h
 #define V2_h
 
+#include <librealsense2/rs.hpp> // Include RealSense Cross Platform API
+#include <librealsense2/rsutil.h> // Include RealSense Cross Platform API
+#include <opencv2/opencv.hpp>
 #include <deque>
 #include <cmath>
 
@@ -32,6 +35,17 @@ struct coord3D{
     float y;
     float z;
 };
+
+cv::Mat rsDepthToCVMat(rs2::depth_frame depthFrame){
+    rs2::video_stream_profile prof = depthFrame.get_profile().as<rs2::video_stream_profile>();
+    cv::Mat depth_metric_fp;
+    cv::Mat depth_raw = cv::Mat(prof.height(), prof.width(), CV_16SC1, const_cast<void*>(depthFrame.get_data()));
+    depth_raw.convertTo(depth_metric_fp, CV_32FC1);
+    depth_metric_fp *= depthFrame.get_units();
+    
+    
+    return depth_metric_fp;
+}
 
 #endif /* V2_h */
 

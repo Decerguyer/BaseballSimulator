@@ -22,6 +22,9 @@ public:
     void calibrate();
     std::deque<ImageData> recordImageData(int numFrames,int numThrow = 20);
     struct rs2_intrinsics getIntrinsics();
+    rs2::frameset getFrame();
+    void startStream(int numFrames = 20);
+    void endStream(); 
     
 private:
     rs2::config cfg;
@@ -30,9 +33,6 @@ private:
     bool isStreaming = false;
     struct rs2_intrinsics intrin;
     std::deque<rs2::frameset> recordRSFrames(int numFrames,int numThrow = 20);
-    rs2::frameset getFrame();
-    void startStream(int numFrames = 20);
-    void endStream(); 
     void throwFrames(int numFrames);
 
 };

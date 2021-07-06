@@ -1,7 +1,6 @@
 make --dry-run --always-make --keep-going --print-directory
 make: Entering directory `/Users/yonatanarieh/BaseballSimulator/baseball-simulator'
 /usr/bin/cmake -S/home/ubuntu/BaseballSimulator/baseball-simulator -B/home/ubuntu/BaseballSimulator/baseball-simulator --check-build-system CMakeFiles/Makefile.cmake 0
- 
 /usr/bin/cmake -E cmake_progress_start /home/ubuntu/BaseballSimulator/baseball-simulator/CMakeFiles /home/ubuntu/BaseballSimulator/baseball-simulator/CMakeFiles/progress.marks
 /Applications/Xcode.app/Contents/Developer/usr/bin/make -f CMakeFiles/Makefile2 all
  
@@ -16,7 +15,7 @@ make[1]: *** No rule to make target `all'.
  
 make[1]: Leaving directory `/Users/yonatanarieh/BaseballSimulator/baseball-simulator'
  
-make: Leaving directory `/Users/yonatanarieh/BaseballSimulator/baseball-simulator'
- 
 make: *** [all] Error 2
+ 
+make: Leaving directory `/Users/yonatanarieh/BaseballSimulator/baseball-simulator'
  
