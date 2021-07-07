@@ -16,6 +16,7 @@
 #include <opencv2/imgproc/imgproc.hpp>
 #include <string>
 #include <climits>
+#include "ImageData.h"
 #include "V2.h"
 //#include "BaseballSimulator.h" 
 

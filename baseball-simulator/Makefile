@@ -169,32 +169,356 @@ rs-baseball-simulator/fast:
 	$(MAKE) -f CMakeFiles/rs-baseball-simulator.dir/build.make CMakeFiles/rs-baseball-simulator.dir/build
 .PHONY : rs-baseball-simulator/fast
 
-MainTestingRoutine.o: MainTestingRoutine.cpp.o
+BaseballSimulator.o: BaseballSimulator.cpp.o
 
-.PHONY : MainTestingRoutine.o
+.PHONY : BaseballSimulator.o
 
 # target to build an object file
-MainTestingRoutine.cpp.o:
-	$(MAKE) -f CMakeFiles/rs-baseball-simulator.dir/build.make CMakeFiles/rs-baseball-simulator.dir/MainTestingRoutine.cpp.o
-.PHONY : MainTestingRoutine.cpp.o
+BaseballSimulator.cpp.o:
+	$(MAKE) -f CMakeFiles/rs-baseball-simulator.dir/build.make CMakeFiles/rs-baseball-simulator.dir/BaseballSimulator.cpp.o
+.PHONY : BaseballSimulator.cpp.o
 
-MainTestingRoutine.i: MainTestingRoutine.cpp.i
+BaseballSimulator.i: BaseballSimulator.cpp.i
 
-.PHONY : MainTestingRoutine.i
+.PHONY : BaseballSimulator.i
 
 # target to preprocess a source file
-MainTestingRoutine.cpp.i:
-	$(MAKE) -f CMakeFiles/rs-baseball-simulator.dir/build.make CMakeFiles/rs-baseball-simulator.dir/MainTestingRoutine.cpp.i
-.PHONY : MainTestingRoutine.cpp.i
+BaseballSimulator.cpp.i:
+	$(MAKE) -f CMakeFiles/rs-baseball-simulator.dir/build.make CMakeFiles/rs-baseball-simulator.dir/BaseballSimulator.cpp.i
+.PHONY : BaseballSimulator.cpp.i
 
-MainTestingRoutine.s: MainTestingRoutine.cpp.s
+BaseballSimulator.s: BaseballSimulator.cpp.s
 
-.PHONY : MainTestingRoutine.s
+.PHONY : BaseballSimulator.s
 
 # target to generate assembly for a file
-MainTestingRoutine.cpp.s:
-	$(MAKE) -f CMakeFiles/rs-baseball-simulator.dir/build.make CMakeFiles/rs-baseball-simulator.dir/MainTestingRoutine.cpp.s
-.PHONY : MainTestingRoutine.cpp.s
+BaseballSimulator.cpp.s:
+	$(MAKE) -f CMakeFiles/rs-baseball-simulator.dir/build.make CMakeFiles/rs-baseball-simulator.dir/BaseballSimulator.cpp.s
+.PHONY : BaseballSimulator.cpp.s
+
+Camera.o: Camera.cpp.o
+
+.PHONY : Camera.o
+
+# target to build an object file
+Camera.cpp.o:
+	$(MAKE) -f CMakeFiles/rs-baseball-simulator.dir/build.make CMakeFiles/rs-baseball-simulator.dir/Camera.cpp.o
+.PHONY : Camera.cpp.o
+
+Camera.i: Camera.cpp.i
+
+.PHONY : Camera.i
+
+# target to preprocess a source file
+Camera.cpp.i:
+	$(MAKE) -f CMakeFiles/rs-baseball-simulator.dir/build.make CMakeFiles/rs-baseball-simulator.dir/Camera.cpp.i
+.PHONY : Camera.cpp.i
+
+Camera.s: Camera.cpp.s
+
+.PHONY : Camera.s
+
+# target to generate assembly for a file
+Camera.cpp.s:
+	$(MAKE) -f CMakeFiles/rs-baseball-simulator.dir/build.make CMakeFiles/rs-baseball-simulator.dir/Camera.cpp.s
+.PHONY : Camera.cpp.s
+
+D400.o: D400.cpp.o
+
+.PHONY : D400.o
+
+# target to build an object file
+D400.cpp.o:
+	$(MAKE) -f CMakeFiles/rs-baseball-simulator.dir/build.make CMakeFiles/rs-baseball-simulator.dir/D400.cpp.o
+.PHONY : D400.cpp.o
+
+D400.i: D400.cpp.i
+
+.PHONY : D400.i
+
+# target to preprocess a source file
+D400.cpp.i:
+	$(MAKE) -f CMakeFiles/rs-baseball-simulator.dir/build.make CMakeFiles/rs-baseball-simulator.dir/D400.cpp.i
+.PHONY : D400.cpp.i
+
+D400.s: D400.cpp.s
+
+.PHONY : D400.s
+
+# target to generate assembly for a file
+D400.cpp.s:
+	$(MAKE) -f CMakeFiles/rs-baseball-simulator.dir/build.make CMakeFiles/rs-baseball-simulator.dir/D400.cpp.s
+.PHONY : D400.cpp.s
+
+DataStructure.o: DataStructure.cpp.o
+
+.PHONY : DataStructure.o
+
+# target to build an object file
+DataStructure.cpp.o:
+	$(MAKE) -f CMakeFiles/rs-baseball-simulator.dir/build.make CMakeFiles/rs-baseball-simulator.dir/DataStructure.cpp.o
+.PHONY : DataStructure.cpp.o
+
+DataStructure.i: DataStructure.cpp.i
+
+.PHONY : DataStructure.i
+
+# target to preprocess a source file
+DataStructure.cpp.i:
+	$(MAKE) -f CMakeFiles/rs-baseball-simulator.dir/build.make CMakeFiles/rs-baseball-simulator.dir/DataStructure.cpp.i
+.PHONY : DataStructure.cpp.i
+
+DataStructure.s: DataStructure.cpp.s
+
+.PHONY : DataStructure.s
+
+# target to generate assembly for a file
+DataStructure.cpp.s:
+	$(MAKE) -f CMakeFiles/rs-baseball-simulator.dir/build.make CMakeFiles/rs-baseball-simulator.dir/DataStructure.cpp.s
+.PHONY : DataStructure.cpp.s
+
+FeatureAnalysis.o: FeatureAnalysis.cpp.o
+
+.PHONY : FeatureAnalysis.o
+
+# target to build an object file
+FeatureAnalysis.cpp.o:
+	$(MAKE) -f CMakeFiles/rs-baseball-simulator.dir/build.make CMakeFiles/rs-baseball-simulator.dir/FeatureAnalysis.cpp.o
+.PHONY : FeatureAnalysis.cpp.o
+
+FeatureAnalysis.i: FeatureAnalysis.cpp.i
+
+.PHONY : FeatureAnalysis.i
+
+# target to preprocess a source file
+FeatureAnalysis.cpp.i:
+	$(MAKE) -f CMakeFiles/rs-baseball-simulator.dir/build.make CMakeFiles/rs-baseball-simulator.dir/FeatureAnalysis.cpp.i
+.PHONY : FeatureAnalysis.cpp.i
+
+FeatureAnalysis.s: FeatureAnalysis.cpp.s
+
+.PHONY : FeatureAnalysis.s
+
+# target to generate assembly for a file
+FeatureAnalysis.cpp.s:
+	$(MAKE) -f CMakeFiles/rs-baseball-simulator.dir/build.make CMakeFiles/rs-baseball-simulator.dir/FeatureAnalysis.cpp.s
+.PHONY : FeatureAnalysis.cpp.s
+
+ImageData.o: ImageData.cpp.o
+
+.PHONY : ImageData.o
+
+# target to build an object file
+ImageData.cpp.o:
+	$(MAKE) -f CMakeFiles/rs-baseball-simulator.dir/build.make CMakeFiles/rs-baseball-simulator.dir/ImageData.cpp.o
+.PHONY : ImageData.cpp.o
+
+ImageData.i: ImageData.cpp.i
+
+.PHONY : ImageData.i
+
+# target to preprocess a source file
+ImageData.cpp.i:
+	$(MAKE) -f CMakeFiles/rs-baseball-simulator.dir/build.make CMakeFiles/rs-baseball-simulator.dir/ImageData.cpp.i
+.PHONY : ImageData.cpp.i
+
+ImageData.s: ImageData.cpp.s
+
+.PHONY : ImageData.s
+
+# target to generate assembly for a file
+ImageData.cpp.s:
+	$(MAKE) -f CMakeFiles/rs-baseball-simulator.dir/build.make CMakeFiles/rs-baseball-simulator.dir/ImageData.cpp.s
+.PHONY : ImageData.cpp.s
+
+ImageReconditioning.o: ImageReconditioning.cpp.o
+
+.PHONY : ImageReconditioning.o
+
+# target to build an object file
+ImageReconditioning.cpp.o:
+	$(MAKE) -f CMakeFiles/rs-baseball-simulator.dir/build.make CMakeFiles/rs-baseball-simulator.dir/ImageReconditioning.cpp.o
+.PHONY : ImageReconditioning.cpp.o
+
+ImageReconditioning.i: ImageReconditioning.cpp.i
+
+.PHONY : ImageReconditioning.i
+
+# target to preprocess a source file
+ImageReconditioning.cpp.i:
+	$(MAKE) -f CMakeFiles/rs-baseball-simulator.dir/build.make CMakeFiles/rs-baseball-simulator.dir/ImageReconditioning.cpp.i
+.PHONY : ImageReconditioning.cpp.i
+
+ImageReconditioning.s: ImageReconditioning.cpp.s
+
+.PHONY : ImageReconditioning.s
+
+# target to generate assembly for a file
+ImageReconditioning.cpp.s:
+	$(MAKE) -f CMakeFiles/rs-baseball-simulator.dir/build.make CMakeFiles/rs-baseball-simulator.dir/ImageReconditioning.cpp.s
+.PHONY : ImageReconditioning.cpp.s
+
+LocPredictor.o: LocPredictor.cpp.o
+
+.PHONY : LocPredictor.o
+
+# target to build an object file
+LocPredictor.cpp.o:
+	$(MAKE) -f CMakeFiles/rs-baseball-simulator.dir/build.make CMakeFiles/rs-baseball-simulator.dir/LocPredictor.cpp.o
+.PHONY : LocPredictor.cpp.o
+
+LocPredictor.i: LocPredictor.cpp.i
+
+.PHONY : LocPredictor.i
+
+# target to preprocess a source file
+LocPredictor.cpp.i:
+	$(MAKE) -f CMakeFiles/rs-baseball-simulator.dir/build.make CMakeFiles/rs-baseball-simulator.dir/LocPredictor.cpp.i
+.PHONY : LocPredictor.cpp.i
+
+LocPredictor.s: LocPredictor.cpp.s
+
+.PHONY : LocPredictor.s
+
+# target to generate assembly for a file
+LocPredictor.cpp.s:
+	$(MAKE) -f CMakeFiles/rs-baseball-simulator.dir/build.make CMakeFiles/rs-baseball-simulator.dir/LocPredictor.cpp.s
+.PHONY : LocPredictor.cpp.s
+
+ThresholdFilter.o: ThresholdFilter.cpp.o
+
+.PHONY : ThresholdFilter.o
+
+# target to build an object file
+ThresholdFilter.cpp.o:
+	$(MAKE) -f CMakeFiles/rs-baseball-simulator.dir/build.make CMakeFiles/rs-baseball-simulator.dir/ThresholdFilter.cpp.o
+.PHONY : ThresholdFilter.cpp.o
+
+ThresholdFilter.i: ThresholdFilter.cpp.i
+
+.PHONY : ThresholdFilter.i
+
+# target to preprocess a source file
+ThresholdFilter.cpp.i:
+	$(MAKE) -f CMakeFiles/rs-baseball-simulator.dir/build.make CMakeFiles/rs-baseball-simulator.dir/ThresholdFilter.cpp.i
+.PHONY : ThresholdFilter.cpp.i
+
+ThresholdFilter.s: ThresholdFilter.cpp.s
+
+.PHONY : ThresholdFilter.s
+
+# target to generate assembly for a file
+ThresholdFilter.cpp.s:
+	$(MAKE) -f CMakeFiles/rs-baseball-simulator.dir/build.make CMakeFiles/rs-baseball-simulator.dir/ThresholdFilter.cpp.s
+.PHONY : ThresholdFilter.cpp.s
+
+Tracker.o: Tracker.cpp.o
+
+.PHONY : Tracker.o
+
+# target to build an object file
+Tracker.cpp.o:
+	$(MAKE) -f CMakeFiles/rs-baseball-simulator.dir/build.make CMakeFiles/rs-baseball-simulator.dir/Tracker.cpp.o
+.PHONY : Tracker.cpp.o
+
+Tracker.i: Tracker.cpp.i
+
+.PHONY : Tracker.i
+
+# target to preprocess a source file
+Tracker.cpp.i:
+	$(MAKE) -f CMakeFiles/rs-baseball-simulator.dir/build.make CMakeFiles/rs-baseball-simulator.dir/Tracker.cpp.i
+.PHONY : Tracker.cpp.i
+
+Tracker.s: Tracker.cpp.s
+
+.PHONY : Tracker.s
+
+# target to generate assembly for a file
+Tracker.cpp.s:
+	$(MAKE) -f CMakeFiles/rs-baseball-simulator.dir/build.make CMakeFiles/rs-baseball-simulator.dir/Tracker.cpp.s
+.PHONY : Tracker.cpp.s
+
+Visualize.o: Visualize.cpp.o
+
+.PHONY : Visualize.o
+
+# target to build an object file
+Visualize.cpp.o:
+	$(MAKE) -f CMakeFiles/rs-baseball-simulator.dir/build.make CMakeFiles/rs-baseball-simulator.dir/Visualize.cpp.o
+.PHONY : Visualize.cpp.o
+
+Visualize.i: Visualize.cpp.i
+
+.PHONY : Visualize.i
+
+# target to preprocess a source file
+Visualize.cpp.i:
+	$(MAKE) -f CMakeFiles/rs-baseball-simulator.dir/build.make CMakeFiles/rs-baseball-simulator.dir/Visualize.cpp.i
+.PHONY : Visualize.cpp.i
+
+Visualize.s: Visualize.cpp.s
+
+.PHONY : Visualize.s
+
+# target to generate assembly for a file
+Visualize.cpp.s:
+	$(MAKE) -f CMakeFiles/rs-baseball-simulator.dir/build.make CMakeFiles/rs-baseball-simulator.dir/Visualize.cpp.s
+.PHONY : Visualize.cpp.s
+
+main.o: main.cpp.o
+
+.PHONY : main.o
+
+# target to build an object file
+main.cpp.o:
+	$(MAKE) -f CMakeFiles/rs-baseball-simulator.dir/build.make CMakeFiles/rs-baseball-simulator.dir/main.cpp.o
+.PHONY : main.cpp.o
+
+main.i: main.cpp.i
+
+.PHONY : main.i
+
+# target to preprocess a source file
+main.cpp.i:
+	$(MAKE) -f CMakeFiles/rs-baseball-simulator.dir/build.make CMakeFiles/rs-baseball-simulator.dir/main.cpp.i
+.PHONY : main.cpp.i
+
+main.s: main.cpp.s
+
+.PHONY : main.s
+
+# target to generate assembly for a file
+main.cpp.s:
+	$(MAKE) -f CMakeFiles/rs-baseball-simulator.dir/build.make CMakeFiles/rs-baseball-simulator.dir/main.cpp.s
+.PHONY : main.cpp.s
+
+sendPost.o: sendPost.cpp.o
+
+.PHONY : sendPost.o
+
+# target to build an object file
+sendPost.cpp.o:
+	$(MAKE) -f CMakeFiles/rs-baseball-simulator.dir/build.make CMakeFiles/rs-baseball-simulator.dir/sendPost.cpp.o
+.PHONY : sendPost.cpp.o
+
+sendPost.i: sendPost.cpp.i
+
+.PHONY : sendPost.i
+
+# target to preprocess a source file
+sendPost.cpp.i:
+	$(MAKE) -f CMakeFiles/rs-baseball-simulator.dir/build.make CMakeFiles/rs-baseball-simulator.dir/sendPost.cpp.i
+.PHONY : sendPost.cpp.i
+
+sendPost.s: sendPost.cpp.s
+
+.PHONY : sendPost.s
+
+# target to generate assembly for a file
+sendPost.cpp.s:
+	$(MAKE) -f CMakeFiles/rs-baseball-simulator.dir/build.make CMakeFiles/rs-baseball-simulator.dir/sendPost.cpp.s
+.PHONY : sendPost.cpp.s
 
 # Help Target
 help:
@@ -209,9 +533,45 @@ help:
 	@echo "... rebuild_cache"
 	@echo "... edit_cache"
 	@echo "... rs-baseball-simulator"
-	@echo "... MainTestingRoutine.o"
-	@echo "... MainTestingRoutine.i"
-	@echo "... MainTestingRoutine.s"
+	@echo "... BaseballSimulator.o"
+	@echo "... BaseballSimulator.i"
+	@echo "... BaseballSimulator.s"
+	@echo "... Camera.o"
+	@echo "... Camera.i"
+	@echo "... Camera.s"
+	@echo "... D400.o"
+	@echo "... D400.i"
+	@echo "... D400.s"
+	@echo "... DataStructure.o"
+	@echo "... DataStructure.i"
+	@echo "... DataStructure.s"
+	@echo "... FeatureAnalysis.o"
+	@echo "... FeatureAnalysis.i"
+	@echo "... FeatureAnalysis.s"
+	@echo "... ImageData.o"
+	@echo "... ImageData.i"
+	@echo "... ImageData.s"
+	@echo "... ImageReconditioning.o"
+	@echo "... ImageReconditioning.i"
+	@echo "... ImageReconditioning.s"
+	@echo "... LocPredictor.o"
+	@echo "... LocPredictor.i"
+	@echo "... LocPredictor.s"
+	@echo "... ThresholdFilter.o"
+	@echo "... ThresholdFilter.i"
+	@echo "... ThresholdFilter.s"
+	@echo "... Tracker.o"
+	@echo "... Tracker.i"
+	@echo "... Tracker.s"
+	@echo "... Visualize.o"
+	@echo "... Visualize.i"
+	@echo "... Visualize.s"
+	@echo "... main.o"
+	@echo "... main.i"
+	@echo "... main.s"
+	@echo "... sendPost.o"
+	@echo "... sendPost.i"
+	@echo "... sendPost.s"
 .PHONY : help
 
 

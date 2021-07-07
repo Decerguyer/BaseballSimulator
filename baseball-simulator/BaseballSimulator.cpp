@@ -10,7 +10,7 @@
 #include "Camera.h"
 #include "D400.h"
 #include "DataStructure.h"
-#include "FeatureAnalysis.h"
+//#include "FeatureAnalysis.h"
 #include "ImageData.h"
 #include "ImageReconditioning.h"
 #include "json.hpp"
