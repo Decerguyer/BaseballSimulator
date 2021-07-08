@@ -47,5 +47,5 @@ void ThresholdFilter::createThresholdFrame(){
     
     //thresholdFrame = hole_fill_filter.process(thresholdFrame);
     
-    thresholdMat = rsDepthToCVMat(thresholdFrame);
+    thresholdMat = rsDepthToCVMatExtra(thresholdFrame);
 }
