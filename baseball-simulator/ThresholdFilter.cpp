@@ -12,7 +12,7 @@ ThresholdFilter::ThresholdFilter(D400 &cam) : camera(cam){
 
 //This filters out any depth that extends past (background depth - threshDist)
 //NOTE TO SELF; Should change copying method as it's expensive
-cv::Mat ThresholdFilter::filter(cv::Mat depthMat, float threshDist = 0.6096, float maxThreshDist = 3.048){
+cv::Mat ThresholdFilter::filter(cv::Mat depthMat, float threshDist, float maxThreshDist){
     cv::Mat retMat = depthMat; /*depthMat.clone();*/
     for (int i=0; i < depthMat.rows; i++){
         for(int j=0; j < depthMat.cols; j++){
