@@ -23,14 +23,13 @@
 #include "V2.h"
 
 BaseballSimulator::BaseballSimulator(){
-    rs2::context context;
-    this->ctx = context;
 }
 
 void BaseballSimulator::MainTestingRoutine(){
     
     //****************************Camera Initialization & Calibration***************************//
     D400 cam(ctx);
+    std::cout << "Attached Camera" << endl;
     cam.calibrate();
     cam.setDefaultSettings();
     int exposure;
