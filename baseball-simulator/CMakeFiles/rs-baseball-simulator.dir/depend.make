@@ -693,20 +693,9 @@ CMakeFiles/rs-baseball-simulator.dir/ImageData.cpp.o: /usr/include/opencv4/openc
 CMakeFiles/rs-baseball-simulator.dir/ImageData.cpp.o: /usr/include/opencv4/opencv2/viz/vizcore.hpp
 CMakeFiles/rs-baseball-simulator.dir/ImageData.cpp.o: /usr/include/opencv4/opencv2/viz/widgets.hpp
 
-CMakeFiles/rs-baseball-simulator.dir/ImageReconditioning.cpp.o: BaseballSimulator.h
-CMakeFiles/rs-baseball-simulator.dir/ImageReconditioning.cpp.o: Camera.h
-CMakeFiles/rs-baseball-simulator.dir/ImageReconditioning.cpp.o: D400.h
-CMakeFiles/rs-baseball-simulator.dir/ImageReconditioning.cpp.o: DataStructure.h
-CMakeFiles/rs-baseball-simulator.dir/ImageReconditioning.cpp.o: ImageData.h
 CMakeFiles/rs-baseball-simulator.dir/ImageReconditioning.cpp.o: ImageReconditioning.cpp
 CMakeFiles/rs-baseball-simulator.dir/ImageReconditioning.cpp.o: ImageReconditioning.h
-CMakeFiles/rs-baseball-simulator.dir/ImageReconditioning.cpp.o: LocPredictor.h
-CMakeFiles/rs-baseball-simulator.dir/ImageReconditioning.cpp.o: ThresholdFilter.h
-CMakeFiles/rs-baseball-simulator.dir/ImageReconditioning.cpp.o: Tracker.h
 CMakeFiles/rs-baseball-simulator.dir/ImageReconditioning.cpp.o: V2.h
-CMakeFiles/rs-baseball-simulator.dir/ImageReconditioning.cpp.o: Visualizer.h
-CMakeFiles/rs-baseball-simulator.dir/ImageReconditioning.cpp.o: json.hpp
-CMakeFiles/rs-baseball-simulator.dir/ImageReconditioning.cpp.o: sendPost.h
 CMakeFiles/rs-baseball-simulator.dir/ImageReconditioning.cpp.o: /usr/include/opencv4/opencv2/aruco.hpp
 CMakeFiles/rs-baseball-simulator.dir/ImageReconditioning.cpp.o: /usr/include/opencv4/opencv2/aruco/dictionary.hpp
 CMakeFiles/rs-baseball-simulator.dir/ImageReconditioning.cpp.o: /usr/include/opencv4/opencv2/calib3d.hpp
@@ -1111,10 +1100,8 @@ CMakeFiles/rs-baseball-simulator.dir/ThresholdFilter.cpp.o: /usr/include/opencv4
 CMakeFiles/rs-baseball-simulator.dir/ThresholdFilter.cpp.o: /usr/include/opencv4/opencv2/viz/vizcore.hpp
 CMakeFiles/rs-baseball-simulator.dir/ThresholdFilter.cpp.o: /usr/include/opencv4/opencv2/viz/widgets.hpp
 
-CMakeFiles/rs-baseball-simulator.dir/Tracker.cpp.o: BaseballSimulator.h
 CMakeFiles/rs-baseball-simulator.dir/Tracker.cpp.o: Camera.h
 CMakeFiles/rs-baseball-simulator.dir/Tracker.cpp.o: D400.h
-CMakeFiles/rs-baseball-simulator.dir/Tracker.cpp.o: DataStructure.h
 CMakeFiles/rs-baseball-simulator.dir/Tracker.cpp.o: ImageData.h
 CMakeFiles/rs-baseball-simulator.dir/Tracker.cpp.o: ImageReconditioning.h
 CMakeFiles/rs-baseball-simulator.dir/Tracker.cpp.o: LocPredictor.h
@@ -1122,9 +1109,6 @@ CMakeFiles/rs-baseball-simulator.dir/Tracker.cpp.o: ThresholdFilter.h
 CMakeFiles/rs-baseball-simulator.dir/Tracker.cpp.o: Tracker.cpp
 CMakeFiles/rs-baseball-simulator.dir/Tracker.cpp.o: Tracker.h
 CMakeFiles/rs-baseball-simulator.dir/Tracker.cpp.o: V2.h
-CMakeFiles/rs-baseball-simulator.dir/Tracker.cpp.o: Visualizer.h
-CMakeFiles/rs-baseball-simulator.dir/Tracker.cpp.o: json.hpp
-CMakeFiles/rs-baseball-simulator.dir/Tracker.cpp.o: sendPost.h
 CMakeFiles/rs-baseball-simulator.dir/Tracker.cpp.o: /usr/include/opencv4/opencv2/aruco.hpp
 CMakeFiles/rs-baseball-simulator.dir/Tracker.cpp.o: /usr/include/opencv4/opencv2/aruco/dictionary.hpp
 CMakeFiles/rs-baseball-simulator.dir/Tracker.cpp.o: /usr/include/opencv4/opencv2/calib3d.hpp
@@ -1541,6 +1525,7 @@ CMakeFiles/rs-baseball-simulator.dir/main.cpp.o: /usr/include/opencv4/opencv2/vi
 CMakeFiles/rs-baseball-simulator.dir/main.cpp.o: /usr/include/opencv4/opencv2/viz/widgets.hpp
 
 CMakeFiles/rs-baseball-simulator.dir/sendPost.cpp.o: V2.h
+CMakeFiles/rs-baseball-simulator.dir/sendPost.cpp.o: json.hpp
 CMakeFiles/rs-baseball-simulator.dir/sendPost.cpp.o: sendPost.cpp
 CMakeFiles/rs-baseball-simulator.dir/sendPost.cpp.o: sendPost.h
 CMakeFiles/rs-baseball-simulator.dir/sendPost.cpp.o: /usr/include/opencv4/opencv2/calib3d.hpp

@@ -69,7 +69,7 @@ void Camera::createCalibration(std::deque<ImageData> &frames){
     
     bool success;
     int errorCnt = 0;
-
+    
     for(int i =0; i<(int)frames.size(); i++){    //Iterates through the vector of framesets
         cv::Mat irMAT = frames[i].getIRMat();
         // Finding checker board corners
@@ -85,16 +85,24 @@ void Camera::createCalibration(std::deque<ImageData> &frames){
             * If desired number of corner are detected,
             * we refine the pixel coordinates and display
             * them on the images of checker board
-        */
-        
+        */   
         if(success){
                 cv::TermCriteria criteria(cv::TermCriteria::EPS | cv::TermCriteria::MAX_ITER, 30, 0.001);
-
                 // refining pixel coordinates for given 2d points.
-                cv::cornerSubPix(frame,corner_pts,cv::Size(11,11), cv::Size(-1,-1),criteria);
-    
+                cv::cornerSubPix(frame,corner_pts,cv::Size(11,11), cv::Size(-1,-1),criteria);    
                 // Displaying the detected corner points on the checker board
                 cv::drawChessboardCorners(frame, cv::Size(CHECKERBOARD[0], CHECKERBOARD[1]), corner_pts, success); //OPTIONAL
+                
+                //Calibration Mathematics 
+                corner_pts = sortCornerPoints(corner_pts);
+                cv::Mat R,T; //Output Rotation and Translation Vectors
+                cv::solvePnP(objp,corner_pts,cameraMatrix,distCoeffs,R,T,0,0); //Last 0 represents CV_ITERATIVE method
+                
+                cv::Mat rotation, rotationInverse;
+                cv::Rodrigues(R,rotation);
+                cv::invert(rotation,rotationInverse);
+                rotationMatrix += rotationInverse;
+                translationMatrix += T;
         }
         
         else
@@ -110,19 +118,10 @@ void Camera::createCalibration(std::deque<ImageData> &frames){
             frames.clear();
             return;
         }
-
-        corner_pts = sortCornerPoints(corner_pts);
-        cv::Mat R,T; //Output Rotation and Translation Vectors
-        cv::solvePnP(objp,corner_pts,cameraMatrix,distCoeffs,R,T,0,0); //Last 0 represents CV_ITERATIVE method
-        
-        cv::Mat rotation, rotationInverse;
-        cv::Rodrigues(R,rotation);
-        cv::invert(rotation,rotationInverse);
-        rotationMatrix += rotationInverse;
-        translationMatrix += T;
     }
-    rotationMatrix /= NUM_CALIBRATION_FRAMES - errorCnt;
-    translationMatrix /= NUM_CALIBRATION_FRAMES - errorCnt;
+    //Normalizing the result using basic averages
+    rotationMatrix /= (NUM_CALIBRATION_FRAMES - errorCnt);
+    translationMatrix /= (NUM_CALIBRATION_FRAMES - errorCnt);
     //Delete Block Below
     cv::imshow("Image",frames[0].getIRMat());
     cv::waitKey(0);

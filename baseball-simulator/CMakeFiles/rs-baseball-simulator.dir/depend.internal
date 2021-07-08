@@ -694,20 +694,9 @@ CMakeFiles/rs-baseball-simulator.dir/ImageData.cpp.o
  /usr/include/opencv4/opencv2/viz/vizcore.hpp
  /usr/include/opencv4/opencv2/viz/widgets.hpp
 CMakeFiles/rs-baseball-simulator.dir/ImageReconditioning.cpp.o
- /home/ubuntu/BaseballSimulator/baseball-simulator/BaseballSimulator.h
- /home/ubuntu/BaseballSimulator/baseball-simulator/Camera.h
- /home/ubuntu/BaseballSimulator/baseball-simulator/D400.h
- /home/ubuntu/BaseballSimulator/baseball-simulator/DataStructure.h
- /home/ubuntu/BaseballSimulator/baseball-simulator/ImageData.h
  /home/ubuntu/BaseballSimulator/baseball-simulator/ImageReconditioning.cpp
  /home/ubuntu/BaseballSimulator/baseball-simulator/ImageReconditioning.h
- /home/ubuntu/BaseballSimulator/baseball-simulator/LocPredictor.h
- /home/ubuntu/BaseballSimulator/baseball-simulator/ThresholdFilter.h
- /home/ubuntu/BaseballSimulator/baseball-simulator/Tracker.h
  /home/ubuntu/BaseballSimulator/baseball-simulator/V2.h
- /home/ubuntu/BaseballSimulator/baseball-simulator/Visualizer.h
- /home/ubuntu/BaseballSimulator/baseball-simulator/json.hpp
- /home/ubuntu/BaseballSimulator/baseball-simulator/sendPost.h
  /usr/include/opencv4/opencv2/aruco.hpp
  /usr/include/opencv4/opencv2/aruco/dictionary.hpp
  /usr/include/opencv4/opencv2/calib3d.hpp
@@ -1112,10 +1101,8 @@ CMakeFiles/rs-baseball-simulator.dir/ThresholdFilter.cpp.o
  /usr/include/opencv4/opencv2/viz/vizcore.hpp
  /usr/include/opencv4/opencv2/viz/widgets.hpp
 CMakeFiles/rs-baseball-simulator.dir/Tracker.cpp.o
- /home/ubuntu/BaseballSimulator/baseball-simulator/BaseballSimulator.h
  /home/ubuntu/BaseballSimulator/baseball-simulator/Camera.h
  /home/ubuntu/BaseballSimulator/baseball-simulator/D400.h
- /home/ubuntu/BaseballSimulator/baseball-simulator/DataStructure.h
  /home/ubuntu/BaseballSimulator/baseball-simulator/ImageData.h
  /home/ubuntu/BaseballSimulator/baseball-simulator/ImageReconditioning.h
  /home/ubuntu/BaseballSimulator/baseball-simulator/LocPredictor.h
@@ -1123,9 +1110,6 @@ CMakeFiles/rs-baseball-simulator.dir/Tracker.cpp.o
  /home/ubuntu/BaseballSimulator/baseball-simulator/Tracker.cpp
  /home/ubuntu/BaseballSimulator/baseball-simulator/Tracker.h
  /home/ubuntu/BaseballSimulator/baseball-simulator/V2.h
- /home/ubuntu/BaseballSimulator/baseball-simulator/Visualizer.h
- /home/ubuntu/BaseballSimulator/baseball-simulator/json.hpp
- /home/ubuntu/BaseballSimulator/baseball-simulator/sendPost.h
  /usr/include/opencv4/opencv2/aruco.hpp
  /usr/include/opencv4/opencv2/aruco/dictionary.hpp
  /usr/include/opencv4/opencv2/calib3d.hpp
@@ -1542,6 +1526,7 @@ CMakeFiles/rs-baseball-simulator.dir/main.cpp.o
  /usr/include/opencv4/opencv2/viz/widgets.hpp
 CMakeFiles/rs-baseball-simulator.dir/sendPost.cpp.o
  /home/ubuntu/BaseballSimulator/baseball-simulator/V2.h
+ /home/ubuntu/BaseballSimulator/baseball-simulator/json.hpp
  /home/ubuntu/BaseballSimulator/baseball-simulator/sendPost.cpp
  /home/ubuntu/BaseballSimulator/baseball-simulator/sendPost.h
  /usr/include/opencv4/opencv2/calib3d.hpp
