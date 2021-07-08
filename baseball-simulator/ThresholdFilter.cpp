@@ -8,6 +8,7 @@
 #include "V2.h"
 
 ThresholdFilter::ThresholdFilter(D400 &cam) : camera(cam){
+    createThresholdFrame();
 }
 
 //This filters out any depth that extends past (background depth - threshDist)
