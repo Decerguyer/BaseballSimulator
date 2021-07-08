@@ -12,7 +12,7 @@ ImageReconditioning::ImageReconditioning() {
     //sharpnessKernel = (cv::Mat_<float>(5,5) << -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,25,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1); //Larger Kernel
 }
 
-void ImageReconditioning::clahe(cv::Mat src, cv::Mat dst, int clipLimit = 40){ //Constrast Limited Adaptive Histogram Equalization
+void ImageReconditioning::clahe(cv::Mat src, cv::Mat dst, int clipLimit){ //Constrast Limited Adaptive Histogram Equalization
     Clahe->setClipLimit(clipLimit);
     Clahe->apply(src,dst);
 }	
@@ -33,7 +33,7 @@ void ImageReconditioning::sharpen(cv::Mat src, cv::Mat dst){
     cv::filter2D(src,dst,-1,sharpnessKernel);
 }
 
-void ImageReconditioning::guassianBlur(cv::Mat src, cv::Mat dst,int dimmension=9){ //Dimmension = size of kernel (we will use a default of 9x9)
+void ImageReconditioning::guassianBlur(cv::Mat src, cv::Mat dst,int dimmension){ //Dimmension = size of kernel (we will use a default of 9x9)
     cv::GaussianBlur(src,dst,cv::Size(dimmension,dimmension),0);
 }
 
@@ -41,7 +41,7 @@ void ImageReconditioning::medianBlur(cv::Mat src, cv::Mat dst, int kernelSize){
     cv::medianBlur(src,dst, kernelSize);
 }
 
-void ImageReconditioning::otsuThresh(cv::Mat src, cv::Mat dst, int thresh = 0, int maxValue = 255){
+void ImageReconditioning::otsuThresh(cv::Mat src, cv::Mat dst, int thresh, int maxValue){
     cv::threshold(src,dst,thresh,maxValue,cv::THRESH_OTSU);
 }
 
