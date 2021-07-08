@@ -36,16 +36,6 @@ struct coord3D{
     float z;
 };
 
-cv::Mat rsDepthToCVMatExtra(rs2::depth_frame depthFrame){
-    rs2::video_stream_profile prof = depthFrame.get_profile().as<rs2::video_stream_profile>();
-    cv::Mat depth_metric_fp;
-    cv::Mat depth_raw = cv::Mat(prof.height(), prof.width(), CV_16SC1, const_cast<void*>(depthFrame.get_data()));
-    depth_raw.convertTo(depth_metric_fp, CV_32FC1);
-    depth_metric_fp *= depthFrame.get_units();
-    
-    
-    return depth_metric_fp;
-}
 
 #endif /* V2_h */
 
