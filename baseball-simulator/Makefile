@@ -277,33 +277,6 @@ DataStructure.cpp.s:
 	$(MAKE) -f CMakeFiles/rs-baseball-simulator.dir/build.make CMakeFiles/rs-baseball-simulator.dir/DataStructure.cpp.s
 .PHONY : DataStructure.cpp.s
 
-FeatureAnalysis.o: FeatureAnalysis.cpp.o
-
-.PHONY : FeatureAnalysis.o
-
-# target to build an object file
-FeatureAnalysis.cpp.o:
-	$(MAKE) -f CMakeFiles/rs-baseball-simulator.dir/build.make CMakeFiles/rs-baseball-simulator.dir/FeatureAnalysis.cpp.o
-.PHONY : FeatureAnalysis.cpp.o
-
-FeatureAnalysis.i: FeatureAnalysis.cpp.i
-
-.PHONY : FeatureAnalysis.i
-
-# target to preprocess a source file
-FeatureAnalysis.cpp.i:
-	$(MAKE) -f CMakeFiles/rs-baseball-simulator.dir/build.make CMakeFiles/rs-baseball-simulator.dir/FeatureAnalysis.cpp.i
-.PHONY : FeatureAnalysis.cpp.i
-
-FeatureAnalysis.s: FeatureAnalysis.cpp.s
-
-.PHONY : FeatureAnalysis.s
-
-# target to generate assembly for a file
-FeatureAnalysis.cpp.s:
-	$(MAKE) -f CMakeFiles/rs-baseball-simulator.dir/build.make CMakeFiles/rs-baseball-simulator.dir/FeatureAnalysis.cpp.s
-.PHONY : FeatureAnalysis.cpp.s
-
 ImageData.o: ImageData.cpp.o
 
 .PHONY : ImageData.o
@@ -545,9 +518,6 @@ help:
 	@echo "... DataStructure.o"
 	@echo "... DataStructure.i"
 	@echo "... DataStructure.s"
-	@echo "... FeatureAnalysis.o"
-	@echo "... FeatureAnalysis.i"
-	@echo "... FeatureAnalysis.s"
 	@echo "... ImageData.o"
 	@echo "... ImageData.i"
 	@echo "... ImageData.s"

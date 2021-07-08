@@ -96,22 +96,9 @@ CMakeFiles/rs-baseball-simulator.dir/DataStructure.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/rs-baseball-simulator.dir/DataStructure.cpp.s"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/ubuntu/BaseballSimulator/baseball-simulator/DataStructure.cpp -o CMakeFiles/rs-baseball-simulator.dir/DataStructure.cpp.s
 
-CMakeFiles/rs-baseball-simulator.dir/FeatureAnalysis.cpp.o: CMakeFiles/rs-baseball-simulator.dir/flags.make
-CMakeFiles/rs-baseball-simulator.dir/FeatureAnalysis.cpp.o: FeatureAnalysis.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/ubuntu/BaseballSimulator/baseball-simulator/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Building CXX object CMakeFiles/rs-baseball-simulator.dir/FeatureAnalysis.cpp.o"
-	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/rs-baseball-simulator.dir/FeatureAnalysis.cpp.o -c /home/ubuntu/BaseballSimulator/baseball-simulator/FeatureAnalysis.cpp
-
-CMakeFiles/rs-baseball-simulator.dir/FeatureAnalysis.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/rs-baseball-simulator.dir/FeatureAnalysis.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/ubuntu/BaseballSimulator/baseball-simulator/FeatureAnalysis.cpp > CMakeFiles/rs-baseball-simulator.dir/FeatureAnalysis.cpp.i
-
-CMakeFiles/rs-baseball-simulator.dir/FeatureAnalysis.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/rs-baseball-simulator.dir/FeatureAnalysis.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/ubuntu/BaseballSimulator/baseball-simulator/FeatureAnalysis.cpp -o CMakeFiles/rs-baseball-simulator.dir/FeatureAnalysis.cpp.s
-
 CMakeFiles/rs-baseball-simulator.dir/ImageData.cpp.o: CMakeFiles/rs-baseball-simulator.dir/flags.make
 CMakeFiles/rs-baseball-simulator.dir/ImageData.cpp.o: ImageData.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/ubuntu/BaseballSimulator/baseball-simulator/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Building CXX object CMakeFiles/rs-baseball-simulator.dir/ImageData.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/ubuntu/BaseballSimulator/baseball-simulator/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Building CXX object CMakeFiles/rs-baseball-simulator.dir/ImageData.cpp.o"
 	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/rs-baseball-simulator.dir/ImageData.cpp.o -c /home/ubuntu/BaseballSimulator/baseball-simulator/ImageData.cpp
 
 CMakeFiles/rs-baseball-simulator.dir/ImageData.cpp.i: cmake_force
@@ -124,7 +111,7 @@ CMakeFiles/rs-baseball-simulator.dir/ImageData.cpp.s: cmake_force
 
 CMakeFiles/rs-baseball-simulator.dir/ImageReconditioning.cpp.o: CMakeFiles/rs-baseball-simulator.dir/flags.make
 CMakeFiles/rs-baseball-simulator.dir/ImageReconditioning.cpp.o: ImageReconditioning.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/ubuntu/BaseballSimulator/baseball-simulator/CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Building CXX object CMakeFiles/rs-baseball-simulator.dir/ImageReconditioning.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/ubuntu/BaseballSimulator/baseball-simulator/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Building CXX object CMakeFiles/rs-baseball-simulator.dir/ImageReconditioning.cpp.o"
 	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/rs-baseball-simulator.dir/ImageReconditioning.cpp.o -c /home/ubuntu/BaseballSimulator/baseball-simulator/ImageReconditioning.cpp
 
 CMakeFiles/rs-baseball-simulator.dir/ImageReconditioning.cpp.i: cmake_force
@@ -137,7 +124,7 @@ CMakeFiles/rs-baseball-simulator.dir/ImageReconditioning.cpp.s: cmake_force
 
 CMakeFiles/rs-baseball-simulator.dir/LocPredictor.cpp.o: CMakeFiles/rs-baseball-simulator.dir/flags.make
 CMakeFiles/rs-baseball-simulator.dir/LocPredictor.cpp.o: LocPredictor.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/ubuntu/BaseballSimulator/baseball-simulator/CMakeFiles --progress-num=$(CMAKE_PROGRESS_7) "Building CXX object CMakeFiles/rs-baseball-simulator.dir/LocPredictor.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/ubuntu/BaseballSimulator/baseball-simulator/CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Building CXX object CMakeFiles/rs-baseball-simulator.dir/LocPredictor.cpp.o"
 	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/rs-baseball-simulator.dir/LocPredictor.cpp.o -c /home/ubuntu/BaseballSimulator/baseball-simulator/LocPredictor.cpp
 
 CMakeFiles/rs-baseball-simulator.dir/LocPredictor.cpp.i: cmake_force
@@ -150,7 +137,7 @@ CMakeFiles/rs-baseball-simulator.dir/LocPredictor.cpp.s: cmake_force
 
 CMakeFiles/rs-baseball-simulator.dir/sendPost.cpp.o: CMakeFiles/rs-baseball-simulator.dir/flags.make
 CMakeFiles/rs-baseball-simulator.dir/sendPost.cpp.o: sendPost.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/ubuntu/BaseballSimulator/baseball-simulator/CMakeFiles --progress-num=$(CMAKE_PROGRESS_8) "Building CXX object CMakeFiles/rs-baseball-simulator.dir/sendPost.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/ubuntu/BaseballSimulator/baseball-simulator/CMakeFiles --progress-num=$(CMAKE_PROGRESS_7) "Building CXX object CMakeFiles/rs-baseball-simulator.dir/sendPost.cpp.o"
 	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/rs-baseball-simulator.dir/sendPost.cpp.o -c /home/ubuntu/BaseballSimulator/baseball-simulator/sendPost.cpp
 
 CMakeFiles/rs-baseball-simulator.dir/sendPost.cpp.i: cmake_force
@@ -163,7 +150,7 @@ CMakeFiles/rs-baseball-simulator.dir/sendPost.cpp.s: cmake_force
 
 CMakeFiles/rs-baseball-simulator.dir/ThresholdFilter.cpp.o: CMakeFiles/rs-baseball-simulator.dir/flags.make
 CMakeFiles/rs-baseball-simulator.dir/ThresholdFilter.cpp.o: ThresholdFilter.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/ubuntu/BaseballSimulator/baseball-simulator/CMakeFiles --progress-num=$(CMAKE_PROGRESS_9) "Building CXX object CMakeFiles/rs-baseball-simulator.dir/ThresholdFilter.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/ubuntu/BaseballSimulator/baseball-simulator/CMakeFiles --progress-num=$(CMAKE_PROGRESS_8) "Building CXX object CMakeFiles/rs-baseball-simulator.dir/ThresholdFilter.cpp.o"
 	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/rs-baseball-simulator.dir/ThresholdFilter.cpp.o -c /home/ubuntu/BaseballSimulator/baseball-simulator/ThresholdFilter.cpp
 
 CMakeFiles/rs-baseball-simulator.dir/ThresholdFilter.cpp.i: cmake_force
@@ -176,7 +163,7 @@ CMakeFiles/rs-baseball-simulator.dir/ThresholdFilter.cpp.s: cmake_force
 
 CMakeFiles/rs-baseball-simulator.dir/Tracker.cpp.o: CMakeFiles/rs-baseball-simulator.dir/flags.make
 CMakeFiles/rs-baseball-simulator.dir/Tracker.cpp.o: Tracker.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/ubuntu/BaseballSimulator/baseball-simulator/CMakeFiles --progress-num=$(CMAKE_PROGRESS_10) "Building CXX object CMakeFiles/rs-baseball-simulator.dir/Tracker.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/ubuntu/BaseballSimulator/baseball-simulator/CMakeFiles --progress-num=$(CMAKE_PROGRESS_9) "Building CXX object CMakeFiles/rs-baseball-simulator.dir/Tracker.cpp.o"
 	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/rs-baseball-simulator.dir/Tracker.cpp.o -c /home/ubuntu/BaseballSimulator/baseball-simulator/Tracker.cpp
 
 CMakeFiles/rs-baseball-simulator.dir/Tracker.cpp.i: cmake_force
@@ -189,7 +176,7 @@ CMakeFiles/rs-baseball-simulator.dir/Tracker.cpp.s: cmake_force
 
 CMakeFiles/rs-baseball-simulator.dir/Visualize.cpp.o: CMakeFiles/rs-baseball-simulator.dir/flags.make
 CMakeFiles/rs-baseball-simulator.dir/Visualize.cpp.o: Visualize.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/ubuntu/BaseballSimulator/baseball-simulator/CMakeFiles --progress-num=$(CMAKE_PROGRESS_11) "Building CXX object CMakeFiles/rs-baseball-simulator.dir/Visualize.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/ubuntu/BaseballSimulator/baseball-simulator/CMakeFiles --progress-num=$(CMAKE_PROGRESS_10) "Building CXX object CMakeFiles/rs-baseball-simulator.dir/Visualize.cpp.o"
 	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/rs-baseball-simulator.dir/Visualize.cpp.o -c /home/ubuntu/BaseballSimulator/baseball-simulator/Visualize.cpp
 
 CMakeFiles/rs-baseball-simulator.dir/Visualize.cpp.i: cmake_force
@@ -202,7 +189,7 @@ CMakeFiles/rs-baseball-simulator.dir/Visualize.cpp.s: cmake_force
 
 CMakeFiles/rs-baseball-simulator.dir/BaseballSimulator.cpp.o: CMakeFiles/rs-baseball-simulator.dir/flags.make
 CMakeFiles/rs-baseball-simulator.dir/BaseballSimulator.cpp.o: BaseballSimulator.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/ubuntu/BaseballSimulator/baseball-simulator/CMakeFiles --progress-num=$(CMAKE_PROGRESS_12) "Building CXX object CMakeFiles/rs-baseball-simulator.dir/BaseballSimulator.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/ubuntu/BaseballSimulator/baseball-simulator/CMakeFiles --progress-num=$(CMAKE_PROGRESS_11) "Building CXX object CMakeFiles/rs-baseball-simulator.dir/BaseballSimulator.cpp.o"
 	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/rs-baseball-simulator.dir/BaseballSimulator.cpp.o -c /home/ubuntu/BaseballSimulator/baseball-simulator/BaseballSimulator.cpp
 
 CMakeFiles/rs-baseball-simulator.dir/BaseballSimulator.cpp.i: cmake_force
@@ -215,7 +202,7 @@ CMakeFiles/rs-baseball-simulator.dir/BaseballSimulator.cpp.s: cmake_force
 
 CMakeFiles/rs-baseball-simulator.dir/main.cpp.o: CMakeFiles/rs-baseball-simulator.dir/flags.make
 CMakeFiles/rs-baseball-simulator.dir/main.cpp.o: main.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/ubuntu/BaseballSimulator/baseball-simulator/CMakeFiles --progress-num=$(CMAKE_PROGRESS_13) "Building CXX object CMakeFiles/rs-baseball-simulator.dir/main.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/ubuntu/BaseballSimulator/baseball-simulator/CMakeFiles --progress-num=$(CMAKE_PROGRESS_12) "Building CXX object CMakeFiles/rs-baseball-simulator.dir/main.cpp.o"
 	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/rs-baseball-simulator.dir/main.cpp.o -c /home/ubuntu/BaseballSimulator/baseball-simulator/main.cpp
 
 CMakeFiles/rs-baseball-simulator.dir/main.cpp.i: cmake_force
@@ -231,7 +218,6 @@ rs__baseball__simulator_OBJECTS = \
 "CMakeFiles/rs-baseball-simulator.dir/Camera.cpp.o" \
 "CMakeFiles/rs-baseball-simulator.dir/D400.cpp.o" \
 "CMakeFiles/rs-baseball-simulator.dir/DataStructure.cpp.o" \
-"CMakeFiles/rs-baseball-simulator.dir/FeatureAnalysis.cpp.o" \
 "CMakeFiles/rs-baseball-simulator.dir/ImageData.cpp.o" \
 "CMakeFiles/rs-baseball-simulator.dir/ImageReconditioning.cpp.o" \
 "CMakeFiles/rs-baseball-simulator.dir/LocPredictor.cpp.o" \
@@ -248,7 +234,6 @@ rs__baseball__simulator_EXTERNAL_OBJECTS =
 rs-baseball-simulator: CMakeFiles/rs-baseball-simulator.dir/Camera.cpp.o
 rs-baseball-simulator: CMakeFiles/rs-baseball-simulator.dir/D400.cpp.o
 rs-baseball-simulator: CMakeFiles/rs-baseball-simulator.dir/DataStructure.cpp.o
-rs-baseball-simulator: CMakeFiles/rs-baseball-simulator.dir/FeatureAnalysis.cpp.o
 rs-baseball-simulator: CMakeFiles/rs-baseball-simulator.dir/ImageData.cpp.o
 rs-baseball-simulator: CMakeFiles/rs-baseball-simulator.dir/ImageReconditioning.cpp.o
 rs-baseball-simulator: CMakeFiles/rs-baseball-simulator.dir/LocPredictor.cpp.o
@@ -309,7 +294,7 @@ rs-baseball-simulator: /usr/lib/aarch64-linux-gnu/libopencv_photo.so.4.2.0
 rs-baseball-simulator: /usr/lib/aarch64-linux-gnu/libopencv_imgproc.so.4.2.0
 rs-baseball-simulator: /usr/lib/aarch64-linux-gnu/libopencv_core.so.4.2.0
 rs-baseball-simulator: CMakeFiles/rs-baseball-simulator.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/ubuntu/BaseballSimulator/baseball-simulator/CMakeFiles --progress-num=$(CMAKE_PROGRESS_14) "Linking CXX executable rs-baseball-simulator"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/ubuntu/BaseballSimulator/baseball-simulator/CMakeFiles --progress-num=$(CMAKE_PROGRESS_13) "Linking CXX executable rs-baseball-simulator"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/rs-baseball-simulator.dir/link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.

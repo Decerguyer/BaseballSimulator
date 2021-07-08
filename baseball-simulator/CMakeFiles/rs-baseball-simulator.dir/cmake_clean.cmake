@@ -3,7 +3,6 @@ file(REMOVE_RECURSE
   "CMakeFiles/rs-baseball-simulator.dir/Camera.cpp.o"
   "CMakeFiles/rs-baseball-simulator.dir/D400.cpp.o"
   "CMakeFiles/rs-baseball-simulator.dir/DataStructure.cpp.o"
-  "CMakeFiles/rs-baseball-simulator.dir/FeatureAnalysis.cpp.o"
   "CMakeFiles/rs-baseball-simulator.dir/ImageData.cpp.o"
   "CMakeFiles/rs-baseball-simulator.dir/ImageReconditioning.cpp.o"
   "CMakeFiles/rs-baseball-simulator.dir/LocPredictor.cpp.o"
