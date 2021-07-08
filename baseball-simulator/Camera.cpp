@@ -70,12 +70,11 @@ void Camera::createCalibration(std::deque<ImageData> &frames){
     bool success;
     int errorCnt = 0;
 
-    for(int i =0; i<(int)frames.size();(i >= 0 ? i++ : i = 0)){    //Iterates through the vector of framesets
+    for(int i =0; i<(int)frames.size(); i++){    //Iterates through the vector of framesets
         cv::Mat irMAT = frames[i].getIRMat();
         // Finding checker board corners
         // If desired number of corners are found in the image then success = true
-        cv::Mat frame;
-        frame = irMAT;
+        cv::Mat frame = irMAT;
         cv::Mat axesMat; //OPTIONAL
         cv::cvtColor(irMAT,axesMat,cv::COLOR_GRAY2BGR); //OPTIONAL
         
@@ -122,14 +121,13 @@ void Camera::createCalibration(std::deque<ImageData> &frames){
         rotationMatrix += rotationInverse;
         translationMatrix += T;
     }
-    rotationMatrix /= NUM_CALIBRATION_FRAMES;
-    translationMatrix /= NUM_CALIBRATION_FRAMES;
+    rotationMatrix /= NUM_CALIBRATION_FRAMES - errorCnt;
+    translationMatrix /= NUM_CALIBRATION_FRAMES - errorCnt;
     //Delete Block Below
     cv::imshow("Image",frames[0].getIRMat());
     cv::waitKey(0);
     cv::destroyAllWindows();
     cv::waitKey(1);
-    
 }
 
 std::vector<cv::Point2f> Camera::sortCornerPoints(std::vector<cv::Point2f> cornerPoints) {
