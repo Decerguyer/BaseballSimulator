@@ -6,9 +6,8 @@ make all --print-data-base --no-builtin-variables --no-builtin-rules --question
 # PARTICULAR PURPOSE.
 
 # This program built for i386-apple-darwin11.3.0
- 
 
-# Make data base, printed on Tue Jul  6 17:52:10 2021
+# Make data base, printed on Tue Jul  6 22:31:21 2021
 
 # Variables
 
@@ -34,7 +33,6 @@ RM = /usr/bin/cmake -E remove -f
 VSCODE_NLS_CONFIG = {"locale":"en-us","availableLanguages":{},"_languagePackSupport":true}
 # environment
 _ = /usr/bin/make
- 
 # makefile (from `Makefile', line 54)
 CMAKE_BINARY_DIR = /home/ubuntu/BaseballSimulator/baseball-simulator
 # makefile (from `Makefile', line 1)
@@ -44,7 +42,7 @@ VSCODE_NODE_CACHED_DATA_DIR = /Users/yonatanarieh/Library/Application Support/Co
 # environment
 VSCODE_VERBOSE_LOGGING = true
 # environment
-VSCODE_IPC_HOOK_EXTHOST = /var/folders/q3/gcfxpt5d26d2pcp2h7cxj5jh0000gn/T/vscode-ipc-90065a66-9808-414b-91e4-e14ff9e7834e.sock
+VSCODE_IPC_HOOK_EXTHOST = /var/folders/q3/gcfxpt5d26d2pcp2h7cxj5jh0000gn/T/vscode-ipc-e1fa8548-bc87-4ec6-b1bf-582030e1cbfb.sock
 # environment
 VSCODE_CWD = /
 # environment
@@ -140,7 +138,6 @@ SECURITYSESSIONID = 186a8
 # makefile (from `Makefile', line 42)
 CMAKE_COMMAND = /usr/bin/cmake
 # automatic
- 
 ^F = $(notdir $^)
 # makefile (from `Makefile', line 21)
 SUFFIXES = 
@@ -161,9 +158,9 @@ VSCODE_PID = 577
 
 # Directories
 
-# . (device 16777220, inode 12902336198): 41 files, no impossibilities.
+# . (device 16777220, inode 12902336198): 39 files, no impossibilities.
 
-# 41 files, no impossibilities in 1 directories.
+# 39 files, no impossibilities in 1 directories.
 
 # Implicit Rules
 
@@ -263,6 +260,7 @@ preinstall/fast:
 # Not a target:
 Makefile:
 #  Implicit rule search has been done.
+ 
 #  Last modified 2021-05-25 16:51:26
 #  File has been updated.
 #  Successfully updated.
@@ -349,7 +347,6 @@ help:
 	@echo "... MainTestingRoutine.i"
 	@echo "... MainTestingRoutine.s"
 	
- 
 
 preinstall: all
 #  Phony target (prerequisite of .PHONY).
@@ -518,6 +515,6 @@ rebuild_cache:
 # strcache size: total = 4096 / max = 4096 / min = 4096 / avg = 4096
 # strcache free: total = 4087 / max = 4087 / min = 4087 / avg = 4087
 
-# Finished Make data base on Tue Jul  6 17:52:10 2021
+# Finished Make data base on Tue Jul  6 22:31:21 2021
 
  

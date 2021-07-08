@@ -29,7 +29,7 @@ void D400::enableDepthStream(int width, int height, int fps){
     cfg.enable_stream(RS2_STREAM_DEPTH, width, height, RS2_FORMAT_Z16, fps);
 }
 
- void D400::enableIRStream(int width, int height, int fps, int index = 1){
+ void D400::enableIRStream(int width, int height, int fps, int index){
     cfg.enable_stream(RS2_STREAM_INFRARED, index, width, height, RS2_FORMAT_Y8, fps);
 }
 
@@ -63,7 +63,7 @@ void D400::calibrate(){
     setDefaultSettings();
 }
 
-std::deque<ImageData> D400::recordImageData(int numFrames,int numThrow = 20){
+std::deque<ImageData> D400::recordImageData(int numFrames,int numThrow){
     std::deque<rs2::frameset> recordedFrames = recordRSFrames(numFrames, numThrow);
     std::deque<ImageData> images;
     while(!recordedFrames.empty()){
@@ -81,7 +81,7 @@ struct rs2_intrinsics D400::getIntrinsics(){
 /*Takes specified number of frames and
 returns a deque of the collected frames
 */
-std::deque<rs2::frameset> D400::recordRSFrames(int numFrames,int numThrow = 20){
+std::deque<rs2::frameset> D400::recordRSFrames(int numFrames,int numThrow){
     std::deque<rs2::frameset> frames;
     startStream();
     throwFrames(numThrow);
@@ -101,7 +101,7 @@ rs2::frameset D400::getFrame(){
 }
 
 //starts a stream and throws out the first few frames
-void D400::startStream(int numFrames = 20){
+void D400::startStream(int numFrames){
     pipe.start(cfg);
     intrin = pipe.get_active_profile().get_stream(RS2_STREAM_DEPTH).as<rs2::video_stream_profile>().get_intrinsics();
     Camera::cameraMatrix = (cv::Mat_<float>(3,3) << intrin.fx,0,intrin.ppx,0,intrin.fy,intrin.ppy,0,0,1);
