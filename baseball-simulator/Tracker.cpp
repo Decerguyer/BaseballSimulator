@@ -16,6 +16,7 @@ Tracker::Tracker(int width, int height, struct rs2_intrinsics intrinsics, Thresh
 }
 
 coord2D Tracker::track(ImageData &imgData){
+    
     float predDepth = locPred.depthPred(imgData.getTimeStamp());
     if (predDepth < 0.8){
         predDepth = 0.8;
@@ -25,6 +26,7 @@ coord2D Tracker::track(ImageData &imgData){
 
     coord2D ballCoordDepth = findBallFromDepth(imgData);
     coord2D ballCoordIR = {0, 0 , 0};
+
     if (ballCoordDepth.depth){
         std::cout << "here Depth = " << ballCoordDepth.depth << std::endl;
         ballCoordIR = findBallFromIR(imgData, imgData.depthVisBallLoc, ballCoordDepth);
