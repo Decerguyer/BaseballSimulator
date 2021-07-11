@@ -28,8 +28,8 @@ public:
     cv::Mat getTranslationMatrix();
     std::vector<float> transformPoint(std::vector<float> untransformedVec);
     std::vector<float> transformError(std::vector<float> untransformedVec);
-    void writeMat(cv::Mat mat, std::string fileName);
-    cv::Mat readMat(std::string fileName);
+    void writeMat(std::string fileName);
+    void readMat(std::string fileName);
     
 protected:
     cv::Mat cameraMatrix; //This is set by the subclass camera (For D400 this happens in startStream)

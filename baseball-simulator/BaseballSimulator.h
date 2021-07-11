@@ -28,6 +28,8 @@ class BaseballSimulator{
     public:
         BaseballSimulator();
         void MainTestingRoutine();
+        void Save();
+        void Load();
     private:
         rs2::context ctx;
 };

@@ -19,11 +19,11 @@ int main(){
     BaseballSimulator system;
     while(true){
         char yesNo;
-        std::cout << "Run MainTestingRoutine Process? (Y/N)" << std::endl;
+        std::cout << "Run System Process? (Y/N)" << std::endl;
         std::cin >> yesNo;
         if (yesNo == 'N')
             break;
-        system.MainTestingRoutine();
+        system.Save();
     }
 }
 

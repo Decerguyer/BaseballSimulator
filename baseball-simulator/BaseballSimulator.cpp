@@ -133,3 +133,16 @@ void BaseballSimulator::MainTestingRoutine(){
     //****************************Completion Message***************************//
     std::cout<<"The Routine has completed" << std::endl;
 }
+
+void BaseballSimulator::Save(){
+    D400 cam(ctx);
+    std::cout << "Attached Camera" << endl;
+    cam.calibrate();
+    cam.setDefaultSettings();
+    cam.writeMat("RotationMatrix");
+}
+void BaseballSimulator::Load(){
+    D400 cam(ctx);
+    std::cout << "Attached Camera" << endl;
+    cam.readMat("RotationMatrix");
+}

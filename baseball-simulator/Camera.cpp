@@ -39,21 +39,22 @@ std::vector<float> Camera::transformError(std::vector<float> untransformedVec){
     return transformedPoint;
 }
 
-void Camera::writeMat(cv::Mat mat, std::string fileName){
+void Camera::writeMat(std::string fileName){
     fileName.append(".xml");
     cv::FileStorage file(fileName, cv::FileStorage::WRITE);
 
-    file << "saved_matrix" << mat;
+    file << "saved_matrix" << rotationMatrix;
     file.release();
 }
 
-cv::Mat Camera::readMat(std::string fileName){
+void Camera::readMat(std::string fileName){
     fileName.append(".xml");
     cv::FileStorage file(fileName, cv::FileStorage::READ);
     cv::Mat retMatrix;
     file["saved_matrix"] >> retMatrix;
     file.release();
-    return retMatrix;
+    this->rotationMatrix = retMatrix;
+    std::cout << "Rot Matrix: " << rotationMatrix << std::endl;
 }
 
 void Camera::createCalibration(std::deque<ImageData> &frames){
