@@ -23,7 +23,7 @@ int main(){
         std::cin >> yesNo;
         if (yesNo == 'N')
             break;
-        system.Save();
+        system.MainTestingRoutine();
     }
 }
 

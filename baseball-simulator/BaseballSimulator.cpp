@@ -135,14 +135,14 @@ void BaseballSimulator::MainTestingRoutine(){
 }
 
 void BaseballSimulator::Save(){
-    D400 cam(ctx);
-    std::cout << "Attached Camera" << endl;
-    cam.calibrate();
-    cam.setDefaultSettings();
-    cam.writeMat("RotationMatrix");
+    // D400 cam(ctx);
+    // std::cout << "Attached Camera" << endl;
+    // cam.calibrate();
+    // cam.setDefaultSettings();
+    // cam.writeMat("RotationMatrix");
 }
 void BaseballSimulator::Load(){
-    D400 cam(ctx);
-    std::cout << "Attached Camera" << endl;
-    cam.readMat("RotationMatrix");
+    // D400 cam(ctx);
+    // std::cout << "Attached Camera" << endl;
+    // cam.readMat("RotationMatrix");
 }
