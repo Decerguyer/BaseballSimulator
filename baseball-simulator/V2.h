@@ -37,6 +37,24 @@ struct coord3D{
 };
 
 
+void writeMat(cv::Mat mat, std::string fileName){
+    fileName.append(".xml");
+    cv::FileStorage file(fileName, cv::FileStorage::WRITE);
+
+    file << "saved_matrix" << mat;
+    file.release();
+}
+
+cv::Mat readMat(std::string fileName){
+    fileName.append(".xml");
+    cv::FileStorage file(fileName, cv::FileStorage::READ);
+    cv::Mat retMatrix;
+    file["saved_matrix"] >> retMatrix;
+    file.release();
+    return retMatrix;
+}
+
+
 #endif /* V2_h */
 
 
