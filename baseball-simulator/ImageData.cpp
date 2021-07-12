@@ -106,7 +106,6 @@ static void write(cv::FileStorage& file, const std::string&, const ImageData& im
 static void read(const cv::FileNode& node, ImageData& imgData){
     if(node.empty())
         std::cout << "No Data found in file\n";
-        return 1;
     else
         imgData.read(node);
 }

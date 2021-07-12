@@ -81,7 +81,6 @@ static void write(cv::FileStorage& file, const std::string&, const ThresholdFilt
 static void read(const cv::FileNode& node, ThresholdFilter& threshFilter){
     if(node.empty())
         std::cout << "No Data found in file\n";
-        return 1;
     else
         threshFilter.read(node);
 }

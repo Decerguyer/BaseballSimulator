@@ -198,7 +198,6 @@ static void write(cv::FileStorage& file, const std::string&, const Camera& camer
 static void read(const cv::FileNode& node, Camera& camera){
     if(node.empty())
         std::cout << "No Data found in file\n";
-        return 1;
     else
         camera.read(node);
 }
