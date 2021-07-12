@@ -145,12 +145,12 @@ void D400::read(const cv::FileNode& node)
 
 }
 
-static void write(cv::FileStorage& file, const std::string&, const Camera& camera)
+static void write(cv::FileStorage& file, const std::string&, const D400& camera)
 {
     camera.write(file);
 }
 
-static void read(const cv::FileNode& node, Camera& camera){
+static void read(const cv::FileNode& node, D400& camera){
     if(node.empty())
         std::cout << "No Data found in file\n";
         return 1;

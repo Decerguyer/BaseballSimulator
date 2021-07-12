@@ -31,8 +31,8 @@ public:
     void writeMat(cv::Mat mat, std::string fileName);
     cv::Mat readMat(std::string fileName);
 
-    void write(FileStorage& file) const;
-    void read(const FileNode& node);
+    void write(cv::FileStorage& file) const;
+    void read(const cv::FileNode& node);
     
 protected:
     cv::Mat cameraMatrix; //This is set by the subclass camera (For D400 this happens in startStream)
@@ -51,7 +51,7 @@ private:
 
 };
 
-static void write(FileStorage& file, const std::string&, const Camera& camera);
-static void read(const FileNode& node, Camera& camera);
+static void write(cv::FileStorage& file, const std::string&, const Camera& camera);
+static void read(const cv::FileNode& node, Camera& camera);
 
 #endif /* Camera_h */

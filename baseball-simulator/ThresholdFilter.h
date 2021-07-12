@@ -15,8 +15,8 @@ public:
     cv::Mat filter(cv::Mat depthMat, float threshDist = 0.6096, float maxThreshDist = 3.048);
     void createThresholdFrame();
 
-    void write(FileStorage& file) const;
-    void read(const FileNode& node);
+    void write(cv::FileStorage& file) const;
+    void read(const cv::FileNode& node);
 
 private:
     cv::Mat thresholdMat;
@@ -25,7 +25,7 @@ private:
     
 };
 
-static void write(FileStorage& file, const std::string&, const ThresholdFilter& threshFilter);
-static void read(const FileNode& node, ThresholdFilter& threshFilter);
+static void write(cv::FileStorage& file, const std::string&, const ThresholdFilter& threshFilter);
+static void read(const cv::FileNode& node, ThresholdFilter& threshFilter);
 
 #endif /* ThresholdFilter_h */

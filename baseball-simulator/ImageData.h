@@ -30,8 +30,8 @@ public:
     cv::Vec3f IRBallLoc = {0, 0, 0};
     cv::Mat depthToVisual(cv::Mat depth);
 
-    void write(FileStorage& file) const;
-    void read(const FileNode& node);
+    void write(cv::FileStorage& file) const;
+    void read(const cv::FileNode& node);
 
     
 private:
@@ -42,7 +42,7 @@ private:
 
 };
 
-static void write(FileStorage& file, const std::string&, const ImageData& imgData);
-static void read(const FileNode& node, ImageData& imgData);
+static void write(cv::FileStorage& file, const std::string&, const ImageData& imgData);
+static void read(const cv::FileNode& node, ImageData& imgData);
 
 #endif /* ImageData_h */

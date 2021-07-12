@@ -25,6 +25,9 @@ public:
     rs2::frameset getFrame();
     void startStream(int numFrames = 20);
     void endStream(); 
+
+    void D400::write(cv::FileStorage& file) const;
+    void D400::read(const cv::FileNode& node);
     
 private:
     rs2::config cfg;
@@ -36,5 +39,9 @@ private:
     void throwFrames(int numFrames);
 
 };
+
+static void write(cv::FileStorage& file, const std::string&, const D400& camera);
+
+static void read(const cv::FileNode& node, D400& camera);
 
 #endif /* D400_h */
