@@ -117,3 +117,43 @@ void D400::throwFrames(int numFrames){
         getFrame();
     }
 }
+
+void D400::write(FileStorage& file) const  
+{
+    file << "{" 
+    << "rotationMatrix" << this->rotationMatrix 
+    << "translationMatrix" << this->translationMatrix 
+    << "cameraMatrix" << this->cameraMatrix
+
+    << "}";
+}
+void D400::read(const FileNode& node)
+{
+    this->rotationMatrix = node["rotationMatrix"];
+    this->translationMatrix = node["translationMatrix"];
+    this->cameraMatrix = node["cameraMatrix"];
+
+    //Write overload for rs2_intrin later to avoid this unnecessary code
+    this->intrin.width = node["intrinWidth"];
+    this->intrin.height = node["intrinHeight"];
+    this->intrin.ppx = node["intrinPpx"];
+    this->intrin.ppy = node["intrinPpy"];
+    this->intrin.fx = node["intrinFx"];
+    this->intrin.fy = node["intrinFy"];
+    
+
+
+}
+
+static void write(FileStorage& file, const std::string&, const Camera& camera)
+{
+    camera.write(file);
+}
+
+static void read(const FileNode& node, Camera& camera){
+    if(node.empty())
+        std::cout << "No Data found in file\n";
+        return 1;
+    else
+        camera.read(node);
+}

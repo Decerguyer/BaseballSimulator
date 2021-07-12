@@ -62,13 +62,13 @@ cv::Mat ThresholdFilter::rsDepthToCVMatExtra(rs2::depth_frame depthFrame){
     return depth_metric_fp;
 }
 
-void write(FileStorage& file) const  
+void ThresholdFilter::write(FileStorage& file) const  
 {
     file << "{" 
     << "thresholdMat" << this->thresholdMat
     << "}";
 }
-void read(const FileNode& node)
+void ThresholdFilter::read(const FileNode& node)
 {
     this->thresholdMat = node["thresholdMat"];
 }
