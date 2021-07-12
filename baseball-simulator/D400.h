@@ -11,6 +11,7 @@
 
 class D400 : public Camera{
 public:
+    D400();
     D400(rs2::context &ctx);
     void setExposure(int exposureTime);
     void enableStreams(int width, int height, int fps);
@@ -40,8 +41,7 @@ private:
 
 };
 
-static void write(cv::FileStorage& file, const std::string&, const D400& camera);
-
-static void read(const cv::FileNode& node, D400& camera);
+void write(cv::FileStorage& file, const std::string&, const Camera& camera);
+void read(const cv::FileNode& node, D400& camera, const D400& default_value);
 
 #endif /* D400_h */

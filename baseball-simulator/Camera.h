@@ -51,7 +51,7 @@ private:
 
 };
 
-static void write(cv::FileStorage& file, const std::string&, const Camera& camera);
-static void read(const cv::FileNode& node, Camera& camera);
+// void write(cv::FileStorage& file, const std::string&, const Camera& camera);
+// void read(const cv::FileNode& node, Camera& camera, const Camera& default_value);
 
 #endif /* Camera_h */

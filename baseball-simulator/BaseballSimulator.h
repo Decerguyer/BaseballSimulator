@@ -28,6 +28,8 @@ class BaseballSimulator{
     public:
         BaseballSimulator();
         void MainTestingRoutine();
+        void savingRoutine();
+        void loadingRoutine();
         void Save();
         void Load();
     private:

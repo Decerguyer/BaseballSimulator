@@ -7,8 +7,11 @@
 #include "D400.h"
 #include "V2.h"
 
-ThresholdFilter::ThresholdFilter(D400 &cam) : camera(cam){
-    createThresholdFrame();
+ThresholdFilter::ThresholdFilter(D400 &cam){
+    createThresholdFrame(cam);
+}
+
+ThresholdFilter::ThresholdFilter(){
 }
 
 //This filters out any depth that extends past (background depth - threshDist)
@@ -32,7 +35,7 @@ cv::Mat ThresholdFilter::filter(cv::Mat depthMat, float threshDist, float maxThr
     return retMat;
 }
 
-void ThresholdFilter::createThresholdFrame(){
+void ThresholdFilter::createThresholdFrame(D400& camera){
     rs2::temporal_filter temp_filter(0.4, 20, 7);
     rs2::hole_filling_filter hole_fill_filter(2);
     
@@ -73,12 +76,12 @@ void ThresholdFilter::read(const cv::FileNode& node)
     node["thresholdMat"] >> this->thresholdMat;
 }
 
-static void write(cv::FileStorage& file, const std::string&, const ThresholdFilter& threshFilter)
+void write(cv::FileStorage& file, const std::string&, const ThresholdFilter& threshFilter)
 {
     threshFilter.write(file);
 }
 
-static void read(const cv::FileNode& node, ThresholdFilter& threshFilter){
+void read(const cv::FileNode& node, ThresholdFilter& threshFilter, const ThresholdFilter& default_value = ThresholdFilter()){
     if(node.empty())
         std::cout << "No Data found in file\n";
     else

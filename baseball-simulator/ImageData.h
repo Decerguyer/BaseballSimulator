@@ -7,10 +7,12 @@
 #include <deque>
 #include <cmath>
 #include "V2.h"
+#include <string>
 
 class ImageData{
 public:
     ImageData(rs2::frameset fSet);
+    ImageData();
     cv::Mat getDepthMat();
     cv::Mat getIRMat();
     cv::Mat getDepthVisMat();
@@ -33,7 +35,6 @@ public:
     void write(cv::FileStorage& file) const;
     void read(const cv::FileNode& node);
 
-    
 private:
     long long timeStamp;
     unsigned long long frameNumber;
@@ -42,7 +43,12 @@ private:
 
 };
 
-static void write(cv::FileStorage& file, const std::string&, const ImageData& imgData);
-static void read(const cv::FileNode& node, ImageData& imgData);
+void write(cv::FileStorage& file, const std::string&, const ImageData& imgData);
+void read(const cv::FileNode& node, ImageData& imgData, const ImageData& default_value);
+
+//pass in an empty deque
+void loadImageDataDeque(std::deque<ImageData>& images, cv::FileStorage& file);
+
+void saveImageDataDeque(std::deque<ImageData>& images, cv::FileStorage& file);
 
 #endif /* ImageData_h */

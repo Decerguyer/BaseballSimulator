@@ -11,21 +11,21 @@
 
 class ThresholdFilter{
 public:
+    ThresholdFilter();
     ThresholdFilter(D400 &camera);
     cv::Mat filter(cv::Mat depthMat, float threshDist = 0.6096, float maxThreshDist = 3.048);
-    void createThresholdFrame();
+    void createThresholdFrame(D400& cam);
 
     void write(cv::FileStorage& file) const;
     void read(const cv::FileNode& node);
 
 private:
     cv::Mat thresholdMat;
-    D400 &camera;
     cv::Mat rsDepthToCVMatExtra(rs2::depth_frame depthFrame);
     
 };
 
-static void write(cv::FileStorage& file, const std::string&, const ThresholdFilter& threshFilter);
-static void read(const cv::FileNode& node, ThresholdFilter& threshFilter);
+void write(cv::FileStorage& file, const std::string&, const ThresholdFilter& threshFilter);
+void read(const cv::FileNode& node, ThresholdFilter& threshFilter, const ThresholdFilter& default_value);
 
 #endif /* ThresholdFilter_h */

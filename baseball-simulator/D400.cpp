@@ -7,6 +7,10 @@
 #include "D400.h"
 #include "V2.h"
 
+D400::D400(){
+
+}
+
 D400::D400(rs2::context &ctx){
     //A context is a librealsense tool for managing devices
     auto devList = ctx.query_devices(); // Get a snapshot of currently connected devices
@@ -121,7 +125,7 @@ void D400::throwFrames(int numFrames){
 void D400::write(cv::FileStorage& file) const  
 {
     file << "{" << "Camera";
-    Camera::write(file); 
+    // Camera::write(file); 
     file << "intrinWidth" << this->intrin.width
     << "intrinHeight" << this->intrin.height
     << "intrinPpx" << this->intrin.ppx
@@ -138,7 +142,7 @@ void D400::write(cv::FileStorage& file) const
 }
 void D400::read(const cv::FileNode& node)
 {
-    Camera::read(node["Camera"]);
+    //Camera::read(node["Camera"]);
     this->intrin.width = (int)node["intrinWidth"];
     this->intrin.height = (int)node["intrinHeight"];
     this->intrin.ppx = (float)node["intrinPpx"];
@@ -155,12 +159,12 @@ void D400::read(const cv::FileNode& node)
     this->intrin.coeffs[4] = (float)node["intrinCoeffs4"];
 }
 
-static void write(cv::FileStorage& file, const std::string&, const D400& camera)
+void write(cv::FileStorage& file, const std::string&, const Camera& camera)
 {
     camera.write(file);
 }
 
-static void read(const cv::FileNode& node, D400& camera){
+void read(const cv::FileNode& node, D400& camera, const D400& default_value = D400()){
     if(node.empty())
         std::cout << "No Data found in file\n";
     else

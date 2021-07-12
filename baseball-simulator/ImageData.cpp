@@ -6,6 +6,8 @@
 #include "V2.h"
 #include "ImageData.h"
 
+ImageData::ImageData(){};
+
 ImageData::ImageData(rs2::frameset fSet){
     depthMat = rsDepthToCVMat(fSet.get_depth_frame());
     irMat = rsIRToCVMat(fSet.get_infrared_frame(1));
@@ -96,16 +98,40 @@ void ImageData::read(const cv::FileNode& node)
     node["irMat"] >> this->irMat;
     this->timeStamp = (double)node["timeStamp"];
     this->frameNumber = (int)node["frameNumber"];
+
+    this->depthMatCropped = this->depthMat;
+    this->irMatCropped = this->irMat;
+    this->depthVisMat = depthToVisual(this->depthMat);
+    this->depthVisMatCropped = this->depthVisMat;
 }
 
-static void write(cv::FileStorage& file, const std::string&, const ImageData& imgData)
+
+void write(cv::FileStorage& file, const std::string&, const ImageData& imgData)
 {
     imgData.write(file);
 }
 
-static void read(const cv::FileNode& node, ImageData& imgData){
+void read(const cv::FileNode& node, ImageData& imgData, const ImageData& default_value = ImageData()){
     if(node.empty())
         std::cout << "No Data found in file\n";
     else
         imgData.read(node);
+}
+
+//pass in an empty deque
+void loadImageDataDeque(std::deque<ImageData>& images, cv::FileStorage& file){
+    cv::FileNode n = file["images"];
+    cv::FileNodeIterator it = n.begin(), it_end = n.end(); // Go through the node
+    for (; it != it_end; ++it){
+        ImageData img;
+        read(*it, img);
+        images.push_back(img);
+    }
+}
+void saveImageDataDeque(std::deque<ImageData>& images, cv::FileStorage& file){
+    file << "images" << "[";
+    for (int i = 0; i < (int)images.size(); i++){
+        file << images[i];
+    }
+    file << "]";
 }
