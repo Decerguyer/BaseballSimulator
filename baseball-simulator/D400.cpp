@@ -145,7 +145,7 @@ void D400::read(const cv::FileNode& node)
     this->intrin.ppy = (float)node["intrinPpy"];
     this->intrin.fx = (float)node["intrinFx"];
     this->intrin.fy = (float)node["intrinFy"];
-    this->intrin.model = static_cast<rs2::rs2_distortion>(node["intrinModel"]);
+    this->intrin.model = static_cast<rs2_distortion>((int)node["intrinModel"]);
 
     //Redo...
     this->intrin.coeffs[0] = (float)node["intrinCoeffs0"];
