@@ -70,7 +70,7 @@ void ThresholdFilter::write(cv::FileStorage& file) const
 }
 void ThresholdFilter::read(const cv::FileNode& node)
 {
-    this->thresholdMat = node["thresholdMat"];
+    node["thresholdMat"] >> this->thresholdMat;
 }
 
 static void write(cv::FileStorage& file, const std::string&, const ThresholdFilter& threshFilter)

@@ -120,29 +120,26 @@ void D400::throwFrames(int numFrames){
 
 void D400::write(cv::FileStorage& file) const  
 {
-    file << "{" 
-    << "rotationMatrix" << this->rotationMatrix 
-    << "translationMatrix" << this->translationMatrix 
-    << "cameraMatrix" << this->cameraMatrix
+    // file << "{" 
+    // << "rotationMatrix" << this->rotationMatrix 
+    // << "translationMatrix" << this->translationMatrix 
+    // << "cameraMatrix" << this->cameraMatrix
 
-    << "}";
+    // << "}";
 }
 void D400::read(const cv::FileNode& node)
 {
-    this->rotationMatrix = node["rotationMatrix"];
-    this->translationMatrix = node["translationMatrix"];
-    this->cameraMatrix = node["cameraMatrix"];
+    // node["rotationMatrix"] >> this->rotationMatrix;
+    // node["translationMatrix"] >> this->translationMatrix;
+    // node["cameraMatrix"] >> this->cameraMatrix;
 
-    //Write overload for rs2_intrin later to avoid this unnecessary code
+    //Read overload for rs2_intrin later to avoid this unnecessary code
     this->intrin.width = node["intrinWidth"];
     this->intrin.height = node["intrinHeight"];
     this->intrin.ppx = node["intrinPpx"];
     this->intrin.ppy = node["intrinPpy"];
     this->intrin.fx = node["intrinFx"];
     this->intrin.fy = node["intrinFy"];
-    
-
-
 }
 
 static void write(cv::FileStorage& file, const std::string&, const D400& camera)

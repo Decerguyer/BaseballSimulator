@@ -86,16 +86,16 @@ void ImageData::write(cv::FileStorage& file) const
     file << "{" 
     << "depthMat" << this->depthMat 
     << "irMat" << this->irMat 
-    << "timeStamp" << this->timeStamp
-    << "frameNumber" << this->frameNumber 
+    << "timeStamp" << (double)this->timeStamp
+    << "frameNumber" << (int)this->frameNumber 
     << "}";
 }
 void ImageData::read(const cv::FileNode& node)
 {
-    this->depthMat = node["depthMat"];
-    this->irMat = node["irMat"];
-    this->timeStamp = (long long)node["timeStamp"];
-    this->frameNumber = (unsigned long long)node["frameNumber"];
+    node["depthMat"] >> this->depthMat;
+    node["irMat"] >> this->irMat;
+    this->timeStamp = (double)node["timeStamp"];
+    this->frameNumber = (int)node["frameNumber"];
 }
 
 static void write(cv::FileStorage& file, const std::string&, const ImageData& imgData)

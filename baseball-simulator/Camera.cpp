@@ -185,9 +185,9 @@ void Camera::write(cv::FileStorage& file) const
 }
 void Camera::read(const cv::FileNode& node)
 {
-    this->rotationMatrix = node["rotationMatrix"];
-    this->translationMatrix = node["translationMatrix"];
-    this->cameraMatrix = node["cameraMatrix"];
+    node["rotationMatrix"] >> this->rotationMatrix;
+    node["translationMatrix"] >> this->translationMatrix;
+    node["cameraMatrix"] >> this->cameraMatrix;
 }
 
 static void write(cv::FileStorage& file, const std::string&, const Camera& camera)
