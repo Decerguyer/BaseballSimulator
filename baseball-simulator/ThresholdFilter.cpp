@@ -62,23 +62,23 @@ cv::Mat ThresholdFilter::rsDepthToCVMatExtra(rs2::depth_frame depthFrame){
     return depth_metric_fp;
 }
 
-void ThresholdFilter::write(FileStorage& file) const  
+void ThresholdFilter::write(cv::FileStorage& file) const  
 {
     file << "{" 
     << "thresholdMat" << this->thresholdMat
     << "}";
 }
-void ThresholdFilter::read(const FileNode& node)
+void ThresholdFilter::read(const cv::FileNode& node)
 {
     this->thresholdMat = node["thresholdMat"];
 }
 
-static void write(FileStorage& file, const std::string&, const ThresholdFilter& threshFilter)
+static void write(cv::FileStorage& file, const std::string&, const ThresholdFilter& threshFilter)
 {
     threshFilter.write(file);
 }
 
-static void read(const FileNode& node, ThresholdFilter& threshFilter){
+static void read(const cv::FileNode& node, ThresholdFilter& threshFilter){
     if(node.empty())
         std::cout << "No Data found in file\n";
         return 1;

@@ -175,7 +175,7 @@ std::vector<float> Camera::convertPosMatVec(cv::Mat unconverted){
     return converted;
 }
 
-void Camera::write(FileStorage& file) const  
+void Camera::write(cv::FileStorage& file) const  
 {
     file << "{" 
     << "rotationMatrix" << this->rotationMatrix 
@@ -183,19 +183,19 @@ void Camera::write(FileStorage& file) const
     << "cameraMatrix" << this->cameraMatrix
     << "}";
 }
-void Camera::read(const FileNode& node)
+void Camera::read(const cv::FileNode& node)
 {
     this->rotationMatrix = node["rotationMatrix"];
     this->translationMatrix = node["translationMatrix"];
     this->cameraMatrix = node["cameraMatrix"];
 }
 
-static void write(FileStorage& file, const std::string&, const Camera& camera)
+static void write(cv::FileStorage& file, const std::string&, const Camera& camera)
 {
     camera.write(file);
 }
 
-static void read(const FileNode& node, Camera& camera){
+static void read(const cv::FileNode& node, Camera& camera){
     if(node.empty())
         std::cout << "No Data found in file\n";
         return 1;

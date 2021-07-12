@@ -81,7 +81,7 @@ cv::Mat ImageData::rsIRToCVMat(rs2::video_frame irFrame){
     return ir_mat;
 }
 
-void ImageData::write(FileStorage& file) const  
+void ImageData::write(cv::FileStorage& file) const  
 {
     file << "{" 
     << "depthMat" << this->depthMat 
@@ -90,7 +90,7 @@ void ImageData::write(FileStorage& file) const
     << "frameNumber" << this->frameNumber 
     << "}";
 }
-void ImageData::read(const FileNode& node)
+void ImageData::read(const cv::FileNode& node)
 {
     this->depthMat = node["depthMat"];
     this->irMat = node["irMat"];
@@ -98,12 +98,12 @@ void ImageData::read(const FileNode& node)
     this->frameNumber = (unsigned long long)node["frameNumber"];
 }
 
-static void write(FileStorage& file, const std::string&, const ImageData& imgData)
+static void write(cv::FileStorage& file, const std::string&, const ImageData& imgData)
 {
     imgData.write(file);
 }
 
-static void read(const FileNode& node, ImageData& imgData){
+static void read(const cv::FileNode& node, ImageData& imgData){
     if(node.empty())
         std::cout << "No Data found in file\n";
         return 1;

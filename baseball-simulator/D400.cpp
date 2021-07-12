@@ -118,7 +118,7 @@ void D400::throwFrames(int numFrames){
     }
 }
 
-void D400::write(FileStorage& file) const  
+void D400::write(cv::FileStorage& file) const  
 {
     file << "{" 
     << "rotationMatrix" << this->rotationMatrix 
@@ -127,7 +127,7 @@ void D400::write(FileStorage& file) const
 
     << "}";
 }
-void D400::read(const FileNode& node)
+void D400::read(const cv::FileNode& node)
 {
     this->rotationMatrix = node["rotationMatrix"];
     this->translationMatrix = node["translationMatrix"];
@@ -145,12 +145,12 @@ void D400::read(const FileNode& node)
 
 }
 
-static void write(FileStorage& file, const std::string&, const Camera& camera)
+static void write(cv::FileStorage& file, const std::string&, const Camera& camera)
 {
     camera.write(file);
 }
 
-static void read(const FileNode& node, Camera& camera){
+static void read(const cv::FileNode& node, Camera& camera){
     if(node.empty())
         std::cout << "No Data found in file\n";
         return 1;
