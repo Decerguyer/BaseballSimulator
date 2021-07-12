@@ -175,7 +175,7 @@ std::vector<float> Camera::convertPosMatVec(cv::Mat unconverted){
     return converted;
 }
 
-void write(FileStorage& file) const  
+void Camera::write(FileStorage& file) const  
 {
     file << "{" 
     << "rotationMatrix" << this->rotationMatrix 
@@ -183,7 +183,7 @@ void write(FileStorage& file) const
     << "cameraMatrix" << this->cameraMatrix
     << "}";
 }
-void read(const FileNode& node)
+void Camera::read(const FileNode& node)
 {
     this->rotationMatrix = node["rotationMatrix"];
     this->translationMatrix = node["translationMatrix"];

@@ -81,7 +81,7 @@ cv::Mat ImageData::rsIRToCVMat(rs2::video_frame irFrame){
     return ir_mat;
 }
 
-void write(FileStorage& file) const  
+void ImageData::write(FileStorage& file) const  
 {
     file << "{" 
     << "depthMat" << this->depthMat 
@@ -90,7 +90,7 @@ void write(FileStorage& file) const
     << "frameNumber" << this->frameNumber 
     << "}";
 }
-void read(const FileNode& node)
+void ImageData::read(const FileNode& node)
 {
     this->depthMat = node["depthMat"];
     this->irMat = node["irMat"];
