@@ -30,13 +30,19 @@ public:
     cv::Vec3f IRBallLoc = {0, 0, 0};
     cv::Mat depthToVisual(cv::Mat depth);
 
+    void write(FileStorage& file) const;
+    void read(const FileNode& node);
+
     
 private:
     long long timeStamp;
     unsigned long long frameNumber;
     cv::Mat rsDepthToCVMat(rs2::depth_frame depthFrame);
     cv::Mat rsIRToCVMat(rs2::video_frame irFrame);
-    
+
 };
+
+static void write(FileStorage& file, const std::string&, const ImageData& imgData);
+static void read(const FileNode& node, ImageData& imgData);
 
 #endif /* ImageData_h */

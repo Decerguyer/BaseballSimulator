@@ -15,11 +15,17 @@ public:
     cv::Mat filter(cv::Mat depthMat, float threshDist = 0.6096, float maxThreshDist = 3.048);
     void createThresholdFrame();
 
+    void write(FileStorage& file) const;
+    void read(const FileNode& node);
+
 private:
     cv::Mat thresholdMat;
     D400 &camera;
     cv::Mat rsDepthToCVMatExtra(rs2::depth_frame depthFrame);
     
 };
+
+static void write(FileStorage& file, const std::string&, const ThresholdFilter& threshFilter);
+static void read(const FileNode& node, ThresholdFilter& threshFilter);
 
 #endif /* ThresholdFilter_h */
