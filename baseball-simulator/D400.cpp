@@ -120,26 +120,39 @@ void D400::throwFrames(int numFrames){
 
 void D400::write(cv::FileStorage& file) const  
 {
-    // file << "{" 
-    // << "rotationMatrix" << this->rotationMatrix 
-    // << "translationMatrix" << this->translationMatrix 
-    // << "cameraMatrix" << this->cameraMatrix
-
-    // << "}";
+    file << "{" << "Camera";
+    Camera::write(file); 
+    file << "intrinWidth" << this->intrin.width
+    << "intrinHeight" << this->intrin.height
+    << "intrinPpx" << this->intrin.ppx
+    << "intrinPpy" << this->intrin.ppy
+    << "intrinFx" << this->intrin.fx
+    << "intrinFy" << this->intrin.fy
+    << "intrinModel" << this->intrin.model
+    << "intrinCoeffs0" << this->intrin.coeffs[0]
+    << "intrinCoeffs1" << this->intrin.coeffs[1]
+    << "intrinCoeffs2" << this->intrin.coeffs[2]
+    << "intrinCoeffs3" << this->intrin.coeffs[3]
+    << "intrinCoeffs4" << this->intrin.coeffs[4]
+    << "}";
 }
 void D400::read(const cv::FileNode& node)
 {
-    // node["rotationMatrix"] >> this->rotationMatrix;
-    // node["translationMatrix"] >> this->translationMatrix;
-    // node["cameraMatrix"] >> this->cameraMatrix;
+    Camera::read(node["Camera"]);
+    this->intrin.width = (int)node["intrinWidth"];
+    this->intrin.height = (int)node["intrinHeight"];
+    this->intrin.ppx = (float)node["intrinPpx"];
+    this->intrin.ppy = (float)node["intrinPpy"];
+    this->intrin.fx = (float)node["intrinFx"];
+    this->intrin.fy = (float)node["intrinFy"];
+    this->intrin.model = static_cast<rs2::rs2_distortion>(node["intrinModel"]);
 
-    //Read overload for rs2_intrin later to avoid this unnecessary code
-    this->intrin.width = node["intrinWidth"];
-    this->intrin.height = node["intrinHeight"];
-    this->intrin.ppx = node["intrinPpx"];
-    this->intrin.ppy = node["intrinPpy"];
-    this->intrin.fx = node["intrinFx"];
-    this->intrin.fy = node["intrinFy"];
+    //Redo...
+    this->intrin.coeffs[0] = (float)node["intrinCoeffs0"];
+    this->intrin.coeffs[1] = (float)node["intrinCoeffs1"];
+    this->intrin.coeffs[2] = (float)node["intrinCoeffs2"];
+    this->intrin.coeffs[3] = (float)node["intrinCoeffs3"];
+    this->intrin.coeffs[4] = (float)node["intrinCoeffs4"];
 }
 
 static void write(cv::FileStorage& file, const std::string&, const D400& camera)
