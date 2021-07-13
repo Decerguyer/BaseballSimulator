@@ -136,7 +136,7 @@ void BaseballSimulator::MainTestingRoutine(){
 }
 
 void BaseballSimulator::savingRoutine(){
-    cv::FileStorage file("TestingRoutineData.xml", cv::FileStorage::WRITE);
+    cv::FileStorage file("TestingRoutineData0.xml", cv::FileStorage::WRITE);
 
     //****************************Camera Initialization & Calibration***************************//
     D400 cam(ctx);
