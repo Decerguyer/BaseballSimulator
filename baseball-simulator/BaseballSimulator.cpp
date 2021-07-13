@@ -147,6 +147,13 @@ void BaseballSimulator::savingRoutine(){
     file << "CameraCalibration" << cam; //Saves Camera/D400 Object with Node Name "CameraCalibration"
     
     cam.setDefaultSettings();
+    
+    //**************************Threshold Initialization*************************//
+    ThresholdFilter threshFilter(cam);
+    std::cout << "Saving ThresholdFilter\n";
+    file << "ThresholdFilter" << threshFilter;
+
+    //****************************User Control Block***************************//
     int exposure;
     std::cout << "Enter Exposure Value: ";
     std::cin >> exposure;
@@ -154,14 +161,8 @@ void BaseballSimulator::savingRoutine(){
 
     std::cout << "Saving Exposure\n";
     file << "Exposure" << exposure;
-    
-    //**************************Threshold Initialization*************************//
-    ThresholdFilter threshFilter(cam);
 
-    std::cout << "Saving ThresholdFiler";
-    file << "ThresholdFilter" << threshFilter;
 
-    //****************************User Control Block***************************//
     int numFrames;
     std::cout << "Enter number of frames to record\n";
     std::cin >> numFrames;
@@ -194,7 +195,7 @@ void BaseballSimulator::savingRoutine(){
     std::cout << std::endl << "Spin values set: \n" << spin[0] << std::endl << spin[1] << std::endl << spin[2] << std::endl;
 
     file << "Spin0" << spin[0]
-    << "Sping1" << spin[1]
+    << "Spin1" << spin[1]
     << "Spin2" << spin[2];
 
 
@@ -204,9 +205,9 @@ void BaseballSimulator::savingRoutine(){
     cin >> x >> z;
 
     file << "GroundTruthX" << x
-    << "GroundTruthY" << z;
+    << "GroundTruthZ" << z;
 
-    std::cout<<"The Routine has completed" << std::endl;
+    std::cout<<"The Routine has completed\n" << std::endl;
 }
 
 void BaseballSimulator::loadingRoutine(){
