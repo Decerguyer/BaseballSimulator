@@ -50,7 +50,7 @@ public:
         cv::Mat transformedPoint = pointTransform(adjustedPoint3D);
         return transformedPoint;
     }
-    cv::Mat transformError(){
+    cv::Mat transformError(cv::Mat adjustedPoint3D){
         cv::Mat transformedError = errorTransform(adjustedPoint3D);
         return transformedError;
     }
@@ -102,7 +102,7 @@ private:
     int rows = 3;
     int columns = 3;
     int CHECKERBOARD[2] = {columns, rows};
-    float squareSize = 152.4;
+    float squareSize = 455;
     //*/
     void createCalibration(){
         camera.setDefaultSettings();
