@@ -38,10 +38,11 @@ protected:
     cv::Mat cameraMatrix; //This is set by the subclass camera (For D400 this happens in startStream)
     cv::Mat distCoeffs = (cv::Mat_<float>(1,5) << 0,0,0,0,0); //Distortion coeff, should be 0 for all usable realsense cameras
     void createCalibration(std::deque<ImageData> &frames);
-    
-private:
+
     cv::Mat rotationMatrix = (cv::Mat_<double>(3,3) << 0,0,0,0,0,0,0,0,0);
     cv::Mat translationMatrix = (cv::Mat_<double>(3,1) << 0,0,0);
+    
+private:
     int rows = 3;
     int columns = 3;
     int CHECKERBOARD[2] = {columns, rows};
@@ -51,7 +52,7 @@ private:
 
 };
 
-// void write(cv::FileStorage& file, const std::string&, const Camera& camera);
-// void read(const cv::FileNode& node, Camera& camera, const Camera& default_value);
+static void write(cv::FileStorage& file, const std::string&, const Camera& camera);
+static void read(const cv::FileNode& node, Camera& camera, const Camera& default_value);
 
 #endif /* Camera_h */

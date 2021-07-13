@@ -125,7 +125,7 @@ void D400::throwFrames(int numFrames){
 void D400::write(cv::FileStorage& file) const  
 {
     file << "{" << "Camera";
-    // Camera::write(file); 
+    Camera::write(file);
     file << "intrinWidth" << this->intrin.width
     << "intrinHeight" << this->intrin.height
     << "intrinPpx" << this->intrin.ppx
@@ -142,7 +142,7 @@ void D400::write(cv::FileStorage& file) const
 }
 void D400::read(const cv::FileNode& node)
 {
-    //Camera::read(node["Camera"]);
+    Camera::read(node["Camera"]);
     this->intrin.width = (int)node["intrinWidth"];
     this->intrin.height = (int)node["intrinHeight"];
     this->intrin.ppx = (float)node["intrinPpx"];
@@ -159,7 +159,7 @@ void D400::read(const cv::FileNode& node)
     this->intrin.coeffs[4] = (float)node["intrinCoeffs4"];
 }
 
-void write(cv::FileStorage& file, const std::string&, const Camera& camera)
+void write(cv::FileStorage& file, const std::string&, const D400& camera)
 {
     camera.write(file);
 }

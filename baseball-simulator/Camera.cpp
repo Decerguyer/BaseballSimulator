@@ -190,14 +190,14 @@ void Camera::read(const cv::FileNode& node)
     node["cameraMatrix"] >> this->cameraMatrix;
 }
 
-// void write(cv::FileStorage& file, const std::string&, const Camera& camera)
-// {
-//     camera.write(file);
-// }
+void write(cv::FileStorage& file, const std::string&, const Camera& camera)
+{
+    camera.write(file);
+}
 
-// void read(const cv::FileNode& node, Camera& camera, const Camera& default_value = Camera()){
-//     if(node.empty())
-//         std::cout << "No Data found in file\n";
-//     else
-//         camera.read(node);
-// }
+void read(const cv::FileNode& node, Camera& camera, const Camera& default_value = Camera()){
+    if(node.empty())
+        std::cout << "No Data found in file\n";
+    else
+        camera.read(node);
+}

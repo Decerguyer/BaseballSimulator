@@ -41,7 +41,7 @@ private:
 
 };
 
-void write(cv::FileStorage& file, const std::string&, const Camera& camera);
+void write(cv::FileStorage& file, const std::string&, const D400& camera);
 void read(const cv::FileNode& node, D400& camera, const D400& default_value);
 
 #endif /* D400_h */
