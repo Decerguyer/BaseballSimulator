@@ -28,8 +28,8 @@ class BaseballSimulator{
     public:
         BaseballSimulator();
         void MainTestingRoutine();
-        void savingRoutine();
-        void loadingRoutine();
+        void savingRoutine(std::string str);
+        void loadingRoutine(std::string str);
         void Save();
         void Load();
     private:

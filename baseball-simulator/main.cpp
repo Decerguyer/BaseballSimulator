@@ -14,16 +14,32 @@
 
 //Custom JEY Solutions headers
 #include "BaseballSimulator.h"
+#include <string>
 
 int main(){
     BaseballSimulator system;
     while(true){
-        char yesNo;
-        std::cout << "Run System Process? (Y/N)" << std::endl;
-        std::cin >> yesNo;
-        if (yesNo == 'N')
-            break;
-        system.savingRoutine();
+        std::cout << "Enter 0 for MainTestingRoutine, 1 for savingRoutine, 2, for loadingRoutinem\n";
+        int choice;
+        
+        if (choice == 0){
+            std::cout << "Running MainTestingRoutine\n";
+            system.MainTestingRoutine();
+        }
+        else if (choice == 1){
+            std::cout << "Running savingRoutine\n";
+            std::cout << "Enter string for name of file to save (include folder name)\n";
+            std::string str;
+            std:: cin >> str;
+            system.savingRoutine(str);
+        }
+        else if (choice == 2){
+            std::cout << "Running loadingRoutine\n";
+            std::cout << "Enter string for name of file to load (include folder name)\n";
+            std::string str;
+            std:: cin >> str;
+            system.loadingRoutine(str);
+        }
     }
 }
 

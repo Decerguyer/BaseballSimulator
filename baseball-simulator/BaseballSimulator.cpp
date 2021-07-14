@@ -135,8 +135,8 @@ void BaseballSimulator::MainTestingRoutine(){
     std::cout<<"The Routine has completed" << std::endl;
 }
 
-void BaseballSimulator::savingRoutine(){
-    cv::FileStorage file("TestingRoutineData0.xml", cv::FileStorage::WRITE);
+void BaseballSimulator::savingRoutine(std::string str){
+    cv::FileStorage file(str, cv::FileStorage::WRITE);
 
     //****************************Camera Initialization & Calibration***************************//
     D400 cam(ctx);
@@ -210,11 +210,10 @@ void BaseballSimulator::savingRoutine(){
     std::cout<<"The Routine has completed\n" << std::endl;
 }
 
-void BaseballSimulator::loadingRoutine(){
+void BaseballSimulator::loadingRoutine(std::string str){
 
-    cv::FileStorage file("TestingRoutineData.xml", cv::FileStorage::READ);
+    cv::FileStorage file(str, cv::FileStorage::READ);
 
-    
     //****************************Camera Initialization & Calibration***************************//
     D400 cam(ctx);
     file["CameraCalibration"] >> cam;
