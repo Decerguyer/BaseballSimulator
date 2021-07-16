@@ -21,7 +21,7 @@ coord2D Tracker::track(ImageData &imgData){
     if (predDepth < 0.8){
         predDepth = 0.8;
     }
-    imgData.depthMat = threshFilter.filter(imgData.depthMat, 0.6096 ,(1.2*predDepth));
+    imgData.depthMat = threshFilter.filter(imgData.depthMat, 0.6096 ,3);//(1.2*predDepth));
     imgData.depthVisMat = imgData.depthToVisual(imgData.depthMat);
 
     coord2D ballCoordDepth = findBallFromDepth(imgData);

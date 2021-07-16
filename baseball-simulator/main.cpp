@@ -20,7 +20,8 @@ int main(){
     BaseballSimulator system;
     while(true){
         std::cout << "Enter 0 for MainTestingRoutine, 1 for savingRoutine, 2, for loadingRoutinem\n";
-        int choice;
+        int choice=0;
+        std::cin >> choice;
         
         if (choice == 0){
             std::cout << "Running MainTestingRoutine\n";
