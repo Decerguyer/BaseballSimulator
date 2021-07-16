@@ -254,6 +254,15 @@ void BaseballSimulator::loadingRoutine(std::string str){
     //Change images to VALID images so only the frames with the ball are shown?
     vis.visualize(images, true, true, true);
 
+    //**************************User Control Crop Block *************************//
+    int startFrame, endFrame;
+    std::cout<< "Enter the starting frame and then the ending frame (inclusive)" << std::endl;
+    std::cin >> startFrame >> endFrame;
+    coord2DVec.erase(coord2DVec.begin()+endFrame+1, coord2DVec.end());
+    timeStampsVec.erase(timeStampsVec.begin()+endFrame+1, timeStampsVec.end());
+    coord2DVec.erase(coord2DVec.begin(), coord2DVec.begin()+startFrame);
+    timeStampsVec.erase(timeStampsVec.begin(), timeStampsVec.begin()+startFrame);
+
     //**************************Pixel to Positions Block *************************//
     std::vector<std::vector<float>> positions3D = trk.convertTo3D(coord2DVec);
     for (int i = 0; i < positions3D.size(); i++){
