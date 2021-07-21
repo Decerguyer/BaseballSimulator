@@ -43,7 +43,9 @@ void Visualizer::visualize(std::deque<ImageData> imgData, bool showDepth, bool s
             imshow("Depth Visualized ROI", imgData[i].depthVisMatCropped);
         }
         if (showIR){
+            cv::namedWindow( "IR", cv::WINDOW_AUTOSIZE);
             imshow("IR", imgData[i].irMat);
+            cv::setMouseCallback("IR", onMouse, 0 );
             imshow("IR Cropped", imgData[i].irMatCropped);
         }
         int key = cv::waitKey(0);
@@ -60,4 +62,9 @@ void Visualizer::visualize(std::deque<ImageData> imgData, bool showDepth, bool s
     }
     cv::destroyAllWindows();
     cv::waitKey(1);
+}
+
+void Visualizer::onMouse( int event, int x, int y, int f, void*){
+    if (event == cv::EVENT_LBUTTONDOWN)
+        std::cout << x << " " << y << std::endl;
 }

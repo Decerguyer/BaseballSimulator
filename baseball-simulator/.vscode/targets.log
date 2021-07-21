@@ -7,7 +7,7 @@ make all --print-data-base --no-builtin-variables --no-builtin-rules --question
 
 # This program built for i386-apple-darwin11.3.0
 
-# Make data base, printed on Tue Jul  6 22:31:21 2021
+# Make data base, printed on Wed Jul 21 10:56:30 2021
 
 # Variables
 
@@ -38,17 +38,13 @@ CMAKE_BINARY_DIR = /home/ubuntu/BaseballSimulator/baseball-simulator
 # makefile (from `Makefile', line 1)
 MAKEFILE_LIST :=  Makefile
 # environment
-VSCODE_NODE_CACHED_DATA_DIR = /Users/yonatanarieh/Library/Application Support/Code/CachedData/507ce72a4466fbb27b715c3722558bb15afa9f48
-# environment
 VSCODE_VERBOSE_LOGGING = true
 # environment
-VSCODE_IPC_HOOK_EXTHOST = /var/folders/q3/gcfxpt5d26d2pcp2h7cxj5jh0000gn/T/vscode-ipc-e1fa8548-bc87-4ec6-b1bf-582030e1cbfb.sock
+VSCODE_IPC_HOOK_EXTHOST = /var/folders/q3/gcfxpt5d26d2pcp2h7cxj5jh0000gn/T/vscode-ipc-8f1a25f3-f5f0-467f-b5d9-63d8206f8422.sock
 # environment
 VSCODE_CWD = /
 # environment
 PATH = /usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/opt/X11/bin:/Library/Apple/usr/bin
-# environment
-LaunchInstanceID = 6AA85D4D-54B8-4CEB-A683-8CD33F926920
 # environment
 VSCODE_LOG_STACK = false
 # environment
@@ -73,6 +69,8 @@ VSCODE_AMD_ENTRYPOINT = vs/workbench/services/extensions/node/extensionHostProce
 HOME = /Users/yonatanarieh
 # default
 MAKEFILEPATH := /Applications/Xcode.app/Contents/Developer/Makefiles
+# environment
+VSCODE_CODE_CACHE_PATH = /Users/yonatanarieh/Library/Application Support/Code/CachedData/2aeda6b18e13c4f4f9edf6667158a6b8d408874b
 # environment
 LOGNAME = yonatanarieh
 # environment
@@ -110,7 +108,7 @@ TMPDIR = /var/folders/q3/gcfxpt5d26d2pcp2h7cxj5jh0000gn/T/
 # automatic
 *F = $(notdir $*)
 # environment
-VSCODE_IPC_HOOK = /Users/yonatanarieh/Library/Application Support/Code/1.57.1-main.sock
+VSCODE_IPC_HOOK = /Users/yonatanarieh/Library/Application Support/Code/1.58.1-main.sock
 # makefile
 MAKEFLAGS = sRrqp
 # environment
@@ -118,23 +116,21 @@ MFLAGS = -sRrqp
 # automatic
 *D = $(patsubst %/,%,$(dir $*))
 # environment
-XPC_SERVICE_NAME = com.apple.xpc.launchd.oneshot.0x10000000.Electron
+XPC_SERVICE_NAME = com.microsoft.VSCode.32112
 # automatic
 +D = $(patsubst %/,%,$(dir $+))
 # automatic
 +F = $(notdir $+)
 # environment
 __CF_USER_TEXT_ENCODING = 0x1F5:0x0:0x0
-# environment
-COMMAND_MODE = unix2003
 # default
 MAKEFILES := 
+# environment
+VSCODE_BROWSER_CODE_LOADING = bypassHeatCheck
 # automatic
 <F = $(notdir $<)
 # environment
 LC_ALL = C
-# environment
-SECURITYSESSIONID = 186a8
 # makefile (from `Makefile', line 42)
 CMAKE_COMMAND = /usr/bin/cmake
 # automatic
@@ -148,9 +144,9 @@ MAKELEVEL := 0
 # environment
 LANG = C
 # environment
-VSCODE_PID = 577
+VSCODE_PID = 24147
 # variable set hash-table stats:
-# Load=69/1024=7%, Rehash=0, Collisions=3/101=3%
+# Load=67/1024=7%, Rehash=0, Collisions=3/99=3%
 
 # Pattern-specific Variable Values
 
@@ -158,9 +154,9 @@ VSCODE_PID = 577
 
 # Directories
 
-# . (device 16777220, inode 12902336198): 39 files, no impossibilities.
+# . (device 16777220, inode 12902336198): 40 files, no impossibilities.
 
-# 39 files, no impossibilities in 1 directories.
+# 40 files, no impossibilities in 1 directories.
 
 # Implicit Rules
 
@@ -176,6 +172,15 @@ cmake_force:
 #  File does not exist.
 #  File has not been updated.
 
+BaseballSimulator.cpp.s:
+#  Phony target (prerequisite of .PHONY).
+#  Implicit rule search has not been done.
+#  File does not exist.
+#  File has not been updated.
+#  commands to execute (from `Makefile', line 196):
+	$(MAKE) -f CMakeFiles/rs-baseball-simulator.dir/build.make CMakeFiles/rs-baseball-simulator.dir/BaseballSimulator.cpp.s
+	
+
 list_install_components:
 #  Phony target (prerequisite of .PHONY).
 #  Implicit rule search has not been done.
@@ -183,6 +188,15 @@ list_install_components:
 #  File has not been updated.
 #  commands to execute (from `Makefile', line 97):
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Available install components are: \"Unspecified\""
+	
+
+ImageData.cpp.s:
+#  Phony target (prerequisite of .PHONY).
+#  Implicit rule search has not been done.
+#  File does not exist.
+#  File has not been updated.
+#  commands to execute (from `Makefile', line 304):
+	$(MAKE) -f CMakeFiles/rs-baseball-simulator.dir/build.make CMakeFiles/rs-baseball-simulator.dir/ImageData.cpp.s
 	
 
 install/local: preinstall
@@ -205,12 +219,61 @@ edit_cache:
 	/usr/bin/cmake -E echo No\ interactive\ CMake\ dialog\ available.
 	
 
+BaseballSimulator.i: BaseballSimulator.cpp.i
+#  Phony target (prerequisite of .PHONY).
+#  Implicit rule search has not been done.
+#  File does not exist.
+#  File has not been updated.
+
+ImageReconditioning.cpp.i:
+#  Phony target (prerequisite of .PHONY).
+#  Implicit rule search has not been done.
+#  File does not exist.
+#  File has not been updated.
+#  commands to execute (from `Makefile', line 322):
+	$(MAKE) -f CMakeFiles/rs-baseball-simulator.dir/build.make CMakeFiles/rs-baseball-simulator.dir/ImageReconditioning.cpp.i
+	
+
+Tracker.cpp.s:
+#  Phony target (prerequisite of .PHONY).
+#  Implicit rule search has not been done.
+#  File does not exist.
+#  File has not been updated.
+#  commands to execute (from `Makefile', line 412):
+	$(MAKE) -f CMakeFiles/rs-baseball-simulator.dir/build.make CMakeFiles/rs-baseball-simulator.dir/Tracker.cpp.s
+	
+
+BaseballSimulator.o: BaseballSimulator.cpp.o
+#  Phony target (prerequisite of .PHONY).
+#  Implicit rule search has not been done.
+#  File does not exist.
+#  File has not been updated.
+
+ImageReconditioning.cpp.o:
+#  Phony target (prerequisite of .PHONY).
+#  Implicit rule search has not been done.
+#  File does not exist.
+#  File has not been updated.
+#  commands to execute (from `Makefile', line 313):
+	$(MAKE) -f CMakeFiles/rs-baseball-simulator.dir/build.make CMakeFiles/rs-baseball-simulator.dir/ImageReconditioning.cpp.o
+	
+
+DataStructure.cpp.s:
+#  Phony target (prerequisite of .PHONY).
+#  Implicit rule search has not been done.
+#  File does not exist.
+#  File has not been updated.
+#  commands to execute (from `Makefile', line 277):
+	$(MAKE) -f CMakeFiles/rs-baseball-simulator.dir/build.make CMakeFiles/rs-baseball-simulator.dir/DataStructure.cpp.s
+	
+
 all: cmake_check_build_system
 #  Phony target (prerequisite of .PHONY).
 #  Command-line target.
 #  Implicit rule search has not been done.
 #  File does not exist.
 #  File has been updated.
+ 
 #  Needs to be updated (-q is set).
 # variable set hash-table stats:
 # Load=0/32=0%, Rehash=0, Collisions=0/5=0%
@@ -220,28 +283,91 @@ all: cmake_check_build_system
 	$(CMAKE_COMMAND) -E cmake_progress_start /home/ubuntu/BaseballSimulator/baseball-simulator/CMakeFiles 0
 	
 
-.PHONY: default_target cmake_force install/strip install/strip/fast install/local install/local/fast install install/fast list_install_components list_install_components/fast rebuild_cache rebuild_cache/fast edit_cache edit_cache/fast all clean clean/fast preinstall preinstall/fast depend rs-baseball-simulator rs-baseball-simulator/fast MainTestingRoutine.o MainTestingRoutine.cpp.o MainTestingRoutine.i MainTestingRoutine.cpp.i MainTestingRoutine.s MainTestingRoutine.cpp.s help cmake_check_build_system
+sendPost.cpp.s:
+#  Phony target (prerequisite of .PHONY).
+#  Implicit rule search has not been done.
+#  File does not exist.
+#  File has not been updated.
+#  commands to execute (from `Makefile', line 493):
+	$(MAKE) -f CMakeFiles/rs-baseball-simulator.dir/build.make CMakeFiles/rs-baseball-simulator.dir/sendPost.cpp.s
+	
+
+ImageData.i: ImageData.cpp.i
+#  Phony target (prerequisite of .PHONY).
+#  Implicit rule search has not been done.
+#  File does not exist.
+#  File has not been updated.
+
+ImageData.o: ImageData.cpp.o
+#  Phony target (prerequisite of .PHONY).
+#  Implicit rule search has not been done.
+#  File does not exist.
+#  File has not been updated.
+
+Visualize.cpp.i:
+#  Phony target (prerequisite of .PHONY).
+#  Implicit rule search has not been done.
+#  File does not exist.
+#  File has not been updated.
+#  commands to execute (from `Makefile', line 430):
+	$(MAKE) -f CMakeFiles/rs-baseball-simulator.dir/build.make CMakeFiles/rs-baseball-simulator.dir/Visualize.cpp.i
+	
+
+Visualize.cpp.o:
+#  Phony target (prerequisite of .PHONY).
+#  Implicit rule search has not been done.
+#  File does not exist.
+#  File has not been updated.
+#  commands to execute (from `Makefile', line 421):
+	$(MAKE) -f CMakeFiles/rs-baseball-simulator.dir/build.make CMakeFiles/rs-baseball-simulator.dir/Visualize.cpp.o
+	
+
+.PHONY: default_target cmake_force install/strip install/strip/fast install/local install/local/fast install install/fast list_install_components list_install_components/fast rebuild_cache rebuild_cache/fast edit_cache edit_cache/fast all clean clean/fast preinstall preinstall/fast depend rs-baseball-simulator rs-baseball-simulator/fast BaseballSimulator.o BaseballSimulator.cpp.o BaseballSimulator.i BaseballSimulator.cpp.i BaseballSimulator.s BaseballSimulator.cpp.s Camera.o Camera.cpp.o Camera.i Camera.cpp.i Camera.s Camera.cpp.s D400.o D400.cpp.o D400.i D400.cpp.i D400.s D400.cpp.s DataStructure.o DataStructure.cpp.o DataStructure.i DataStructure.cpp.i DataStructure.s DataStructure.cpp.s ImageData.o ImageData.cpp.o ImageData.i ImageData.cpp.i ImageData.s ImageData.cpp.s ImageReconditioning.o ImageReconditioning.cpp.o ImageReconditioning.i ImageReconditioning.cpp.i ImageReconditioning.s ImageReconditioning.cpp.s LocPredictor.o LocPredictor.cpp.o LocPredictor.i LocPredictor.cpp.i LocPredictor.s LocPredictor.cpp.s ThresholdFilter.o ThresholdFilter.cpp.o ThresholdFilter.i ThresholdFilter.cpp.i ThresholdFilter.s ThresholdFilter.cpp.s Tracker.o Tracker.cpp.o Tracker.i Tracker.cpp.i Tracker.s Tracker.cpp.s Visualize.o Visualize.cpp.o Visualize.i Visualize.cpp.i Visualize.s Visualize.cpp.s main.o main.cpp.o main.i main.cpp.i main.s main.cpp.s sendPost.o sendPost.cpp.o sendPost.i sendPost.cpp.i sendPost.s sendPost.cpp.s help cmake_check_build_system
 #  Implicit rule search has not been done.
 #  Modification time never checked.
 #  File has not been updated.
 
-MainTestingRoutine.cpp.i:
+Tracker.i: Tracker.cpp.i
 #  Phony target (prerequisite of .PHONY).
 #  Implicit rule search has not been done.
 #  File does not exist.
 #  File has not been updated.
-#  commands to execute (from `Makefile', line 187):
-	$(MAKE) -f CMakeFiles/rs-baseball-simulator.dir/build.make CMakeFiles/rs-baseball-simulator.dir/MainTestingRoutine.cpp.i
-	
 
-MainTestingRoutine.cpp.o:
+DataStructure.i: DataStructure.cpp.i
 #  Phony target (prerequisite of .PHONY).
 #  Implicit rule search has not been done.
 #  File does not exist.
 #  File has not been updated.
-#  commands to execute (from `Makefile', line 178):
-	$(MAKE) -f CMakeFiles/rs-baseball-simulator.dir/build.make CMakeFiles/rs-baseball-simulator.dir/MainTestingRoutine.cpp.o
-	
+
+Tracker.o: Tracker.cpp.o
+#  Phony target (prerequisite of .PHONY).
+#  Implicit rule search has not been done.
+#  File does not exist.
+#  File has not been updated.
+
+DataStructure.o: DataStructure.cpp.o
+#  Phony target (prerequisite of .PHONY).
+#  Implicit rule search has not been done.
+#  File does not exist.
+#  File has not been updated.
+
+sendPost.i: sendPost.cpp.i
+#  Phony target (prerequisite of .PHONY).
+#  Implicit rule search has not been done.
+#  File does not exist.
+#  File has not been updated.
+
+sendPost.o: sendPost.cpp.o
+#  Phony target (prerequisite of .PHONY).
+#  Implicit rule search has not been done.
+#  File does not exist.
+#  File has not been updated.
+
+main.s: main.cpp.s
+#  Phony target (prerequisite of .PHONY).
+#  Implicit rule search has not been done.
+#  File does not exist.
+#  File has not been updated.
 
 preinstall/fast:
 #  Phony target (prerequisite of .PHONY).
@@ -252,24 +378,95 @@ preinstall/fast:
 	$(MAKE) -f CMakeFiles/Makefile2 preinstall
 	
 
+ThresholdFilter.cpp.s:
+#  Phony target (prerequisite of .PHONY).
+#  Implicit rule search has not been done.
+#  File does not exist.
+#  File has not been updated.
+#  commands to execute (from `Makefile', line 385):
+	$(MAKE) -f CMakeFiles/rs-baseball-simulator.dir/build.make CMakeFiles/rs-baseball-simulator.dir/ThresholdFilter.cpp.s
+	
+
+Camera.cpp.s:
+#  Phony target (prerequisite of .PHONY).
+#  Implicit rule search has not been done.
+#  File does not exist.
+#  File has not been updated.
+#  commands to execute (from `Makefile', line 223):
+	$(MAKE) -f CMakeFiles/rs-baseball-simulator.dir/build.make CMakeFiles/rs-baseball-simulator.dir/Camera.cpp.s
+	
+
+D400.cpp.s:
+#  Phony target (prerequisite of .PHONY).
+#  Implicit rule search has not been done.
+#  File does not exist.
+#  File has not been updated.
+#  commands to execute (from `Makefile', line 250):
+	$(MAKE) -f CMakeFiles/rs-baseball-simulator.dir/build.make CMakeFiles/rs-baseball-simulator.dir/D400.cpp.s
+	
+
+LocPredictor.cpp.s:
+#  Phony target (prerequisite of .PHONY).
+#  Implicit rule search has not been done.
+#  File does not exist.
+#  File has not been updated.
+#  commands to execute (from `Makefile', line 358):
+	$(MAKE) -f CMakeFiles/rs-baseball-simulator.dir/build.make CMakeFiles/rs-baseball-simulator.dir/LocPredictor.cpp.s
+	
+
+Camera.i: Camera.cpp.i
+#  Phony target (prerequisite of .PHONY).
+#  Implicit rule search has not been done.
+#  File does not exist.
+#  File has not been updated.
+
 .SUFFIXES: .hpux_make_needs_suffix_list
 #  Implicit rule search has not been done.
 #  Modification time never checked.
 #  File has not been updated.
 
+Camera.o: Camera.cpp.o
+#  Phony target (prerequisite of .PHONY).
+#  Implicit rule search has not been done.
+#  File does not exist.
+#  File has not been updated.
+
+D400.o: D400.cpp.o
+#  Phony target (prerequisite of .PHONY).
+#  Implicit rule search has not been done.
+#  File does not exist.
+#  File has not been updated.
+
 # Not a target:
 Makefile:
 #  Implicit rule search has been done.
- 
-#  Last modified 2021-05-25 16:51:26
+#  Last modified 2021-07-08 09:43:20
 #  File has been updated.
 #  Successfully updated.
 # variable set hash-table stats:
 # Load=0/32=0%, Rehash=0, Collisions=0/0=0%
 
+LocPredictor.i: LocPredictor.cpp.i
+#  Phony target (prerequisite of .PHONY).
+#  Implicit rule search has not been done.
+#  File does not exist.
+#  File has not been updated.
+
+LocPredictor.o: LocPredictor.cpp.o
+#  Phony target (prerequisite of .PHONY).
+#  Implicit rule search has not been done.
+#  File does not exist.
+#  File has not been updated.
+
 .NOTPARALLEL:
 #  Implicit rule search has not been done.
 #  Modification time never checked.
+#  File has not been updated.
+
+ThresholdFilter.o: ThresholdFilter.cpp.o
+#  Phony target (prerequisite of .PHONY).
+#  Implicit rule search has not been done.
+#  File does not exist.
 #  File has not been updated.
 
 clean/fast: clean
@@ -277,6 +474,25 @@ clean/fast: clean
 #  Implicit rule search has not been done.
 #  File does not exist.
 #  File has not been updated.
+
+main.cpp.i:
+#  Phony target (prerequisite of .PHONY).
+#  Implicit rule search has not been done.
+#  File does not exist.
+#  File has not been updated.
+#  commands to execute (from `Makefile', line 457):
+	$(MAKE) -f CMakeFiles/rs-baseball-simulator.dir/build.make CMakeFiles/rs-baseball-simulator.dir/main.cpp.i
+	
+
+main.cpp.o:
+#  Phony target (prerequisite of .PHONY).
+ 
+#  Implicit rule search has not been done.
+#  File does not exist.
+#  File has not been updated.
+#  commands to execute (from `Makefile', line 448):
+	$(MAKE) -f CMakeFiles/rs-baseball-simulator.dir/build.make CMakeFiles/rs-baseball-simulator.dir/main.cpp.o
+	
 
 install/strip/fast: preinstall/fast
 #  Phony target (prerequisite of .PHONY).
@@ -322,8 +538,23 @@ cmake_check_build_system:
 # ? := 
 # variable set hash-table stats:
 # Load=8/32=25%, Rehash=0, Collisions=3/13=23%
-#  commands to execute (from `Makefile', line 226):
+#  commands to execute (from `Makefile', line 556):
 	$(CMAKE_COMMAND) -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 0
+	
+
+BaseballSimulator.s: BaseballSimulator.cpp.s
+#  Phony target (prerequisite of .PHONY).
+#  Implicit rule search has not been done.
+#  File does not exist.
+#  File has not been updated.
+
+ImageReconditioning.cpp.s:
+#  Phony target (prerequisite of .PHONY).
+#  Implicit rule search has not been done.
+#  File does not exist.
+#  File has not been updated.
+#  commands to execute (from `Makefile', line 331):
+	$(MAKE) -f CMakeFiles/rs-baseball-simulator.dir/build.make CMakeFiles/rs-baseball-simulator.dir/ImageReconditioning.cpp.s
 	
 
 help:
@@ -331,7 +562,7 @@ help:
 #  Implicit rule search has not been done.
 #  File does not exist.
 #  File has not been updated.
-#  commands to execute (from `Makefile', line 201):
+#  commands to execute (from `Makefile', line 498):
 	@echo "The following are some of the valid targets for this Makefile:"
 	@echo "... all (the default if no target is provided)"
 	@echo "... clean"
@@ -343,10 +574,49 @@ help:
 	@echo "... rebuild_cache"
 	@echo "... edit_cache"
 	@echo "... rs-baseball-simulator"
-	@echo "... MainTestingRoutine.o"
-	@echo "... MainTestingRoutine.i"
-	@echo "... MainTestingRoutine.s"
+	@echo "... BaseballSimulator.o"
+	@echo "... BaseballSimulator.i"
+	@echo "... BaseballSimulator.s"
+	@echo "... Camera.o"
+	@echo "... Camera.i"
+	@echo "... Camera.s"
+	@echo "... D400.o"
+	@echo "... D400.i"
+	@echo "... D400.s"
+	@echo "... DataStructure.o"
+	@echo "... DataStructure.i"
+	@echo "... DataStructure.s"
+	@echo "... ImageData.o"
+	@echo "... ImageData.i"
+	@echo "... ImageData.s"
+	@echo "... ImageReconditioning.o"
+	@echo "... ImageReconditioning.i"
+	@echo "... ImageReconditioning.s"
+	@echo "... LocPredictor.o"
+	@echo "... LocPredictor.i"
+	@echo "... LocPredictor.s"
+	@echo "... ThresholdFilter.o"
+	@echo "... ThresholdFilter.i"
+	@echo "... ThresholdFilter.s"
+	@echo "... Tracker.o"
+	@echo "... Tracker.i"
+	@echo "... Tracker.s"
+	@echo "... Visualize.o"
+	@echo "... Visualize.i"
+	@echo "... Visualize.s"
+	@echo "... main.o"
+	@echo "... main.i"
+	@echo "... main.s"
+	@echo "... sendPost.o"
+	@echo "... sendPost.i"
+	@echo "... sendPost.s"
 	
+
+ImageData.s: ImageData.cpp.s
+#  Phony target (prerequisite of .PHONY).
+#  Implicit rule search has not been done.
+#  File does not exist.
+#  File has not been updated.
 
 preinstall: all
 #  Phony target (prerequisite of .PHONY).
@@ -357,14 +627,47 @@ preinstall: all
 	$(MAKE) -f CMakeFiles/Makefile2 preinstall
 	
 
-MainTestingRoutine.cpp.s:
+Visualize.cpp.s:
 #  Phony target (prerequisite of .PHONY).
 #  Implicit rule search has not been done.
 #  File does not exist.
 #  File has not been updated.
-#  commands to execute (from `Makefile', line 196):
-	$(MAKE) -f CMakeFiles/rs-baseball-simulator.dir/build.make CMakeFiles/rs-baseball-simulator.dir/MainTestingRoutine.cpp.s
+#  commands to execute (from `Makefile', line 439):
+	$(MAKE) -f CMakeFiles/rs-baseball-simulator.dir/build.make CMakeFiles/rs-baseball-simulator.dir/Visualize.cpp.s
 	
+
+DataStructure.cpp.o:
+#  Phony target (prerequisite of .PHONY).
+#  Implicit rule search has not been done.
+#  File does not exist.
+#  File has not been updated.
+#  commands to execute (from `Makefile', line 259):
+	$(MAKE) -f CMakeFiles/rs-baseball-simulator.dir/build.make CMakeFiles/rs-baseball-simulator.dir/DataStructure.cpp.o
+	
+
+ImageReconditioning.i: ImageReconditioning.cpp.i
+#  Phony target (prerequisite of .PHONY).
+#  Implicit rule search has not been done.
+#  File does not exist.
+#  File has not been updated.
+
+Tracker.s: Tracker.cpp.s
+#  Phony target (prerequisite of .PHONY).
+#  Implicit rule search has not been done.
+#  File does not exist.
+#  File has not been updated.
+
+ImageReconditioning.o: ImageReconditioning.cpp.o
+#  Phony target (prerequisite of .PHONY).
+#  Implicit rule search has not been done.
+#  File does not exist.
+#  File has not been updated.
+
+DataStructure.s: DataStructure.cpp.s
+#  Phony target (prerequisite of .PHONY).
+#  Implicit rule search has not been done.
+#  File does not exist.
+#  File has not been updated.
 
 .SILENT:
 #  Implicit rule search has not been done.
@@ -380,13 +683,19 @@ depend:
 	$(CMAKE_COMMAND) -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 1
 	
 
-MainTestingRoutine.i: MainTestingRoutine.cpp.i
+sendPost.s: sendPost.cpp.s
 #  Phony target (prerequisite of .PHONY).
 #  Implicit rule search has not been done.
 #  File does not exist.
 #  File has not been updated.
 
-MainTestingRoutine.o: MainTestingRoutine.cpp.o
+Visualize.i: Visualize.cpp.i
+#  Phony target (prerequisite of .PHONY).
+#  Implicit rule search has not been done.
+#  File does not exist.
+#  File has not been updated.
+
+Visualize.o: Visualize.cpp.o
 #  Phony target (prerequisite of .PHONY).
 #  Implicit rule search has not been done.
 #  File does not exist.
@@ -404,6 +713,58 @@ default_target: all
 #  File does not exist.
 #  File has not been updated.
 
+D400.i: D400.cpp.i
+#  Phony target (prerequisite of .PHONY).
+#  Implicit rule search has not been done.
+#  File does not exist.
+#  File has not been updated.
+
+ThresholdFilter.s: ThresholdFilter.cpp.s
+#  Phony target (prerequisite of .PHONY).
+#  Implicit rule search has not been done.
+#  File does not exist.
+#  File has not been updated.
+
+Camera.s: Camera.cpp.s
+#  Phony target (prerequisite of .PHONY).
+#  Implicit rule search has not been done.
+#  File does not exist.
+#  File has not been updated.
+
+D400.s: D400.cpp.s
+#  Phony target (prerequisite of .PHONY).
+#  Implicit rule search has not been done.
+#  File does not exist.
+#  File has not been updated.
+
+BaseballSimulator.cpp.i:
+#  Phony target (prerequisite of .PHONY).
+#  Implicit rule search has not been done.
+#  File does not exist.
+#  File has not been updated.
+#  commands to execute (from `Makefile', line 187):
+	$(MAKE) -f CMakeFiles/rs-baseball-simulator.dir/build.make CMakeFiles/rs-baseball-simulator.dir/BaseballSimulator.cpp.i
+	
+
+BaseballSimulator.cpp.o:
+#  Phony target (prerequisite of .PHONY).
+#  Implicit rule search has not been done.
+#  File does not exist.
+#  File has not been updated.
+#  commands to execute (from `Makefile', line 178):
+	$(MAKE) -f CMakeFiles/rs-baseball-simulator.dir/build.make CMakeFiles/rs-baseball-simulator.dir/BaseballSimulator.cpp.o
+	
+
+ImageData.cpp.i:
+#  Phony target (prerequisite of .PHONY).
+#  Implicit rule search has not been done.
+#  File does not exist.
+ 
+#  File has not been updated.
+#  commands to execute (from `Makefile', line 295):
+	$(MAKE) -f CMakeFiles/rs-baseball-simulator.dir/build.make CMakeFiles/rs-baseball-simulator.dir/ImageData.cpp.i
+	
+
 clean:
 #  Phony target (prerequisite of .PHONY).
 #  Implicit rule search has not been done.
@@ -411,6 +772,21 @@ clean:
 #  File has not been updated.
 #  commands to execute (from `Makefile', line 136):
 	$(MAKE) -f CMakeFiles/Makefile2 clean
+	
+
+ThresholdFilter.i: ThresholdFilter.cpp.i
+#  Phony target (prerequisite of .PHONY).
+#  Implicit rule search has not been done.
+#  File does not exist.
+#  File has not been updated.
+
+ImageData.cpp.o:
+#  Phony target (prerequisite of .PHONY).
+#  Implicit rule search has not been done.
+#  File does not exist.
+#  File has not been updated.
+#  commands to execute (from `Makefile', line 286):
+	$(MAKE) -f CMakeFiles/rs-baseball-simulator.dir/build.make CMakeFiles/rs-baseball-simulator.dir/ImageData.cpp.o
 	
 
 install/fast: preinstall/fast
@@ -422,6 +798,12 @@ install/fast: preinstall/fast
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Install the project..."
 	/usr/bin/cmake -P cmake_install.cmake
 	
+
+LocPredictor.s: LocPredictor.cpp.s
+#  Phony target (prerequisite of .PHONY).
+#  Implicit rule search has not been done.
+#  File does not exist.
+#  File has not been updated.
 
 rebuild_cache/fast: rebuild_cache
 #  Phony target (prerequisite of .PHONY).
@@ -439,6 +821,15 @@ install/strip: preinstall
 	/usr/bin/cmake -DCMAKE_INSTALL_DO_STRIP=1 -P cmake_install.cmake
 	
 
+Tracker.cpp.i:
+#  Phony target (prerequisite of .PHONY).
+#  Implicit rule search has not been done.
+#  File does not exist.
+#  File has not been updated.
+#  commands to execute (from `Makefile', line 403):
+	$(MAKE) -f CMakeFiles/rs-baseball-simulator.dir/build.make CMakeFiles/rs-baseball-simulator.dir/Tracker.cpp.i
+	
+
 list_install_components/fast: list_install_components
 #  Phony target (prerequisite of .PHONY).
 #  Implicit rule search has not been done.
@@ -451,6 +842,24 @@ edit_cache/fast: edit_cache
 #  File does not exist.
 #  File has not been updated.
 
+DataStructure.cpp.i:
+#  Phony target (prerequisite of .PHONY).
+#  Implicit rule search has not been done.
+#  File does not exist.
+#  File has not been updated.
+#  commands to execute (from `Makefile', line 268):
+	$(MAKE) -f CMakeFiles/rs-baseball-simulator.dir/build.make CMakeFiles/rs-baseball-simulator.dir/DataStructure.cpp.i
+	
+
+Tracker.cpp.o:
+#  Phony target (prerequisite of .PHONY).
+#  Implicit rule search has not been done.
+#  File does not exist.
+#  File has not been updated.
+#  commands to execute (from `Makefile', line 394):
+	$(MAKE) -f CMakeFiles/rs-baseball-simulator.dir/build.make CMakeFiles/rs-baseball-simulator.dir/Tracker.cpp.o
+	
+
 rs-baseball-simulator: cmake_check_build_system
 #  Phony target (prerequisite of .PHONY).
 #  Implicit rule search has not been done.
@@ -458,6 +867,24 @@ rs-baseball-simulator: cmake_check_build_system
 #  File has not been updated.
 #  commands to execute (from `Makefile', line 164):
 	$(MAKE) -f CMakeFiles/Makefile2 rs-baseball-simulator
+	
+
+sendPost.cpp.i:
+#  Phony target (prerequisite of .PHONY).
+#  Implicit rule search has not been done.
+#  File does not exist.
+#  File has not been updated.
+#  commands to execute (from `Makefile', line 484):
+	$(MAKE) -f CMakeFiles/rs-baseball-simulator.dir/build.make CMakeFiles/rs-baseball-simulator.dir/sendPost.cpp.i
+	
+
+D400.cpp.i:
+#  Phony target (prerequisite of .PHONY).
+#  Implicit rule search has not been done.
+#  File does not exist.
+#  File has not been updated.
+#  commands to execute (from `Makefile', line 241):
+	$(MAKE) -f CMakeFiles/rs-baseball-simulator.dir/build.make CMakeFiles/rs-baseball-simulator.dir/D400.cpp.i
 	
 
 install/local/fast: preinstall/fast
@@ -470,13 +897,113 @@ install/local/fast: preinstall/fast
 	/usr/bin/cmake -DCMAKE_INSTALL_LOCAL_ONLY=1 -P cmake_install.cmake
 	
 
+main.cpp.s:
+#  Phony target (prerequisite of .PHONY).
+#  Implicit rule search has not been done.
+#  File does not exist.
+#  File has not been updated.
+#  commands to execute (from `Makefile', line 466):
+	$(MAKE) -f CMakeFiles/rs-baseball-simulator.dir/build.make CMakeFiles/rs-baseball-simulator.dir/main.cpp.s
+	
+
+sendPost.cpp.o:
+#  Phony target (prerequisite of .PHONY).
+#  Implicit rule search has not been done.
+#  File does not exist.
+#  File has not been updated.
+#  commands to execute (from `Makefile', line 475):
+	$(MAKE) -f CMakeFiles/rs-baseball-simulator.dir/build.make CMakeFiles/rs-baseball-simulator.dir/sendPost.cpp.o
+	
+
+main.i: main.cpp.i
+#  Phony target (prerequisite of .PHONY).
+#  Implicit rule search has not been done.
+#  File does not exist.
+#  File has not been updated.
+
+ThresholdFilter.cpp.i:
+#  Phony target (prerequisite of .PHONY).
+#  Implicit rule search has not been done.
+#  File does not exist.
+#  File has not been updated.
+#  commands to execute (from `Makefile', line 376):
+	$(MAKE) -f CMakeFiles/rs-baseball-simulator.dir/build.make CMakeFiles/rs-baseball-simulator.dir/ThresholdFilter.cpp.i
+	
+
+main.o: main.cpp.o
+#  Phony target (prerequisite of .PHONY).
+#  Implicit rule search has not been done.
+#  File does not exist.
+#  File has not been updated.
+
+Camera.cpp.i:
+#  Phony target (prerequisite of .PHONY).
+#  Implicit rule search has not been done.
+#  File does not exist.
+#  File has not been updated.
+#  commands to execute (from `Makefile', line 214):
+	$(MAKE) -f CMakeFiles/rs-baseball-simulator.dir/build.make CMakeFiles/rs-baseball-simulator.dir/Camera.cpp.i
+	
+
+ThresholdFilter.cpp.o:
+#  Phony target (prerequisite of .PHONY).
+#  Implicit rule search has not been done.
+#  File does not exist.
+#  File has not been updated.
+#  commands to execute (from `Makefile', line 367):
+	$(MAKE) -f CMakeFiles/rs-baseball-simulator.dir/build.make CMakeFiles/rs-baseball-simulator.dir/ThresholdFilter.cpp.o
+	
+
+Camera.cpp.o:
+#  Phony target (prerequisite of .PHONY).
+#  Implicit rule search has not been done.
+#  File does not exist.
+#  File has not been updated.
+#  commands to execute (from `Makefile', line 205):
+	$(MAKE) -f CMakeFiles/rs-baseball-simulator.dir/build.make CMakeFiles/rs-baseball-simulator.dir/Camera.cpp.o
+	
+
+D400.cpp.o:
+#  Phony target (prerequisite of .PHONY).
+#  Implicit rule search has not been done.
+#  File does not exist.
+#  File has not been updated.
+#  commands to execute (from `Makefile', line 232):
+	$(MAKE) -f CMakeFiles/rs-baseball-simulator.dir/build.make CMakeFiles/rs-baseball-simulator.dir/D400.cpp.o
+	
+
 # Not a target:
 .hpux_make_needs_suffix_list:
 #  Implicit rule search has not been done.
 #  Modification time never checked.
 #  File has not been updated.
 
-MainTestingRoutine.s: MainTestingRoutine.cpp.s
+ImageReconditioning.s: ImageReconditioning.cpp.s
+#  Phony target (prerequisite of .PHONY).
+#  Implicit rule search has not been done.
+#  File does not exist.
+#  File has not been updated.
+
+LocPredictor.cpp.i:
+#  Phony target (prerequisite of .PHONY).
+#  Implicit rule search has not been done.
+#  File does not exist.
+#  File has not been updated.
+#  commands to execute (from `Makefile', line 349):
+	$(MAKE) -f CMakeFiles/rs-baseball-simulator.dir/build.make CMakeFiles/rs-baseball-simulator.dir/LocPredictor.cpp.i
+	
+
+LocPredictor.cpp.o:
+#  Phony target (prerequisite of .PHONY).
+#  Implicit rule search has not been done.
+#  File does not exist.
+#  File has not been updated.
+#  commands to execute (from `Makefile', line 340):
+ 
+	$(MAKE) -f CMakeFiles/rs-baseball-simulator.dir/build.make CMakeFiles/rs-baseball-simulator.dir/LocPredictor.cpp.o
+	
+
+Visualize.s: Visualize.cpp.s
 #  Phony target (prerequisite of .PHONY).
 #  Implicit rule search has not been done.
 #  File does not exist.
@@ -503,7 +1030,7 @@ rebuild_cache:
 	
 
 # files hash-table stats:
-# Load=37/1024=4%, Rehash=0, Collisions=3/130=2%
+# Load=103/1024=10%, Rehash=0, Collisions=20/361=6%
 # VPATH Search Paths
 
 # No `vpath' search paths.
@@ -515,6 +1042,6 @@ rebuild_cache:
 # strcache size: total = 4096 / max = 4096 / min = 4096 / avg = 4096
 # strcache free: total = 4087 / max = 4087 / min = 4087 / avg = 4087
 
-# Finished Make data base on Tue Jul  6 22:31:21 2021
+# Finished Make data base on Wed Jul 21 10:56:30 2021
 
  

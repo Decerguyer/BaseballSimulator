@@ -15,7 +15,7 @@ public:
     Visualizer();
     cv::Mat drawCircle(cv::Mat image, cv::Vec3f coord);
     void visualize(std::deque<ImageData> imgData, bool showDepth, bool showIR, bool drawCircles);
-
+    static void onMouse( int event, int x, int y, int f, void* );
 };
 
 #endif /* Visualizer_h */
