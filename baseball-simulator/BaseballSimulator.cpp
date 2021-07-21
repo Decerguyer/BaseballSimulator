@@ -256,7 +256,7 @@ void BaseballSimulator::loadingRoutine(std::string str){
     vis.visualize(images, true, true, true);
 
     for(int l = 0; l < clicks.size(); l++){
-        std::cout << "x: " << clicks[l].x << " y: " << clicks[l].y << " z: " << clicks[l.z];
+        std::cout << "x: " << clicks[l].x << " y: " << clicks[l].y << " z: " << clicks[l].depth << std::endl;
     }
 
     //**************************User Control Crop Block *************************//

@@ -35,7 +35,7 @@ void Visualizer::visualize(std::deque<ImageData> imgData, bool showDepth, bool s
         std::cout << "Frame = " << i << "/" << imgData.size() - 1 << "; ";
         std::cout << "Act Frame # = " << imgData[i].getFrameNumber() << std::endl;
         
-        tmpImgData = imgData[i];
+        tmpImgData = &imgData[i];
 
         if (drawCircles){
             if (imgData[i].depthVisBallLoc[2])
