@@ -77,7 +77,7 @@ void Visualizer::onMouse( int event, int x, int y, int f, void*){
             coord2D tmp;
             tmp.x = x;
             tmp.y = y;
-            tmp.depth = tmpImgData.getDepthAt(x,y);
+            tmp.depth = tmpImgData->getDepthAt(x,y);
             clicks->push_back(tmp);
         }
     }
