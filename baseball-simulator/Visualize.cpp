@@ -65,6 +65,6 @@ void Visualizer::visualize(std::deque<ImageData> imgData, bool showDepth, bool s
 }
 
 void Visualizer::onMouse( int event, int x, int y, int f, void*){
-    if (event == cv::EVENT_LBUTTONDOWN)
+    if (event == cv::EVENT_RBUTTONDOWN)
         std::cout << x << " " << y << std::endl;
 }
