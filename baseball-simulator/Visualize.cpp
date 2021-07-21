@@ -7,8 +7,12 @@
 #include "ImageData.h"
 #include "V2.h"
 
-
 Visualizer::Visualizer(){
+    this->clicks = NULL;
+}
+
+Visualizer::Visualizer(std::vector<coord2D> *clicks){
+    this->clicks = clicks;
 }
 
 //returns a Mat with a circle drawn on it
@@ -31,6 +35,8 @@ void Visualizer::visualize(std::deque<ImageData> imgData, bool showDepth, bool s
         std::cout << "Frame = " << i << "/" << imgData.size() - 1 << "; ";
         std::cout << "Act Frame # = " << imgData[i].getFrameNumber() << std::endl;
         
+        tmpImgData = imgData[i];
+
         if (drawCircles){
             if (imgData[i].depthVisBallLoc[2])
                 drawCircle(imgData[i].depthVisMat, imgData[i].depthVisBallLoc);
@@ -65,6 +71,14 @@ void Visualizer::visualize(std::deque<ImageData> imgData, bool showDepth, bool s
 }
 
 void Visualizer::onMouse( int event, int x, int y, int f, void*){
-    if (event == cv::EVENT_RBUTTONDOWN)
+    if (event == cv::EVENT_RBUTTONDOWN){
         std::cout << x << " " << y << std::endl;
+        if(clicks != NULL){
+            coord2D tmp;
+            tmp.x = x;
+            tmp.y = y;
+            tmp.depth = tmpImgData.getDepthAt(x,y);
+            clicks->push_back(tmp);
+        }
+    }
 }

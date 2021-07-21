@@ -249,10 +249,15 @@ void BaseballSimulator::loadingRoutine(std::string str){
     }
     
     //**************************Visualization Block *************************//
-    Visualizer vis;
+    std::vector<coord2D> clicks;
+    Visualizer vis(&clicks);
     
     //Change images to VALID images so only the frames with the ball are shown?
     vis.visualize(images, true, true, true);
+
+    for(int l = 0; l < clicks.size(); l++){
+        std::cout << "x: " << clicks[l].x << " y: " << clicks[l].y << " z: " << clicks[l.z];
+    }
 
     //**************************User Control Crop Block *************************//
     int startFrame, endFrame;
