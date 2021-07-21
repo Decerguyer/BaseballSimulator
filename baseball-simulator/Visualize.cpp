@@ -8,11 +8,10 @@
 #include "V2.h"
 
 Visualizer::Visualizer(){
-    this->clicks = NULL;
 }
 
-Visualizer::Visualizer(std::vector<coord2D> *clicks){
-    this->clicks = clicks;
+Visualizer::Visualizer(std::vector<coord2D> *empty_clicks){
+    clicks = empty_clicks;
 }
 
 //returns a Mat with a circle drawn on it
@@ -69,6 +68,9 @@ void Visualizer::visualize(std::deque<ImageData> imgData, bool showDepth, bool s
     cv::destroyAllWindows();
     cv::waitKey(1);
 }
+
+ImageData* Visualizer::tmpImgData{NULL};
+std::vector<coord2D>* Visualizer::clicks{NULL};
 
 void Visualizer::onMouse( int event, int x, int y, int f, void*){
     if (event == cv::EVENT_RBUTTONDOWN){
