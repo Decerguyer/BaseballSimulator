@@ -6,6 +6,7 @@ import math
 import datetime
 import uuid
 import json
+from flask_cors import CORS
 
 
 class Vector3D():
@@ -61,8 +62,9 @@ class Pitch:
 
 
 app = Flask(__name__)
+CORS(app)
 
-PICHES_TABLE = os.environ['PITCHES_TABLE']
+PITCHES_TABLE = os.environ['PITCHES_TABLE']
 IS_OFFLINE = os.environ.get('IS_OFFLINE')
 
 if IS_OFFLINE:
@@ -84,7 +86,7 @@ def hello():
 def get_user(pitch_id):
     try:
         resp = client.get_item(
-            TableName=PICHES_TABLE,
+            TableName=PITCHES_TABLE,
             Key={
                 'pitch_id': {'S': pitch_id}
             }
@@ -130,7 +132,7 @@ def convert_pitch_to_response(pitch):
 def get_pitch_history():
     try:
         resp = client.scan(
-            TableName=PICHES_TABLE
+            TableName=PITCHES_TABLE
         )
         result = []
         print('Response: ', resp)
@@ -165,7 +167,7 @@ def record_pitch():
             return jsonify({'error': 'Please provide positions, spin, and user'}), 400
 
         resp = client.put_item(
-            TableName=PICHES_TABLE,
+            TableName=PITCHES_TABLE,
             Item=pitch.to_dynamo_item()
         )
 
