@@ -6,18 +6,22 @@ import math
 import datetime
 import uuid
 import json
+from flask_cors import CORS
 
 
 class Vector3D():
-    def __init__(self, x:float, y:float, z:float):
+    def __init__(self, x: float, y: float, z: float):
         self.x = x
         self.y = y
         self.z = z
 
     def to_dynamo_item(self):
-        return { 'M': { 'x': { 'N': str(self.x) }, 'y': { 'N': str(self.y) }, 'z': { 'N': str(self.z) } } }
+        return {'M': {'x': {'N': str(self.x)}, 'y': {'N': str(self.y)}, 'z': {'N': str(self.z)}}}
+
+
 class Pitch:
-    def __init__(self, positions: List[Vector3D], timestamps: List[float], spin: Vector3D, pitcher_id: str, pitch_id: str, serial_number: int, error: List[Vector3D], time: str):
+    def __init__(self, positions: List[Vector3D], timestamps: List[float], spin: Vector3D, pitcher_id: str,
+                 pitch_id: str, serial_number: int, error: List[Vector3D], time: str):
         self.positions = positions
         self.timestamps = timestamps
         self.spin = spin
@@ -26,7 +30,6 @@ class Pitch:
         self.pitch_id = pitch_id
         self.error = error
         self.time = time
-
 
     def to_dynamo_item(self):
         dynamo_positions = []
@@ -37,18 +40,17 @@ class Pitch:
         for err in self.error:
             dynamo_error.append(err.to_dynamo_item())
         for timestamp in self.timestamps:
-            dynamo_timestamps.append({ 'N': str(timestamp) })
+            dynamo_timestamps.append({'N': str(timestamp)})
         return {
-            'positions': { 'L': dynamo_positions },
-            'timestamps': { 'L': dynamo_timestamps },
+            'positions': {'L': dynamo_positions},
+            'timestamps': {'L': dynamo_timestamps},
             'spin': self.spin.to_dynamo_item(),
-            'error': { 'L': dynamo_error },
-            'serial_number': { 'N': str(self.serial_number) },
-            'pitcher_id': { 'S': str(self.pitcher_id) },
-            'pitch_id': { 'S': str(self.pitch_id) },
-            'time': { 'S': str(self.time) }            
+            'error': {'L': dynamo_error},
+            'serial_number': {'N': str(self.serial_number)},
+            'pitcher_id': {'S': str(self.pitcher_id)},
+            'pitch_id': {'S': str(self.pitch_id)},
+            'time': {'S': str(self.time)}
         }
-        
 
     def kalman_filter(self):
         print('filter the pitch')
@@ -59,10 +61,10 @@ class Pitch:
         return self
 
 
-
 app = Flask(__name__)
+CORS(app)
 
-PICHES_TABLE = os.environ['PITCHES_TABLE']
+PITCHES_TABLE = os.environ['PITCHES_TABLE']
 IS_OFFLINE = os.environ.get('IS_OFFLINE')
 
 if IS_OFFLINE:
@@ -84,7 +86,7 @@ def hello():
 def get_user(pitch_id):
     try:
         resp = client.get_item(
-            TableName=PICHES_TABLE,
+            TableName=PITCHES_TABLE,
             Key={
                 'pitch_id': {'S': pitch_id}
             }
@@ -95,7 +97,8 @@ def get_user(pitch_id):
 
         return jsonify(convert_pitch_to_response(pitch)), 200
     except Exception as e:
-        return jsonify({ 'error': str(e) }), 400
+        return jsonify({'error': str(e)}), 400
+
 
 def convert_pitch_to_response(pitch):
     positions = []
@@ -103,12 +106,15 @@ def convert_pitch_to_response(pitch):
     errors = []
     spins = []
     for position in pitch.get('positions').get('L'):
-        positions.append([float(position.get('M')['x'].get('N')), float(position.get('M')['y'].get('N')), float(position.get('M')['z'].get('N'))])
+        positions.append([float(position.get('M')['x'].get('N')), float(position.get('M')['y'].get('N')),
+                          float(position.get('M')['z'].get('N'))])
     for error in pitch.get('error').get('L'):
-        errors.append([float(error.get('M')['x'].get('N')), float(error.get('M')['y'].get('N')), float(error.get('M')['z'].get('N'))])
+        errors.append([float(error.get('M')['x'].get('N')), float(error.get('M')['y'].get('N')),
+                       float(error.get('M')['z'].get('N'))])
     for timestamp in pitch.get('timestamps').get('L'):
         timestamps.append(float(timestamp.get('N')))
-    spin = [float(pitch.get('spin').get('M')['x'].get('N')), float(pitch.get('spin').get('M')['y'].get('N')), float(pitch.get('spin').get('M')['z'].get('N'))] 
+    spin = [float(pitch.get('spin').get('M')['x'].get('N')), float(pitch.get('spin').get('M')['y'].get('N')),
+            float(pitch.get('spin').get('M')['z'].get('N'))]
 
     return {
         'pitch_id': pitch.get('pitch_id').get('S'),
@@ -126,7 +132,7 @@ def convert_pitch_to_response(pitch):
 def get_pitch_history():
     try:
         resp = client.scan(
-            TableName=PICHES_TABLE
+            TableName=PITCHES_TABLE
         )
         result = []
         print('Response: ', resp)
@@ -134,7 +140,8 @@ def get_pitch_history():
             result.append(convert_pitch_to_response(pitch))
         return jsonify(result), 200
     except Exception as e:
-        return jsonify({ 'error': str(e) }), 400
+        return jsonify({'error': str(e)}), 400
+
 
 @app.route("/pitch", methods=["POST"])
 def record_pitch():
@@ -149,19 +156,18 @@ def record_pitch():
         for error in request.json.get('error'):
             error_list.append(Vector3D(*error))
 
-        timestamps= request.json.get('timestamps')
+        timestamps = request.json.get('timestamps')
         spin = Vector3D(*request.json.get('spin'))
         pitcher_id = request.json.get('pitcher_id')
         serial_number = request.json.get('serial_number')
         pitch = Pitch(positions, timestamps, spin, pitcher_id, pitch_id, serial_number, error_list, time)
-        
 
         name = request.json.get('name')
         if not positions or not spin or not pitch_id:
             return jsonify({'error': 'Please provide positions, spin, and user'}), 400
 
         resp = client.put_item(
-            TableName=PICHES_TABLE,
+            TableName=PITCHES_TABLE,
             Item=pitch.to_dynamo_item()
         )
 
@@ -170,4 +176,3 @@ def record_pitch():
         }), 201
     except Exception as e:
         return jsonify({'error': str(e)}), 400
-
