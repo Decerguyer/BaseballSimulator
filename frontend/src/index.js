@@ -1,8 +1,9 @@
-import React,{Component} from 'react';
+import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import Table from "./components/Table";
-
+import BootstrapNavbar from "./components/BootStrapNavBar";
+import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
 
 class App extends React.Component{
     constructor(props) {
@@ -25,7 +26,9 @@ class App extends React.Component{
     render(){
         return (
             <div>
-                <Table pitches={this.state.pitches} />
+                <BootstrapNavbar> </BootstrapNavbar>
+                <div><Table pitches={this.state.pitches} /></div>
+
             </div>
         )
     }

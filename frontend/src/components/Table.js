@@ -2,9 +2,6 @@ import React, {Component} from 'react'
 import './Table.css'
 
 class Table extends Component{
-    constructor(props){
-        super(props)
-    }
 
     renderTableHeader(){
         let header = ['pitcher_id', 'error', 'pitch_id', 'positions', 'serial_number', 'spin', 'time', 'timestamps']
@@ -15,7 +12,6 @@ class Table extends Component{
     renderTableData(){
         return this.props.pitches.map((val, key) =>{
             const { pitcher_id,error, pitch_id, positions, serial_number, spin,time,timestamps} = val
-            console.log(val)
             return (
                 <tr key={pitcher_id}>
                     <td>{pitcher_id}</td>
