@@ -9,6 +9,7 @@ const style = {
 class Pitch3D extends Component {
     componentDidMount() {
         this.sceneSetup();
+        this.addPitchObjects();
         this.addCustomSceneObjects();
         this.startAnimationLoop();
         window.addEventListener("resize", this.handleWindowResize);
@@ -31,27 +32,28 @@ class Pitch3D extends Component {
         this.camera = new THREE.PerspectiveCamera(
             50, // fov = field of view
             width / height, // aspect ratio
-            0.1, // near plane
+            1, // near plane
             1000 // far plane
         );
-        this.camera.position.z = 5;
+
         this.controls = new OrbitControls(this.camera, this.el);
+        //These 3 lines of code are order specific
+        this.controls.target.set(0, 2.595, 0)
+        this.camera.position.set(-2, 12, 45);
+        this.camera.lookAt(0,2.595,0);
         this.renderer = new THREE.WebGLRenderer();
         this.renderer.setSize(width, height);
         this.el.appendChild(this.renderer.domElement); // mount using React ref
     };
 
-    addCustomSceneObjects = () => {
-        const geometry = new THREE.SphereGeometry( 0.12, 32, 32 );
-        const material = new THREE.MeshBasicMaterial( {color: 0x34b7eb} );
-        const sphere = new THREE.Mesh( geometry, material );
-        sphere.position.set(0.63, 10.92, 37.38)
-        this.scene.add( sphere );
+    addPitchObjects = () =>{
 
+        //grid
         const size = 10;
         const divisions = 10;
         const gridHelper = new THREE.GridHelper( size, divisions );
         this.scene.add( gridHelper );
+
 
         //Strike Zone
         const line_material = new THREE.LineBasicMaterial( { color: 0xFFFFFF, linewidth: 2, linecap: 'round'} );
@@ -83,21 +85,15 @@ class Pitch3D extends Component {
         let plateMesh = new THREE.Mesh(plateGeom, plateMat);
         this.scene.add(plateMesh);
 
+        /*
+        //Ground
+        let groundGeometry = new THREE.PlaneGeometry(100, 100);
+        let groundMaterial = new THREE.MeshBasicMaterial({color: 0x808080, side:THREE.DoubleSide})
+        let ground = new THREE.Mesh( groundGeometry, groundMaterial);
+        ground.rotation.set(-Math.PI/2, Math.PI/2000, Math.PI);
+        this.scene.add(ground)
 
-        console.log(this.props.trajectory);
-        //Trajectory of the ball
-        let curve = new THREE.CatmullRomCurve3(this.props.trajectory.map(p=>{
-            return new THREE.Vector3(p[0], p[2], p[1]);
-        }));
-        const trajecPoints = curve.getPoints( 50 );
-        const trajecGeometry = new THREE.BufferGeometry().setFromPoints( trajecPoints );
-        const trajecMaterial = new THREE.LineBasicMaterial( { color : 0xff0000, linewidth: 10 } );
-        // Create the final object to add to the scene
-        const curveObject = new THREE.Line( trajecGeometry,trajecMaterial);
-        this.scene.add(curveObject)
-
-
-
+         */
 
         const axesHelper = new THREE.AxesHelper( 30);
         this.scene.add( axesHelper );
@@ -113,6 +109,36 @@ class Pitch3D extends Component {
         this.scene.add(lights[0]);
         this.scene.add(lights[1]);
         this.scene.add(lights[2]);
+    };
+
+    addCustomSceneObjects = () => {
+        const {pitches = []} = this.props;
+        pitches.map(pitch => {
+            //ball
+            const trajectory = pitch.positions;
+            const ball_geometry = new THREE.SphereGeometry( 0.12, 32, 32 );
+            const ball_material = new THREE.MeshBasicMaterial( {color: 0x34b7eb} );
+            const ball_sphere = new THREE.Mesh( ball_geometry, ball_material );
+            let last_ball_pos = trajectory.slice(-1)[0];
+            ball_sphere.position.set(last_ball_pos[0], last_ball_pos[2], last_ball_pos[1]);
+            this.scene.add( ball_sphere );
+
+
+            //Trajectory of the ball
+            let curve = new THREE.CatmullRomCurve3(trajectory.map(p=>{
+                return new THREE.Vector3(p[0], p[2], p[1]);
+            }));
+            const trajecPoints = curve.getPoints( 50 );
+            const trajecGeometry = new THREE.BufferGeometry().setFromPoints( trajecPoints );
+            const trajecMaterial = new THREE.LineBasicMaterial( { color : 0xff0000, linewidth: 3 } );
+            // Create the final object to add to the scene
+            const curveObject = new THREE.Line( trajecGeometry,trajecMaterial);
+            this.scene.add(curveObject)
+
+        });
+
+
+
     };
 
     startAnimationLoop = () => {
@@ -146,6 +172,7 @@ class Pitch3D extends Component {
 class Container extends React.Component {
     state = { isMounted: true };
 
+
     render() {
         const { isMounted = true } = this.state;
         return (
@@ -157,8 +184,7 @@ class Container extends React.Component {
                 >
                     {isMounted ? "Hide Animation" : "Show Animation"}
                 </button>
-                {isMounted && <Pitch3D trajectory={this.props.trajectory}/>}
-                {isMounted && <div>Scroll to zoom, drag to rotate</div>}
+                {isMounted && <Pitch3D pitches={this.props.pitches}/>}
             </>
         );
     }

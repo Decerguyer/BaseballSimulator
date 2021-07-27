@@ -15,7 +15,7 @@ class App extends React.Component{
                 "pitcher_id":"",
                 "error": [],
                 "pitch_id":"",
-                "positions": [[0,0,0], [0,0,0]],
+                "positions": [],
                 "serial_number": "",
                 "spin":[],
                 "time":"",
@@ -25,13 +25,17 @@ class App extends React.Component{
     }
 
     render(){
+        const {isLoaded, pitches} = this.state;
         return (
-            <div>
-                <BootstrapNavbar> </BootstrapNavbar>
-                <div><Table pitches={this.state.pitches} /></div>
-                <Container trajectory={this.state.pitches[0].positions}/>
-
-            </div>
+            isLoaded ?
+                <div>
+                    <BootstrapNavbar> </BootstrapNavbar>
+                    <div><Table pitches={pitches} /></div>
+                    <Container pitches={pitches}/>
+                </div>:
+                <div>
+                    <BootstrapNavbar> </BootstrapNavbar>
+                </div>
         )
     }
 
