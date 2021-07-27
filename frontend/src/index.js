@@ -30,8 +30,8 @@ class App extends React.Component{
             isLoaded ?
                 <div>
                     <BootstrapNavbar> </BootstrapNavbar>
-                    <div><Table pitches={pitches} /></div>
-                    <Container pitches={pitches}/>
+                    {pitches.length > 0 && <><div><Table pitches={pitches} /></div>
+                        <Container pitches={pitches}/></>}
                 </div>:
                 <div>
                     <BootstrapNavbar> </BootstrapNavbar>

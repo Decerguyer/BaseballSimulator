@@ -1,5 +1,7 @@
 import React, { Component } from "react";
 import * as THREE from "three";
+import './3dpitch.css';
+import Button from 'react-bootstrap/Button'
 import {OrbitControls} from "three/examples/jsm/controls/OrbitControls";
 
 const style = {
@@ -8,17 +10,21 @@ const style = {
 
 class Pitch3D extends Component {
     componentDidMount() {
-        this.sceneSetup();
-        this.addPitchObjects();
-        this.addCustomSceneObjects();
-        this.startAnimationLoop();
-        window.addEventListener("resize", this.handleWindowResize);
+        if (this.props.pitches.length){
+            this.sceneSetup();
+            this.addPitchObjects();
+            this.addCustomSceneObjects();
+            this.startAnimationLoop();
+            window.addEventListener("resize", this.handleWindowResize);
+        }
     }
 
     componentWillUnmount() {
-        window.removeEventListener("resize", this.handleWindowResize);
-        window.cancelAnimationFrame(this.requestID);
-        this.controls.dispose();
+        if (this.props.pitches.length){
+            window.removeEventListener("resize", this.handleWindowResize);
+            window.cancelAnimationFrame(this.requestID);
+            this.controls.dispose();
+        }
     }
 
     // Standard scene setup in Three.js. Check "Creating a scene" manual for more information
@@ -29,6 +35,7 @@ class Pitch3D extends Component {
         const height = this.el.clientHeight;
 
         this.scene = new THREE.Scene();
+        this.scene.background = new THREE.Color('rgb(156,159,161)');
         this.camera = new THREE.PerspectiveCamera(
             50, // fov = field of view
             width / height, // aspect ratio
@@ -49,10 +56,12 @@ class Pitch3D extends Component {
     addPitchObjects = () =>{
 
         //grid
+        /*
         const size = 10;
         const divisions = 10;
         const gridHelper = new THREE.GridHelper( size, divisions );
         this.scene.add( gridHelper );
+         */
 
 
         //Strike Zone
@@ -66,6 +75,7 @@ class Pitch3D extends Component {
         const line_geometry = new THREE.BufferGeometry().setFromPoints( points );
         const line = new THREE.Line(line_geometry, line_material);
         this.scene.add(line);
+
 
 
 
@@ -85,6 +95,34 @@ class Pitch3D extends Component {
         let plateMesh = new THREE.Mesh(plateGeom, plateMat);
         this.scene.add(plateMesh);
 
+
+        const length = 12, width = 8;
+
+        const shape = new THREE.Shape();
+        shape.moveTo( 0,0 );
+        shape.lineTo( 0, width );
+        shape.lineTo( length, width );
+        shape.lineTo( length, 0 );
+        shape.lineTo( 0, 0 );
+
+        const extrudeSettings = {
+            steps: 1,
+            depth: 0.1,
+            bevelEnabled: true,
+            bevelThickness: 0,
+            bevelSize: 0,
+            bevelOffset: 0,
+            bevelSegments: 0
+        };
+
+        let test = new THREE.Shape(homePts);
+        const geometry = new THREE.ExtrudeGeometry( test, extrudeSettings );
+        geometry.rotateX(-Math.PI*0.5);
+        const material = new THREE.MeshBasicMaterial( { color: 'white'} );
+        const mesh = new THREE.Mesh( geometry, material ) ;
+        this.scene.add( mesh );
+
+
         /*
         //Ground
         let groundGeometry = new THREE.PlaneGeometry(100, 100);
@@ -95,8 +133,11 @@ class Pitch3D extends Component {
 
          */
 
+        /*
         const axesHelper = new THREE.AxesHelper( 30);
         this.scene.add( axesHelper );
+         */
+
         const lights = [];
         lights[0] = new THREE.PointLight(0xffffff, 1, 0);
         lights[1] = new THREE.PointLight(0xffffff, 1, 0);
@@ -119,20 +160,28 @@ class Pitch3D extends Component {
             const ball_geometry = new THREE.SphereGeometry( 0.12, 32, 32 );
             const ball_material = new THREE.MeshBasicMaterial( {color: 0x34b7eb} );
             const ball_sphere = new THREE.Mesh( ball_geometry, ball_material );
+            let first_ball_pos = trajectory[0];
             let last_ball_pos = trajectory.slice(-1)[0];
             ball_sphere.position.set(last_ball_pos[0], last_ball_pos[2], last_ball_pos[1]);
             this.scene.add( ball_sphere );
-
+            let ball2 = ball_sphere.clone()
+            ball2.position.set(first_ball_pos[0], first_ball_pos[2], first_ball_pos[1]);
+            this.scene.add(ball2);
 
             //Trajectory of the ball
             let curve = new THREE.CatmullRomCurve3(trajectory.map(p=>{
                 return new THREE.Vector3(p[0], p[2], p[1]);
             }));
             const trajecPoints = curve.getPoints( 50 );
-            const trajecGeometry = new THREE.BufferGeometry().setFromPoints( trajecPoints );
-            const trajecMaterial = new THREE.LineBasicMaterial( { color : 0xff0000, linewidth: 3 } );
+            const trajecGeom = new THREE.TubeGeometry(curve,200, 0.1,50, false );
+            let trajecMaterial;
+            if (last_ball_pos[0] <= 0.83 && last_ball_pos[0] >= -0.83 && last_ball_pos[2] <= 3.67 && last_ball_pos[2] >= 1.52) {
+                trajecMaterial = new THREE.MeshBasicMaterial( { color:'blue'} );
+            } else {
+                trajecMaterial = new THREE.MeshBasicMaterial( { color:0xf79d97} );
+            }
             // Create the final object to add to the scene
-            const curveObject = new THREE.Line( trajecGeometry,trajecMaterial);
+            const curveObject = new THREE.Mesh( trajecGeom,trajecMaterial);
             this.scene.add(curveObject)
 
         });
@@ -177,13 +226,13 @@ class Container extends React.Component {
         const { isMounted = true } = this.state;
         return (
             <>
-                <button
+                <Button id={"unmountSim"} variant={'outline-success'}
                     onClick={() =>
                         this.setState(state => ({ isMounted: !state.isMounted }))
                     }
                 >
                     {isMounted ? "Hide Animation" : "Show Animation"}
-                </button>
+                </Button>
                 {isMounted && <Pitch3D pitches={this.props.pitches}/>}
             </>
         );
