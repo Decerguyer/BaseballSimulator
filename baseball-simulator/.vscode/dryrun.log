@@ -175,14 +175,14 @@ make[2]: *** No rule to make target `/usr/lib/aarch64-linux-gnu/libopencv_videos
 make[2]: *** No rule to make target `/usr/lib/aarch64-linux-gnu/libopencv_viz.so.4.2.0', needed by `rs-baseball-simulator'.
 make[2]: *** No rule to make target `/usr/lib/aarch64-linux-gnu/libopencv_xobjdetect.so.4.2.0', needed by `rs-baseball-simulator'.
 make[2]: *** No rule to make target `/usr/lib/aarch64-linux-gnu/libopencv_xphoto.so.4.2.0', needed by `rs-baseball-simulator'.
- 
 make[2]: *** No rule to make target `/usr/local/lib/librealsense2.so', needed by `rs-baseball-simulator'.
 make[2]: *** No rule to make target `/usr/lib/aarch64-linux-gnu/libopencv_highgui.so.4.2.0', needed by `rs-baseball-simulator'.
 make[2]: *** No rule to make target `/usr/lib/aarch64-linux-gnu/libopencv_datasets.so.4.2.0', needed by `rs-baseball-simulator'.
 make[2]: *** No rule to make target `/usr/lib/aarch64-linux-gnu/libopencv_plot.so.4.2.0', needed by `rs-baseball-simulator'.
 make[2]: *** No rule to make target `/usr/lib/aarch64-linux-gnu/libopencv_text.so.4.2.0', needed by `rs-baseball-simulator'.
 make[2]: *** No rule to make target `/usr/lib/aarch64-linux-gnu/libopencv_dnn.so.4.2.0', needed by `rs-baseball-simulator'.
-make[2]: *** No rule to make target `/usr/lib/aarch64-linux-gnu/libopencv_ml.so.4.2.0', needed by `rs-baseball-simulator'.
+make[2]:  
+*** No rule to make target `/usr/lib/aarch64-linux-gnu/libopencv_ml.so.4.2.0', needed by `rs-baseball-simulator'.
 make[2]: *** No rule to make target `/usr/lib/aarch64-linux-gnu/libopencv_phase_unwrapping.so.4.2.0', needed by `rs-baseball-simulator'.
 make[2]: *** No rule to make target `/usr/lib/aarch64-linux-gnu/libopencv_optflow.so.4.2.0', needed by `rs-baseball-simulator'.
 make[2]: *** No rule to make target `/usr/lib/aarch64-linux-gnu/libopencv_ximgproc.so.4.2.0', needed by `rs-baseball-simulator'.

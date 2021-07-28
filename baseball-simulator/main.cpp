@@ -19,7 +19,7 @@
 int main(){
     BaseballSimulator system;
     while(true){
-        std::cout << "Enter 0 for MainTestingRoutine, 1 for savingRoutine, 2, for loadingRoutinem\n";
+        std::cout << "Enter 0 for MainTestingRoutine, 1 for savingRoutine, 2 for loadingRoutine, 3 for photographyRoutine\n";
         int choice=0;
         std::cin >> choice;
         
@@ -40,6 +40,10 @@ int main(){
             std::string str;
             std:: cin >> str;
             system.loadingRoutine(str);
+        }
+        else if (choice == 3){
+            std::cout << "Running photographyRoutine\n";
+            system.photographyRoutine();
         }
     }
 }

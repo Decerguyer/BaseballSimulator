@@ -322,15 +322,30 @@ void BaseballSimulator::loadingRoutine(std::string str){
     std::cout<<"The Routine has completed" << std::endl;
 }
 
-void BaseballSimulator::Save(){
-    // D400 cam(ctx);
-    // std::cout << "Attached Camera" << endl;
-    // cam.calibrate();
-    // cam.setDefaultSettings();
-    // cam.writeMat("RotationMatrix");
-}
-void BaseballSimulator::Load(){
-    // D400 cam(ctx);
-    // std::cout << "Attached Camera" << endl;
-    // cam.readMat("RotationMatrix");
+void BaseballSimulator::photographyRoutine(){
+    D400 cam(ctx);
+    std::cout << "Attached Camera" << endl;
+    cam.setDefaultSettings();
+    
+    //**************************Threshold Initialization*************************//
+    ThresholdFilter threshFilter(cam);
+    std::cout << "ThresholdFilter\n";
+
+    //****************************User Control Block***************************//
+    int exposure;
+    std::cout << "Enter Exposure Value: ";
+    std::cin >> exposure;
+    cam.setExposure(exposure); //Add method to change this from hard coded value?
+
+    int numFrames;
+    std::cout << "Enter number of frames to record\n";
+    std::cin >> numFrames;
+    std::deque<ImageData> images = cam.recordImageData(numFrames);
+
+    //**************************Visualization Block *************************//
+    Visualizer vis;
+    
+    //Change images to VALID images so only the frames with the ball are shown?
+    vis.visualize(images, true, true, true);
+
 }
