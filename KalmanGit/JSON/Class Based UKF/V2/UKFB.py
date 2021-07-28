@@ -27,7 +27,7 @@ class UKFB:
         self.dt = 0.0001
         self.ukf = UnscentedKalmanFilter(dim_x=9, dim_z=3, dt=self.dt, hx=self.hx, fx=self.fx,
                                          points=MerweScaledSigmaPoints(n=9, alpha=.2, beta=2., kappa=-6.))
-        self.ukf.x = np.array([0., 60., 5, 0., -100., 0, 0., 0., -32])
+        self.ukf.x = np.array([0., 60.5, 5, 0., -100., 0, 0., 0., -32])
         self.ukf.P *= 1000.
         self.ukf.R = np.diag([(0.25 / 3) ** 2, (0.25 / 3) ** 2, (0.25 / 3) ** 2])
         self.ukf.Q = Q_discrete_white_noise(dim=3, dt=self.dt, var=0.0000001, block_size=3)
@@ -205,8 +205,8 @@ class UKFB:
         for position in position_dictionary:
             #Z becomes Y and is inverted. Y becomes Z and is inverted. X is inverted
             #Convert meters to feet
-            #Add 60-mound_offset to the Y value (was Z)
-            offset = 60-mound_offset
+            #Add 60.5-mound_offset to the Y value (was Z)
+            offset = 60.5-mound_offset
             position_set = [(position[0]*-1)/0.3048, (position[2]*-1)/0.3048+offset, (position[1]*-1)/0.3048+height_offset]
             zs.append(position_set)
 
