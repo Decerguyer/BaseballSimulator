@@ -30,7 +30,7 @@ class BaseballSimulator{
         void MainTestingRoutine();
         void savingRoutine(std::string str);
         void loadingRoutine(std::string str);
-        void 
+        void photographyRoutine();
         
     private:
         rs2::context ctx;
