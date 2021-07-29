@@ -30,6 +30,7 @@ void BaseballSimulator::MainTestingRoutine(){
     //****************************Camera Initialization & Calibration***************************//
     D400 cam(ctx);
     std::cout << "Attached Camera" << endl;
+    std::cout << "Square Size: " << SQUARE_SIZE << endl;
     cam.calibrate();
     
     cam.setDefaultSettings();
@@ -141,6 +142,7 @@ void BaseballSimulator::savingRoutine(std::string str){
     //****************************Camera Initialization & Calibration***************************//
     D400 cam(ctx);
     std::cout << "Attached Camera" << endl;
+    std::cout << "Square Size: " << SQUARE_SIZE << endl;
     cam.calibrate();
 
     std::cout << "Saving Calibration\n";
@@ -352,7 +354,8 @@ void BaseballSimulator::photographyRoutine(){
 
 void BaseballSimulator::distFromWall(){
     D400 cam(ctx);
-    std::cout << "Attached Camera" << endl;    
+    std::cout << "Attached Camera" << endl;  
+    std::cout << "Square Size: " << SQUARE_SIZE << endl;  
     cam.calibrate();
 
     cv::Mat R = cam.getRotationMatrix();
