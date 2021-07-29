@@ -9,6 +9,7 @@ make[2]: Entering directory `/Users/yonatanarieh/BaseballSimulator/baseball-simu
 cd /home/ubuntu/BaseballSimulator/baseball-simulator && /usr/bin/cmake -E cmake_depends "Unix Makefiles" /home/ubuntu/BaseballSimulator/baseball-simulator /home/ubuntu/BaseballSimulator/baseball-simulator /home/ubuntu/BaseballSimulator/baseball-simulator /home/ubuntu/BaseballSimulator/baseball-simulator /home/ubuntu/BaseballSimulator/baseball-simulator/CMakeFiles/rs-baseball-simulator.dir/DependInfo.cmake --color=
 make[2]: Leaving directory `/Users/yonatanarieh/BaseballSimulator/baseball-simulator'
 /Applications/Xcode.app/Contents/Developer/usr/bin/make -f CMakeFiles/rs-baseball-simulator.dir/build.make CMakeFiles/rs-baseball-simulator.dir/build
+ 
 make[2]: Entering directory `/Users/yonatanarieh/BaseballSimulator/baseball-simulator'
  
 make[2]: *** No rule to make target `/usr/include/opencv4/opencv2/calib3d.hpp', needed by `CMakeFiles/rs-baseball-simulator.dir/Camera.cpp.o'.
