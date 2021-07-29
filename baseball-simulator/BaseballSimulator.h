@@ -30,7 +30,8 @@ class BaseballSimulator{
         void MainTestingRoutine();
         void savingRoutine(std::string str);
         void loadingRoutine(std::string str);
-        void photographyRoutine();
+        void photographyRoutine(); //To review images without further action
+        void distFromWall(); //To determine Tare value
         
     private:
         rs2::context ctx;

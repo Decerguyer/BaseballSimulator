@@ -349,3 +349,22 @@ void BaseballSimulator::photographyRoutine(){
     vis.visualize(images, true, true, true);
 
 }
+
+void BaseballSimulator::distFromWall(){
+    D400 cam(ctx);
+    std::cout << "Attached Camera" << endl;    
+    cam.calibrate();
+
+    cv::Mat R = cam.getRotationMatrix();
+    cv::Mat T = cam.getTranslationMatrix();
+
+    cv::Mat rotation, rotationInverse;
+    cv::Rodrigues(R,rotation);
+    cv::invert(rotation,rotationInverse);
+
+    cv::Mat zeros = (cv::Mat_<float>(1,3) << 0,0,0);
+
+    std::cout << "Rotation: " << rotation << std::endl;
+    std::cout << "Translation: " << T << std::endl;
+    std::cout << "(0-T)*(R^-1): " <<  rotationInverse*(zeros-T) << std::endl;
+}
