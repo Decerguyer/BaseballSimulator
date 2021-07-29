@@ -361,7 +361,7 @@ void BaseballSimulator::distFromWall(){
     cv::Mat R = cam.getRotationMatrix();
     cv::Mat T = cam.getTranslationMatrix();
 
-    cv::Mat zeros = (cv::Mat_<float>(1,3) << 0,0,0);
+    cv::Mat zeros = (cv::Mat_<float>(3,1) << 0,0,0);
 
     std::cout << "Rotation Inverse: " << R << std::endl;
     std::cout << "Translation: " << T << std::endl;
