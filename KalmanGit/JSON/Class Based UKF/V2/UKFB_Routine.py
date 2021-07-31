@@ -24,29 +24,23 @@ PM.print_output()
 json_manager = JSONControl()
 json_manager.write_output_json("OutputFile.json", PM.positionVector)
 
-'''
-count = 0
+
 downSampled = []
-for i in PM.positionVector:
-    empty = []
-    if count % 50 == 0:
-        x = round(i[0], 2)
-        y = round(i[1], 2)
-        z = round(i[2], 2)
-        empty.append(x)
-        empty.append(y)
-        empty.append(z)
-        downSampled.append(empty)
-    count += 1
-if(len(PM.positionVector)-1)%50 !=0 :
+samples = 20
+step = int(len(PM.positionVector)/samples)
+for i in range(0, len(PM.positionVector), step):
+    x = round(PM.positionVector[i][0], 2)
+    y = round(PM.positionVector[i][1], 2)
+    z = round(PM.positionVector[i][2], 2)
+    empty = [x, y, z]
+    downSampled.append(empty)
+if(len(PM.positionVector)-1) % step != 0:
     x = round(PM.positionVector[-1][0], 2)
     y = round(PM.positionVector[-1][1], 2)
     z = round(PM.positionVector[-1][2], 2)
-    temp = []
-    temp.append(x)
-    temp.append(y)
-    temp.append(z)
+    temp = [x, y, z]
     downSampled.append(temp)
 
 json_manager.write_output_json("DownSampled.json", downSampled)
-'''
+
+json_manager.write_output_json("InputData.json", json_data)
