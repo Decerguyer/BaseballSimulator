@@ -403,11 +403,13 @@ void BaseballSimulator::singleMeasurement(){
     Tracker trk(848, 480, cam.getIntrinsics(), threshFilter);
     std::vector<std::vector<float>> positions3D = trk.convertTo3D(clicks);
 
+    DataStructure data;
+
     for(int l = 0; l < positions3D.size(); l++){
         std::cout << "x: " << positions3D[l][0] << " y: " << positions3D[l][1] << " z: " << positions3D[l][2] << std::endl;
+        data.uncenteredPositions.push_back(positions3D[l]);
     }
 
-    DataStructure data;
     data.centerPositions();
     std::cout << "Center Positions good\n";
     data.transformPositions(cam);
