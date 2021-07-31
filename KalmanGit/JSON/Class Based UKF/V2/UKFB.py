@@ -165,8 +165,8 @@ class UKFB:
     def control_loop(self):
         for z in self.zs:
             time_stamp = self.timeStamps[self.counter]
-            # aprint(timeStamp)
-            print("Predict")
+            # print(timeStamp)
+            # print("Predict")
             while self.time[0] <= time_stamp:
                 self.ukf.predict()
                 self.time[0] += self.dt
@@ -175,12 +175,12 @@ class UKFB:
                 self.var = self.var + 1
                 # print(time[0])
             # print("update")
-            print(self.var)
+            # print(self.var)
             self.var = 0
             self.ukf.R = np.diag([(self.error[self.counter][0] / 3) ** 2, (self.error[self.counter][1] / 3) ** 2, (self.error[self.counter][2]/3) ** 2])
             self.ukf.update(z)
-            print("Updated")
-            print(self.xs[-1])
+            # print("Updated")
+            # print(self.xs[-1])
             self.xs.append(self.ukf.x.copy())
             self.ps.append(self.ukf.P.copy())
             self.counter += 1
@@ -241,3 +241,15 @@ class UKFB:
         spin = {"x": self.spin[0], "y": self.spin[1], "z": self.spin[2]}
         output = {"state": state, "spin": spin}
         return output
+
+    def position_smoother(self):
+        (sxs, Ps, K) = self.ukf.rts_smoother(np.array(self.xs), np.array(self.ps))
+        samples = 8
+        step = int(len(sxs)/samples)
+        print (step)
+        smoothed = []
+        for i in range(0, len(sxs), step):
+            temp = [round(sxs[i][0], 2), round(sxs[i][1], 2), round(sxs[i][2], 2)]
+            smoothed.append(temp)
+        return smoothed
+

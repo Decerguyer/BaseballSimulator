@@ -44,3 +44,6 @@ if(len(PM.positionVector)-1) % step != 0:
 json_manager.write_output_json("DownSampled.json", downSampled)
 
 json_manager.write_output_json("InputData.json", json_data)
+
+smoothed = UKF.position_smoother()
+json_manager.write_output_json("Smoothed.json", smoothed)
