@@ -367,3 +367,43 @@ void BaseballSimulator::distFromWall(){
     std::cout << "Translation: " << T << std::endl;
     std::cout << "(0-T)*(R^-1): " <<  R*(zeros-T) << std::endl;
 }
+
+void BaseballSimulator::singleMeasurement(){
+    
+    D400 cam(ctx);
+    std::cout << "Attached Camera" << endl;
+    std::cout << "Square Size: " << SQUARE_SIZE << endl;
+    cam.calibrate();
+
+    ThresholdFilter threshFilter(cam);
+
+    cam.setDefaultSettings();
+
+    int exposure;
+    std::cout << "Enter Exposure Value: ";
+    std::cin >> exposure;
+    cam.setExposure(exposure); //Add method to change this from hard coded value?
+
+    int numFrames;
+    std::cout << "Enter number of frames to record\n";
+    std::cin >> numFrames;
+    std::deque<ImageData> images = cam.recordImageData(numFrames);
+
+
+    std::vector<coord2D> clicks;
+    Visualizer vis(&clicks);
+
+    //Change images to VALID images so only the frames with the ball are shown?
+    vis.visualize(images, true, true, true);
+
+    for(int l = 0; l < clicks.size(); l++){
+        std::cout << "Px: " << clicks[l].x << " Py: " << clicks[l].y << " z: " << clicks[l].depth << std::endl;
+    }
+
+    Tracker trk(848, 480, cam.getIntrinsics(), threshFilter);
+    std::vector<std::vector<float>> positions3D = trk.convertTo3D(clicks);
+
+    for(int l = 0; l < positions3D.size(); l++){
+        std::cout << "x: " << positions3D[l][0] << " y: " << positions3D[l][1] << " z: " << positions3D[l][2] << std::endl;
+    }
+}
