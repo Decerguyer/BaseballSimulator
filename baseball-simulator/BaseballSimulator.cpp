@@ -406,4 +406,15 @@ void BaseballSimulator::singleMeasurement(){
     for(int l = 0; l < positions3D.size(); l++){
         std::cout << "x: " << positions3D[l][0] << " y: " << positions3D[l][1] << " z: " << positions3D[l][2] << std::endl;
     }
+
+    DataStructure data;
+    data.centerPositions();
+    std::cout << "Center Positions good\n";
+    data.transformError(cam);
+    std::cout << "transform positions good\n";
+
+    for(int l = 0; l < data.positions.size(); l++){
+        std::cout << "x: " << data.positions[l][0] << " y: " << data.positions[l][1] << " z: " << data.positions[l][2] << std::endl;
+    }
+
 }
