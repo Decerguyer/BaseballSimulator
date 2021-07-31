@@ -15,6 +15,7 @@ from filterpy.kalman import UnscentedKalmanFilter
 from filterpy.kalman import unscented_transform, MerweScaledSigmaPoints
 from filterpy.common import Q_discrete_white_noise
 import numpy as np
+import time as T
 from numpy.random import randn
 
 
@@ -243,10 +244,12 @@ class UKFB:
         return output
 
     def position_smoother(self):
+        pre = T.time()
         (sxs, Ps, K) = self.ukf.rts_smoother(np.array(self.xs), np.array(self.ps))
+        print(str(T.time()-pre) + " Seconds to smooth")
         samples = 8
         step = int(len(sxs)/samples)
-        print (step)
+        # print (step)
         smoothed = []
         for i in range(0, len(sxs), step):
             temp = [round(sxs[i][0], 2), round(sxs[i][1], 2), round(sxs[i][2], 2)]
