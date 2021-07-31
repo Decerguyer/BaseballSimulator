@@ -410,7 +410,7 @@ void BaseballSimulator::singleMeasurement(){
     DataStructure data;
     data.centerPositions();
     std::cout << "Center Positions good\n";
-    data.transformError(cam);
+    data.transformPositions(cam);
     std::cout << "transform positions good\n";
 
     for(int l = 0; l < data.positions.size(); l++){
