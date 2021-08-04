@@ -69,6 +69,31 @@ void Visualizer::visualize(std::deque<ImageData> imgData, bool showDepth, bool s
     cv::waitKey(1);
 }
 
+void visualizeSingle(ImageData imgData, bool showDepth, bool showIR, bool drawCircles){
+    std::cout << "TimeStamp = " << imgData.getTimeStamp() << "; ";
+    std::cout << "Act Frame # = " << imgData.getFrameNumber() << std::endl;
+    
+    if (drawCircles){
+        if (imgData.depthVisBallLoc[2])
+            drawCircle(imgData.depthVisMat, imgData.depthVisBallLoc);
+        if (imgData.IRBallLoc[2])
+            drawCircle(imgData.irMat, imgData.IRBallLoc);
+    }
+    
+    if (showDepth){
+        imshow("Depth Visualized", imgData.depthVisMat);
+        imshow("Depth Visualized ROI", imgData.depthVisMatCropped);
+    }
+    if (showIR){
+        cv::namedWindow( "IR", cv::WINDOW_AUTOSIZE);
+        imshow("IR", imgData.irMat);
+        imshow("IR Cropped", imgData[i].irMatCropped);
+    }
+    int key = cv::waitKey(0);
+    cv::destroyAllWindows();
+    cv::waitKey(1);
+}
+
 ImageData* Visualizer::tmpImgData{NULL};
 std::vector<coord2D>* Visualizer::clicks{NULL};
 

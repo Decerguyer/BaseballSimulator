@@ -14,8 +14,10 @@ class Visualizer{
     public:
         Visualizer();
         Visualizer(std::vector<coord2D> *clicks);
-        cv::Mat drawCircle(cv::Mat image, cv::Vec3f coord);
+        static cv::Mat drawCircle(cv::Mat image, cv::Vec3f coord);
         void visualize(std::deque<ImageData> imgData, bool showDepth, bool showIR, bool drawCircles);
+        static void visualizeSingle(ImageData imgData, bool showDepth, bool showIR, bool drawCircles);
+
         static void onMouse( int event, int x, int y, int f, void* );
     private:
         static ImageData *tmpImgData;
