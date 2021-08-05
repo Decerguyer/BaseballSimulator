@@ -77,7 +77,60 @@ class Pitch3D extends Component {
         this.scene.add(line);
 
 
+        const extrudeSettings = {
+            steps: 1,
+            depth: 0.1,
+            bevelEnabled: true,
+            bevelThickness: 0,
+            bevelSize: 0,
+            bevelOffset: 0,
+            bevelSegments: 0
+        };
 
+        const lineMaterial = new THREE.MeshBasicMaterial( {color: 'white'} );
+        //foul line1
+        const line1Geometry = new THREE.BoxGeometry( 0.3, 0.2, 85 );
+        line1Geometry.translate(0,0,50)
+        const line1 = new THREE.Mesh( line1Geometry, lineMaterial );
+        line1.rotateOnAxis(new THREE.Vector3(0,1,0),Math.PI*45/180)
+        this.scene.add( line1 );
+
+        //line2
+        const line2Geometry = new THREE.BoxGeometry( 0.3, 0.2, 85 );
+        line2Geometry.translate(0,0,50)
+        const line2 = new THREE.Mesh( line2Geometry, lineMaterial );
+        line2.rotateOnAxis(new THREE.Vector3(0,1,0),-Math.PI*45/180)
+        this.scene.add( line2 );
+
+
+        //pitcher's mound
+        let moundGeom = new THREE.CylinderGeometry(9,9,0.1, 20,20);
+        moundGeom.translate(0, 0, 59);
+        let moundMat = new THREE.MeshBasicMaterial({color:'brown'});
+        let mound = new THREE.Mesh(moundGeom, moundMat);
+        this.scene.add(mound);
+
+        //batter's mound
+        let batterGeom = new THREE.CylinderGeometry(13,13,0.1, 20,20);
+        let batterMound = new THREE.Mesh(batterGeom, moundMat);
+        this.scene.add(batterMound);
+
+        //pitcher's plate
+        let tmpPitcherPlatePts = [
+            new THREE.Vector3(-1, 0, 60.5),
+            new THREE.Vector3(1, 0, 60.5),
+            new THREE.Vector3(1, 0, 61.0),
+            new THREE.Vector3(-1, 0, 61.0),
+            new THREE.Vector3(-1, 0, 60.5)
+        ];
+
+        let plateMat = new THREE.MeshBasicMaterial({color: "white"});
+        let pitcherPlatePts = tmpPitcherPlatePts.map(p=>{return new THREE.Vector2(p.x, -p.z)});
+        let pitcherPlate = new THREE.Shape(pitcherPlatePts);
+        let pitcherPlateGeom = new THREE.ExtrudeGeometry(pitcherPlate, extrudeSettings);
+        pitcherPlateGeom.rotateX(-Math.PI*0.5);
+        let pitcherPlateMesh = new THREE.Mesh(pitcherPlateGeom, plateMat);
+        this.scene.add(pitcherPlateMesh);
 
         //Home plate
         let tmpPts = [
@@ -89,49 +142,20 @@ class Pitch3D extends Component {
         ];
         let homePts = tmpPts.map(p=>{return new THREE.Vector2(p.x, -p.z)});
         let homePlate = new THREE.Shape(homePts);
-        let plateGeom = new THREE.ShapeBufferGeometry(homePlate);
-        plateGeom.rotateX(-Math.PI * 0.5);
-        let plateMat = new THREE.MeshBasicMaterial({color: "white"});
-        let plateMesh = new THREE.Mesh(plateGeom, plateMat);
-        this.scene.add(plateMesh);
+        const homePlateGeom = new THREE.ExtrudeGeometry( homePlate, extrudeSettings );
+        homePlateGeom.rotateX(-Math.PI*0.5);
+        const homePlateMesh = new THREE.Mesh( homePlateGeom, plateMat) ;
+        this.scene.add( homePlateMesh);
 
 
-        const length = 12, width = 8;
-
-        const shape = new THREE.Shape();
-        shape.moveTo( 0,0 );
-        shape.lineTo( 0, width );
-        shape.lineTo( length, width );
-        shape.lineTo( length, 0 );
-        shape.lineTo( 0, 0 );
-
-        const extrudeSettings = {
-            steps: 1,
-            depth: 0.1,
-            bevelEnabled: true,
-            bevelThickness: 0,
-            bevelSize: 0,
-            bevelOffset: 0,
-            bevelSegments: 0
-        };
-
-        let test = new THREE.Shape(homePts);
-        const geometry = new THREE.ExtrudeGeometry( test, extrudeSettings );
-        geometry.rotateX(-Math.PI*0.5);
-        const material = new THREE.MeshBasicMaterial( { color: 'white'} );
-        const mesh = new THREE.Mesh( geometry, material ) ;
-        this.scene.add( mesh );
-
-
-        /*
         //Ground
-        let groundGeometry = new THREE.PlaneGeometry(100, 100);
-        let groundMaterial = new THREE.MeshBasicMaterial({color: 0x808080, side:THREE.DoubleSide})
+        let groundGeometry = new THREE.PlaneGeometry(250, 250);
+        groundGeometry.translate(0, 100, 0);
+        let groundMaterial = new THREE.MeshBasicMaterial({color: 0x529630, side:THREE.DoubleSide})
         let ground = new THREE.Mesh( groundGeometry, groundMaterial);
         ground.rotation.set(-Math.PI/2, Math.PI/2000, Math.PI);
         this.scene.add(ground)
 
-         */
 
         /*
         const axesHelper = new THREE.AxesHelper( 30);
