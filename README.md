@@ -13,3 +13,4 @@ frontend is at localhost:3000
 backend is at localhost:5000
     
 Make sure proxy server is activated
+import Navbar from "react-bootstrap/Navbar"
