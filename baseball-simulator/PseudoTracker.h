@@ -12,21 +12,23 @@
 class PseudoTracker{
     public:
     coord2D track(ImageData imgData);
-    static void onMouse( int event, int x, int y, int flag, void* );
+    static void onMouse( int event, int x, int y, int flag, void* ptr);
     void onMouse(int event, int x, int y, int flag);
-
-    ImageData originalIRMat;
 
     private:
     struct circleDimensions{
         bool paused = true;
+        bool success;
 
         int initialX;
         int initialY;
         int currentX;
         int currentY;
-    } circleDims;
 
+        void reset();
+    } circleDims;
+    
+    cv::Mat originalIRMat;
 
 };
 

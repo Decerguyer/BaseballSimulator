@@ -16,7 +16,8 @@ class Visualizer{
         Visualizer(std::vector<coord2D> *clicks);
         static cv::Mat drawCircle(cv::Mat image, cv::Vec3f coord);
         void visualize(std::deque<ImageData> imgData, bool showDepth, bool showIR, bool drawCircles);
-        static void visualizeSingle(ImageData imgData, bool showDepth, bool showIR, bool drawCircles);
+        static void visualizeSingleSetUp(ImageData imgData, bool showDepth, bool showIR, bool drawCircles);
+        static void visualizeSingleShow(int time); // milliseconds
 
         static void onMouse( int event, int x, int y, int f, void* );
     private:
