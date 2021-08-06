@@ -64,14 +64,14 @@ class Pitch:
 app = Flask(__name__)
 CORS(app)
 
-PITCHES_TABLE = os.environ['PITCHES_TABLE']
+PITCHES_TABLE = os.environ.get('PITCHES_TABLE')
 IS_OFFLINE = os.environ.get('IS_OFFLINE')
 
 if IS_OFFLINE:
     client = boto3.client(
         'dynamodb',
         region_name='localhost',
-        endpoint_url='http://localhost:5000'
+        endpoint_url='http://localhost:8000'
     )
 else:
     client = boto3.client('dynamodb')
