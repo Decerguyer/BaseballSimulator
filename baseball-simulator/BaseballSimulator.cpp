@@ -185,8 +185,7 @@ void BaseballSimulator::savingRoutine(std::string str){
     images.erase(images.begin()+endFrame+1, images.end());
     images.erase(images.begin(), images.begin()+startFrame);
 
-    std::cout << "Saving Images\n";
-    saveImageDataDeque(images, file);
+    std::cout << "Saving images at the end of routine\n";
 
     //****************************Spin Block***************************//
     
@@ -208,6 +207,9 @@ void BaseballSimulator::savingRoutine(std::string str){
 
     file << "GroundTruthX" << x
     << "GroundTruthZ" << z;
+
+    std::cout << "Saving images\n";
+    saveImageDataDeque(images, file);
 
     std::cout<<"The Routine has completed\n" << std::endl;
 }

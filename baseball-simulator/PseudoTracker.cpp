@@ -6,12 +6,13 @@ PseudoTracker::PseudoTracker(){
 coord2D PseudoTracker::track(ImageData imgData){
     originalIRMat = imgData.irMat.clone();
     circleDims.reset();
+    cv::namedWindow( "IR", cv::WINDOW_AUTOSIZE);
+    cv::setMouseCallback("IR", onMouse, this);
 
     cv::Vec3f circ = {0, 0, 0};
     while(!circleDims.success){
         Visualizer::drawCircle(imgData.irMat, circ);
-        //Visualizer::visualizeSingleSetUp(imgData, true, true, false);
-        cv::setMouseCallback("IR", onMouse, this);
+        Visualizer::visualizeSingleSetUp(imgData, true, true, false);
         Visualizer::visualizeSingleShow(10);
 
         circ[0] = (circleDims.currentX + circleDims.initialX)/2;

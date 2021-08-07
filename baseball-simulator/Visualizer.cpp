@@ -69,7 +69,7 @@ void Visualizer::visualize(std::deque<ImageData> imgData, bool showDepth, bool s
     cv::waitKey(1);
 }
 
-void Visualizer::visualizeSingle(ImageData imgData, bool showDepth, bool showIR, bool drawCircles){
+void Visualizer::visualizeSingleSetUp(ImageData imgData, bool showDepth, bool showIR, bool drawCircles){
     std::cout << "TimeStamp = " << imgData.getTimeStamp() << "; ";
     std::cout << "Act Frame # = " << imgData.getFrameNumber() << std::endl;
     
@@ -85,7 +85,6 @@ void Visualizer::visualizeSingle(ImageData imgData, bool showDepth, bool showIR,
         imshow("Depth Visualized ROI", imgData.depthVisMatCropped);
     }
     if (showIR){
-        cv::namedWindow( "IR", cv::WINDOW_AUTOSIZE);
         imshow("IR", imgData.irMat);
         imshow("IR Cropped", imgData.irMatCropped);
     }
