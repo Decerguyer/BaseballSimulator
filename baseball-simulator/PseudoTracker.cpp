@@ -33,7 +33,7 @@ coord2D PseudoTracker::track(ImageData imgData){
     imgData.irMat = originalIRMat;
 
     coord2D coord = {circ[0], circ[1], imgData.getDepthAt(circ[0], circ[1])};
-    std::cout << "Coord2D = " << coord.x << " " << coord.y << " " coord.depth;
+    std::cout << "Coord2D = " << coord.x << " " << coord.y << " " << coord.depth;
     return coord;
 }
 
