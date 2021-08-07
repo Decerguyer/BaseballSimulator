@@ -11,6 +11,7 @@
 #include <librealsense2/rs.hpp> // Include RealSense Cross Platform API
 #include <librealsense2/rsutil.h> // Include RealSense Cross Platform API
 #include <opencv2/opencv.hpp>
+#include <iostream>
 #include <deque>
 #include <cmath>
 
@@ -31,6 +32,11 @@ struct coord2D{
     float y;
     float depth;
 };
+
+std::ostream& operator<<(std::ostream& os, const coord2D& coord)
+{
+    return os << coord.x << " " << coord.y << " " << coord.depth << std::endl;
+}
 
 struct coord3D{
     float x;

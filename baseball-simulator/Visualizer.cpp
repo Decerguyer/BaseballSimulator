@@ -70,8 +70,6 @@ void Visualizer::visualize(std::deque<ImageData> imgData, bool showDepth, bool s
 }
 
 void Visualizer::visualizeSingleSetUp(ImageData imgData, bool showDepth, bool showIR, bool drawCircles){
-    std::cout << "TimeStamp = " << imgData.getTimeStamp() << "; ";
-    std::cout << "Act Frame # = " << imgData.getFrameNumber() << std::endl;
     
     if (drawCircles){
         if (imgData.depthVisBallLoc[2])

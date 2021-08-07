@@ -6,14 +6,20 @@ PseudoTracker::PseudoTracker(){
 coord2D PseudoTracker::track(ImageData imgData){
     originalIRMat = imgData.irMat.clone();
     circleDims.reset();
+    std::cout << "TimeStamp = " << imgData.getTimeStamp() << "; ";
+    std::cout << "Act Frame # = " << imgData.getFrameNumber() << std::endl;
+
     cv::namedWindow( "IR", cv::WINDOW_AUTOSIZE);
     cv::setMouseCallback("IR", onMouse, this);
 
     cv::Vec3f circ = {0, 0, 0};
-    while(!circleDims.success){
+    while(true){
         Visualizer::drawCircle(imgData.irMat, circ);
         Visualizer::visualizeSingleSetUp(imgData, true, true, false);
-        Visualizer::visualizeSingleShow(10);
+        int key = cv::waitkey(10);
+        if (key == 'n'){
+            break;
+        }
 
         circ[0] = (circleDims.currentX + circleDims.initialX)/2;
         circ[1] = (circleDims.currentY + circleDims.initialY)/2;
@@ -27,6 +33,7 @@ coord2D PseudoTracker::track(ImageData imgData){
     imgData.irMat = originalIRMat;
 
     coord2D coord = {circ[0], circ[1], imgData.getDepthAt(circ[0], circ[1])};
+    std::cout << "Coord2D = " << coord;
     return coord;
 }
 
@@ -39,6 +46,8 @@ void PseudoTracker::onMouse(int event, int x, int y, int flag){
     if (event == cv::EVENT_LBUTTONDOWN) {
         circleDims.initialX = x;
         circleDims.initialY = y;
+        circleDims.currentX = x;
+        circleDims.currentY = y;
         circleDims.paused = false;
     }
     else if (event == cv::EVENT_LBUTTONUP) {
@@ -53,9 +62,12 @@ void PseudoTracker::onMouse(int event, int x, int y, int flag){
             circleDims.currentY = y;
         }
     }
-    if (flag == cv::EVENT_FLAG_SHIFTKEY){
-        circleDims.success = true;
+    else if (event == cv::EVENT_RBUTTONDOWN){
+        circleDims.reset();
     }
+    // if (flag == cv::EVENT_FLAG_SHIFTKEY){
+    //     circleDims.success = true;
+    // }
 }
 
 void PseudoTracker::circleDimensions::reset(){

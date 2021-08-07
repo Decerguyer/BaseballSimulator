@@ -19,7 +19,7 @@
 int main(){
     BaseballSimulator system;
     while(true){
-        std::cout << "Enter 0 for MainTestingRoutine, 1 for savingRoutine, 2 for loadingRoutine, 3 for photographyRoutine, 4 for distFromWall, 5 for singleMeasurement\n";
+        std::cout << "Enter 0 for MainTestingRoutine, 1 for savingRoutine, 2 for loadingRoutine, 3 for photographyRoutine, 4 for distFromWall, 5 for singleMeasurement, 6 for loadingRoutinePseudoTracker\n";
         int choice=0;
         std::cin >> choice;
         
@@ -52,6 +52,13 @@ int main(){
         else if (choice == 5){
             std::cout << "singleMeasurement\n";
             system.singleMeasurement();
+        }
+        else if (choice == 6){
+            std::cout << " Running loadingRoutinePseudoTracker\n";
+            std::cout << "Enter string for name of file to load (include folder name)\n";
+            std::string str;
+            std:: cin >> str;
+            system.loadingRoutinePseudoTracker(str);
         }
     }
 }
