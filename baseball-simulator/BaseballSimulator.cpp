@@ -231,6 +231,7 @@ void BaseballSimulator::loadingRoutine(std::string str){
 
     //**************************Tracker Initialization*************************//
     Tracker trk(848, 480, cam.getIntrinsics(), threshFilter);
+    PseudoTracker ptrk;
     //****************************User Control Block***************************//
     std::deque<ImageData> images;
     loadImageDataDeque(images, file);
@@ -248,7 +249,8 @@ void BaseballSimulator::loadingRoutine(std::string str){
     coord2DVec.reserve(images.size());
     timeStampsVec.reserve(images.size());
     for (int i = 0; i < images.size(); i++){        
-        coord2DVec.push_back(trk.track(images[i]));
+        //coord2DVec.push_back(trk.track(images[i]));
+        coord2DVec.push_back(ptrk.track(images[i]));
         timeStampsVec.push_back(images[i].getTimeStamp());
     }
     
