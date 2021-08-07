@@ -16,7 +16,7 @@ coord2D PseudoTracker::track(ImageData imgData){
         Visualizer::visualizeSingleShow(10);
 
         circ[0] = (circleDims.currentX + circleDims.initialX)/2;
-        circ[1] = (circleDims.currentY - circleDims.initialY)/2;
+        circ[1] = (circleDims.currentY + circleDims.initialY)/2;
         circ[2] = std::sqrt(std::pow(circ[0]-circleDims.initialX, 2) + std::pow(circ[1]-circleDims.initialY, 2));
 
         imgData.irMat = originalIRMat.clone();

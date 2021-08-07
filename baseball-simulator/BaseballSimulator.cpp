@@ -19,6 +19,7 @@
 #include "ThresholdFilter.h"
 #include "Tracker.h"
 #include "Visualizer.h"
+#include "PseudoTracker.h"
 #include "BaseballSimulator.h"
 #include "V2.h"
 
@@ -219,7 +220,7 @@ void BaseballSimulator::loadingRoutine(std::string str){
     cv::FileStorage file(str, cv::FileStorage::READ);
 
     //****************************Camera Initialization & Calibration***************************//
-    D400 cam(ctx);
+    D400 cam;
     file["CameraCalibration"] >> cam;
     
     int exposure;
