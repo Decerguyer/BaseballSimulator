@@ -21,7 +21,8 @@
 //Number of frames per camera for chessboard calibration
 
 //#define SQUARE_SIZE 152.4 //Big Poster Yoni
-#define SQUARE_SIZE 104.8 //Small Poster Yoni
+//#define SQUARE_SIZE 104.8 //Small Poster Yoni
+#define SQUARE_SIZE 145 // fixture board
 //Length of singular square on chessboard in mm
 
 

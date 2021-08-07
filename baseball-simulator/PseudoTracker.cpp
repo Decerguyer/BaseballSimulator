@@ -1,5 +1,8 @@
 #include "PseudoTracker.h"
 
+PseudoTracker::PseudoTracker(){
+}
+
 coord2D PseudoTracker::track(ImageData imgData){
     originalIRMat = imgData.irMat.clone();
     circleDims.reset();
@@ -7,7 +10,7 @@ coord2D PseudoTracker::track(ImageData imgData){
     cv::Vec3f circ = {0, 0, 0};
     while(!circleDims.success){
         Visualizer::drawCircle(imgData.irMat, circ);
-        Visualizer::visualizeSingleSetUp(imgData, true, true, false);
+        //Visualizer::visualizeSingleSetUp(imgData, true, true, false);
         cv::setMouseCallback("IR", onMouse, this);
         Visualizer::visualizeSingleShow(10);
 
@@ -26,7 +29,7 @@ coord2D PseudoTracker::track(ImageData imgData){
     return coord;
 }
 
-static void PseudoTracker::onMouse( int event, int x, int y, int flag, void* ptr){
+void PseudoTracker::onMouse( int event, int x, int y, int flag, void* ptr){
     PseudoTracker* pseudoTrkPtr = (PseudoTracker*)ptr;
     pseudoTrkPtr->onMouse(event, x, y, flag);
 }
@@ -40,7 +43,7 @@ void PseudoTracker::onMouse(int event, int x, int y, int flag){
     else if (event == cv::EVENT_LBUTTONUP) {
         circleDims.currentX = x;
         circleDims.currentY = y;
-        circleDims.paused = true
+        circleDims.paused = true;
     }
     //Mouse move coordinates update
     else if (event == cv::EVENT_MOUSEMOVE) {
@@ -49,7 +52,7 @@ void PseudoTracker::onMouse(int event, int x, int y, int flag){
             circleDims.currentY = y;
         }
     }
-    if (flag == cv::CV_EVENT_FLAG_SHIFTKEY){
+    if (flag == cv::EVENT_FLAG_SHIFTKEY){
         circleDims.success = true;
     }
 }

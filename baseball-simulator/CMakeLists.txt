@@ -12,7 +12,7 @@ find_package( OpenCV REQUIRED )
 find_library(REALSENSE2_FOUND realsense2 HINTS ${LIBRARY_DIR} REQUIRED)
 
 #Add in FeatureAnalysis.cpp when it is ready to be included
-add_executable(rs-baseball-simulator Camera.cpp D400.cpp DataStructure.cpp ImageData.cpp ImageReconditioning.cpp LocPredictor.cpp sendPost.cpp ThresholdFilter.cpp Tracker.cpp Visualize.cpp BaseballSimulator.cpp main.cpp)
+add_executable(rs-baseball-simulator Camera.cpp D400.cpp DataStructure.cpp ImageData.cpp ImageReconditioning.cpp LocPredictor.cpp PseudoTracker.cpp sendPost.cpp ThresholdFilter.cpp Tracker.cpp Visualizer.cpp BaseballSimulator.cpp main.cpp)
 set_property(TARGET rs-baseball-simulator PROPERTY CXX_STANDARD 11)
 include_directories(rs-baseball-simulator ${OpenCV_INCLUDE_DIRS})
 target_link_libraries(rs-baseball-simulator ${DEPENDENCIES} ${OpenCV_LIBS} ${REALSENSE2_FOUND} ${CURLPP_LDFLAGS})

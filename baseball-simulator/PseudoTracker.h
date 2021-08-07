@@ -11,6 +11,7 @@
 
 class PseudoTracker{
     public:
+    PseudoTracker();
     coord2D track(ImageData imgData);
     static void onMouse( int event, int x, int y, int flag, void* ptr);
     void onMouse(int event, int x, int y, int flag);
