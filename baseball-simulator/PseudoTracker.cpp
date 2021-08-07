@@ -16,7 +16,7 @@ coord2D PseudoTracker::track(ImageData imgData){
     while(true){
         Visualizer::drawCircle(imgData.irMat, circ);
         Visualizer::visualizeSingleSetUp(imgData, true, true, false);
-        int key = cv::waitkey(10);
+        int key = cv::waitKey(10);
         if (key == 'n'){
             break;
         }
