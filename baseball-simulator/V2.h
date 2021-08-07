@@ -33,11 +33,6 @@ struct coord2D{
     float depth;
 };
 
-std::ostream& operator<<(std::ostream& os, const coord2D& coord)
-{
-    return os << coord.x << " " << coord.y << " " << coord.depth << std::endl;
-}
-
 struct coord3D{
     float x;
     float y;
