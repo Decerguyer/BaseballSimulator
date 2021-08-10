@@ -68,8 +68,8 @@ void D400::calibrate(){
     setDefaultSettings();
 }
 
-void checkCalibration(std::deque<ImageData> &frames){
-
+void D400::checkCalibration(std::deque<ImageData> &frames){
+    std::cout << "Testing Calibration... " << std::endl;
 }
 
 std::deque<ImageData> D400::recordImageData(int numFrames,int numThrow){
