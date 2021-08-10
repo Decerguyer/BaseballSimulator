@@ -8,15 +8,19 @@ plugins:
   - serverless-dynamodb-local
 
 custom:
-  tableName: 'pitches-table-${self:provider.stage}'
+  unProcessedTableName: 'unProcessed-pitches-table-${self:provider.stage}'
+  processedTableName: 'processed-pitches-table-${self:provider.stage}'
   wsgi:
     app: app.app
     packRequirements: false
+    pythonBin: python3
   pythonRequirements:
     dockerizePip: non-linux
   dynamodb:
     start:
       migrate: true
+    stages:
+      - ${self:provider.stage}
 
 provider:
   name: aws
@@ -33,9 +37,11 @@ provider:
         - dynamodb:UpdateItem
         - dynamodb:DeleteItem
       Resource:
-        - { "Fn::GetAtt": ["PitchesDynamoDBTable", "Arn" ] }
+        - { "Fn::GetAtt": ["unProcessedPitchesDynamoDBTable", "Arn" ] }
+        - { "Fn::GetAtt": ["processedPitchesDynamoDBTable", "Arn" ] }
   environment:
-    PITCHES_TABLE: ${self:custom.tableName}
+    UNPROCESSED_PITCHES_TABLE: ${self:custom.unProcessedTableName}
+    PROCESSED_PITCHES_TABLE: ${self:custom.processedTableName}
 
 functions:
   app:
@@ -46,18 +52,42 @@ functions:
 
 resources:
   Resources:
-    PitchesDynamoDBTable:
+    unProcessedPitchesDynamoDBTable:
       Type: 'AWS::DynamoDB::Table'
       Properties:
         AttributeDefinitions:
-          -
-            AttributeName: pitch_id
+          - AttributeName: pitch_id
+            AttributeType: S
+          - AttributeName: user_id
             AttributeType: S
         KeySchema:
-          -
-            AttributeName: pitch_id
+          - AttributeName: pitch_id
             KeyType: HASH
+          - AttributeName: user_id
+            KeyType: RANGE
         ProvisionedThroughput:
           ReadCapacityUnits: 25
           WriteCapacityUnits: 1
-        TableName: ${self:custom.tableName}
+        TableName: ${self:custom.unProcessedTableName}
+    processedPitchesDynamoDBTable:
+      Type: 'AWS::DynamoDB::Table'
+      Properties:
+        AttributeDefinitions:
+          - AttributeName: pitch_id
+            AttributeType: S
+          - AttributeName: user_id
+            AttributeType: S
+        KeySchema:
+          - AttributeName: pitch_id
+            KeyType: HASH
+          - AttributeName: user_id
+            KeyType: RANGE
+        ProvisionedThroughput:
+          ReadCapacityUnits: 25
+          WriteCapacityUnits: 1
+        TableName: ${self:custom.processedTableName}
+
+package:
+  exclude:
+    - node_modules/**
+    - venv/**
