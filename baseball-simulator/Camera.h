@@ -41,6 +41,7 @@ protected:
 
     cv::Mat rotationMatrix = (cv::Mat_<double>(3,3) << 0,0,0,0,0,0,0,0,0);
     cv::Mat translationMatrix = (cv::Mat_<double>(3,1) << 0,0,0);
+    std::vector<cv::Point2f> verification_corner_pts;
     
 private:
     int rows = 3;

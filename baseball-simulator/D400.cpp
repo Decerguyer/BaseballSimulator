@@ -64,7 +64,12 @@ void D400::calibrate(){
         calibFrameSets.pop_front();
     }
     Camera::createCalibration(calibrationFrames);
+    checkCalibration(calibrationFrames);
     setDefaultSettings();
+}
+
+void checkCalibration(std::deque<ImageData> &frames){
+
 }
 
 std::deque<ImageData> D400::recordImageData(int numFrames,int numThrow){
