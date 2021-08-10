@@ -3,6 +3,7 @@
 #include <opencv2/opencv.hpp>
 #include <deque>
 #include "Camera.h"
+#include "Tracker.h"
 #include "ImageData.h"
 #include "D400.h"
 #include "V2.h"
@@ -69,7 +70,54 @@ void D400::calibrate(){
 }
 
 void D400::checkCalibration(std::deque<ImageData> &frames){
-    std::cout << "Testing Calibration... " << std::endl;
+    std::cout << "\nTesting Calibration... " << std::endl;
+    //std::cout << verification_corner_pts << std::endl;
+    std::vector<float> position;
+    float depth;
+    
+    std::vector<coord2D> coord2DVec;
+    coord2D TL;
+    depth = frames[0].getDepthAt(verification_corner_pts[0].x, verification_corner_pts[0].y);
+    TL.x = verification_corner_pts[0].x;
+    TL.y = verification_corner_pts[0].y;
+    TL.depth = depth;
+    coord2DVec.push_back(TL);
+    
+    coord2D TR;
+    depth = frames[0].getDepthAt(verification_corner_pts[2].x, verification_corner_pts[2].y);
+    TR.x = verification_corner_pts[2].x;
+    TR.y = verification_corner_pts[2].y;
+    TR.depth = depth;
+    coord2DVec.push_back(TR);
+    
+    coord2D BL;
+    depth = frames[0].getDepthAt(verification_corner_pts[6].x, verification_corner_pts[6].y);
+    BL.x = verification_corner_pts[6].x;
+    BL.y = verification_corner_pts[6].y;
+    BL.depth = depth;
+    coord2DVec.push_back(BL);
+    
+    coord2D BR;	
+    depth = frames[0].getDepthAt(verification_corner_pts[8].x, verification_corner_pts[8].y);
+    BR.x = verification_corner_pts[8].x;
+    BR.y = verification_corner_pts[8].y;
+    BR.depth = depth;
+    coord2DVec.push_back(BR);
+
+    std::vector<std::vector<float>> positions3D = Tracker::convertTo3D(coord2DVec, intrin);
+    std::vector<std::vector<float>> transformedPositions;
+    
+    for(int l = 0; l < positions3D.size(); l++){
+        transformedPositions.push_back(transformPoint(positions3D[l]));
+        std::cout << "x: " << transformedPositions[l][0] << " y: " << transformedPositions[l][1] << " z: " << transformedPositions[l][2] << std::endl;
+    }
+
+    std::cout << "\n\nOffset TL: \n" << "x: " << transformedPositions[0][0]-0 << " y: " << transformedPositions[0][1]-0 << " z: " << transformedPositions[0][2]-0 << std::endl;
+    std::cout << "\n\nOffset TR: \n" << "x: " << transformedPositions[1][0]-(2*SQUARE_SIZE)/1000 << " y: " << transformedPositions[1][1]-0 << " z: " << transformedPositions[1][2]-0 << std::endl;
+    std::cout << "\n\nOffset BL: \n" << "x: " << transformedPositions[2][0]-0 << " y: " << transformedPositions[2][1]-(2*SQUARE_SIZE)/1000 << " z: " << transformedPositions[2][2]-0 << std::endl;
+    std::cout << "\n\nOffset BR: \n" << "x: " << transformedPositions[3][0]-(2*SQUARE_SIZE)/1000 << " y: " << transformedPositions[3][1]-(2*SQUARE_SIZE)/1000 << " z: " << transformedPositions[3][2]-0 << std::endl;
+    std::cout << "\n" << std::endl;
+
 }
 
 std::deque<ImageData> D400::recordImageData(int numFrames,int numThrow){

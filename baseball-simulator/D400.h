@@ -35,8 +35,8 @@ private:
     rs2::pipeline pipe;
     rs2::sensor depthSensor;
     bool isStreaming = false;
-    struct rs2_intrinsics intrin;
     std::deque<rs2::frameset> recordRSFrames(int numFrames,int numThrow = 20);
+    struct rs2_intrinsics intrin;
     void throwFrames(int numFrames);
     void checkCalibration(std::deque<ImageData> &frames);
 

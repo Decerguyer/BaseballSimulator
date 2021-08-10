@@ -17,7 +17,7 @@ public:
     coord2D track(ImageData &imgData);
     coord2D findBallFromDepth(ImageData &imgData);
     coord2D findBallFromIR(ImageData &imgData, cv::Vec3f ballCircleDepth, coord2D ballCoordDepth);
-    std::vector<std::vector<float>> convertTo3D(std::vector<coord2D> coord2DVec);
+    static std::vector<std::vector<float>> convertTo3D(std::vector<coord2D> coord2DVec, struct rs2_intrinsics intrinsics);
 
 private:
     cv::Mat croppedDepthVis;

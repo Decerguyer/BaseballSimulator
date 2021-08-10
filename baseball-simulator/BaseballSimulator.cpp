@@ -85,7 +85,7 @@ void BaseballSimulator::MainTestingRoutine(){
     timeStampsVec.erase(timeStampsVec.begin(), timeStampsVec.begin()+startFrame);
 
     //**************************Pixel to Positions Block *************************//
-    std::vector<std::vector<float>> positions3D = trk.convertTo3D(coord2DVec);
+    std::vector<std::vector<float>> positions3D = Tracker::convertTo3D(coord2DVec, cam.getIntrinsics());
     for (int i = 0; i < positions3D.size(); i++){
         if(positions3D[i][2]){ //If the position wasn't an accidental 0,0,0
             data.uncenteredPositions.push_back(positions3D[i]);
@@ -276,7 +276,7 @@ void BaseballSimulator::loadingRoutine(std::string str){
     timeStampsVec.erase(timeStampsVec.begin(), timeStampsVec.begin()+startFrame);
 
     //**************************Pixel to Positions Block *************************//
-    std::vector<std::vector<float>> positions3D = trk.convertTo3D(coord2DVec);
+    std::vector<std::vector<float>> positions3D = Tracker::convertTo3D(coord2DVec, cam.getIntrinsics());
     for (int i = 0; i < positions3D.size(); i++){
         if(positions3D[i][2]){ //If the position wasn't an accidental 0,0,0
             data.uncenteredPositions.push_back(positions3D[i]);
@@ -406,7 +406,7 @@ void BaseballSimulator::singleMeasurement(){
     }
 
     Tracker trk(848, 480, cam.getIntrinsics(), threshFilter);
-    std::vector<std::vector<float>> positions3D = trk.convertTo3D(clicks);
+    std::vector<std::vector<float>> positions3D = Tracker::convertTo3D(clicks, cam.getIntrinsics());
 
     DataStructure data;
 
@@ -487,7 +487,7 @@ void BaseballSimulator::loadingRoutinePseudoTracker(std::string str){
     }
 
     //**************************Pixel to Positions Block *************************//
-    std::vector<std::vector<float>> positions3D = trk.convertTo3D(coord2DVec);
+    std::vector<std::vector<float>> positions3D = Tracker::convertTo3D(coord2DVec, cam.getIntrinsics());
     for (int i = 0; i < positions3D.size(); i++){
         if(positions3D[i][2]){ //If the position wasn't an accidental 0,0,0
             data.uncenteredPositions.push_back(positions3D[i]);

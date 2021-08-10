@@ -94,12 +94,10 @@ void Camera::createCalibration(std::deque<ImageData> &frames){
                 //Calibration Mathematics 
                 corner_pts = sortCornerPoints(corner_pts);
 
-                for(int l = 0; l < corner_pts.size(); l++){
-                    verification_corner_pts[l] += corner_pts[l];
-                }
+                verification_corner_pts = corner_pts;
 
                 // Displaying the detected corner points on the checker board
-                //cv::drawChessboardCorners(frame, cv::Size(CHECKERBOARD[0], CHECKERBOARD[1]), corner_pts, success); //OPTIONAL
+                cv::drawChessboardCorners(frame, cv::Size(CHECKERBOARD[0], CHECKERBOARD[1]), corner_pts, success); //OPTIONAL
                 
                 cv::Mat R,T; //Output Rotation and Translation Vectors
                 cv::solvePnP(objp,corner_pts,cameraMatrix,distCoeffs,R,T,0,0); //Last 0 represents CV_ITERATIVE method
@@ -128,10 +126,6 @@ void Camera::createCalibration(std::deque<ImageData> &frames){
     //Normalizing the result using basic averages
     rotationMatrix /= (NUM_CALIBRATION_FRAMES - errorCnt);
     translationMatrix /= (NUM_CALIBRATION_FRAMES - errorCnt);
-    for(int l = 0; l < verification_corner_pts.size(); l++){
-        verification_corner_pts[l] /= (NUM_CALIBRATION_FRAMES - errorCnt);
-        cv::drawChessboardCorners(frames[0].getIRMat(), cv::Size(CHECKERBOARD[0], CHECKERBOARD[1]), corner_pts, success); //OPTIONAL
-    }   
      //Delete Block Below
     cv::imshow("Image",frames[0].getIRMat());
     cv::waitKey(0);
