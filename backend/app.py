@@ -122,27 +122,14 @@ def record_pitch():
         return jsonify({'error': str(e)}), 400
 
 def convert_pitch_to_response(pitch):
-    positions = []
-    timestamps = []
-    errors = []
-    spin = []
-    for position in pitch.get('positions').get('L'):
-        positions.append([float(position.get('M')['x'].get('N')), float(position.get('M')['y'].get('N')),
-                          float(position.get('M')['z'].get('N'))])
-    for error in pitch.get('error').get('L'):
-        errors.append([float(error.get('M')['x'].get('N')), float(error.get('M')['y'].get('N')),
-                       float(error.get('M')['z'].get('N'))])
-    for timestamp in pitch.get('timestamps').get('L'):
-        timestamps.append(float(timestamp.get('N')))
-    spin = [float(pitch.get('spin').get('M')['x'].get('N')), float(pitch.get('spin').get('M')['y'].get('N')),
-            float(pitch.get('spin').get('M')['z'].get('N'))]
+    #positions = []
+    #for position in pitch.get('positions').get('L'):
+    #    positions.append([float(position.get('M')['x'].get('N')), float(position.get('M')['y'].get('N')),
+    #                      float(position.get('M')['z'].get('N'))])
 
     return {
         'pitch_id': pitch.get('pitch_id').get('S'),
-        'positions': positions,
-        'timestamps': timestamps,
-        'error': errors,
-        'spin': spin,
+        #'positions': positions,
         'serial_number': int(pitch.get('serial_number').get('N')),
         'time': pitch.get('time').get('S'),
         'user_id': pitch.get('user_id').get('S')
