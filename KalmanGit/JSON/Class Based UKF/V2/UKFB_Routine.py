@@ -9,11 +9,12 @@ height_offset = float(input("Enter the height of the inner top right corner rela
 
 http_handler = HTTPHandler("JEYSolutions")
 json_data = http_handler.get_most_recent_pitch()
-
+json_data["mound_offset"] = mount_offset
+json_data["height_offset"] = height_offset
 print(json_data)
 #print(json_data["positions"])
 
-UKF = UKFB(json_data, mount_offset, height_offset)
+UKF = UKFB(json_data)
 UKF.control_loop()
 kalman_output = UKF.output_dict()
 

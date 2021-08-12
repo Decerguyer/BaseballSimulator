@@ -22,7 +22,7 @@ from numpy.random import randn
 class UKFB:
 
     # Constructor, takes file path
-    def __init__(self, input_dict, mound_offset, height_offset):
+    def __init__(self, input_dict):
 
         # FilterPy UKF class initializations
         self.dt = 0.0001
@@ -34,7 +34,7 @@ class UKFB:
         self.ukf.Q = Q_discrete_white_noise(dim=3, dt=self.dt, var=0.0000001, block_size=3)
 
         # Input Dictionary declarations
-        self.zs, self.timeStamps, self.spin, self.error = self.json_manager(input_dict, mound_offset, height_offset)
+        self.zs, self.timeStamps, self.spin, self.error = self.json_manager(input_dict)
 
         # UKFB Control Loop Variable Declarations
         self.counter = 0
