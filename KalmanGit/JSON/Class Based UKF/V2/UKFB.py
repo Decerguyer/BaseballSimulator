@@ -187,20 +187,18 @@ class UKFB:
             self.counter += 1
 
     @staticmethod
-    def json_manager(input_dict: dict, mound_offset, height_offset):
+    def json_manager(input_dict: dict):
         """
         :param input_dict: The JSON Dictionary returned from the Generic JSON Control class
         :type input_dict: dict
-        :param mound_offset: distance from mound to target
-        :type mound_offset: float
-        :param height_offset: Height of inner top left corner of target above the ground
-        :type height_offset: float
         """
         position_dictionary = input_dict["positions"]
         spin_dictionary = input_dict["spin"]
         error_dictionary = input_dict["error"]
-        pitcher = input_dict["pitcher_id"]
+        #pitcher = input_dict["pitcher_id"]
         time_stamp_dict = input_dict["timestamps"]
+        mound_offset = input_dict['mound_offset']
+        height_offset = input_dict['height_offset']
 
         zs = []
         for position in position_dictionary:
