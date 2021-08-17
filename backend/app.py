@@ -8,7 +8,7 @@ import uuid
 import json
 from flask_cors import CORS
 
-from utils import convert_pitch_to_response, get_user_from_serial, get_mound_offset_from_serial, get_height_offset_from_serial
+from utils import convert_processed_pitch_to_response, get_user_from_serial, get_mound_offset_from_serial, get_height_offset_from_serial
 from pitch import Pitch
 from vector3D import Vector3D
 
@@ -47,7 +47,7 @@ def get_user(pitch_id):
         if not pitch:
             return jsonify({'error': 'Pitch does not exist'}), 404
 
-        return jsonify(convert_pitch_to_response(pitch)), 200
+        return jsonify(convert_processed_pitch_to_response(pitch)), 200
     except Exception as e:
         return jsonify({'error': str(e)}), 400
 
@@ -61,7 +61,7 @@ def get_pitch_history():
         result = []
         print('Response: ', resp)
         for pitch in resp.get('Items'):
-            result.append(convert_pitch_to_response(pitch))
+            result.append(convert_processed_pitch_to_response(pitch))
         return jsonify(result), 200
     except Exception as e:
         return jsonify({'error': str(e)}), 400
@@ -98,10 +98,9 @@ def record_pitch():
         up_dict['mound_offset'] = get_mound_offset_from_serial(up_dict['serial_number'])
         up_dict['height_offset'] = get_height_offset_from_serial(up_dict['serial_number'])
 
-
         # RELEVANT TO KF: positions, timestamps, spin, error_list
         pitch = Pitch(up_dict)
-        pitch.routine()
+        pitch.kalman_filter()
 
         # post to unprocessed table first
         up_resp = client.put_item(
@@ -121,16 +120,4 @@ def record_pitch():
     except Exception as e:
         return jsonify({'error': str(e)}), 400
 
-def convert_pitch_to_response(pitch):
-    #positions = []
-    #for position in pitch.get('positions').get('L'):
-    #    positions.append([float(position.get('M')['x'].get('N')), float(position.get('M')['y'].get('N')),
-    #                      float(position.get('M')['z'].get('N'))])
 
-    return {
-        'pitch_id': pitch.get('pitch_id').get('S'),
-        #'positions': positions,
-        'serial_number': int(pitch.get('serial_number').get('N')),
-        'time': pitch.get('time').get('S'),
-        'user_id': pitch.get('user_id').get('S')
-    }

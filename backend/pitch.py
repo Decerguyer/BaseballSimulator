@@ -1,7 +1,9 @@
 
 from typing import List, Tuple, Dict
 from vector3D import Vector3D
-
+#from V3.UKFB_Routine import kalman_process
+from V3.UKFB import UKFB
+from V3.BaseballPhysicalModel import BaseballPhysicalModel
 
 class Pitch:
     def __init__(self, up_dict: dict):
@@ -46,7 +48,7 @@ class Pitch:
             'timestamps': {'L': dynamo_timestamps},
             #ideal spin implementation, pitch logic uses wb, ws, wg for time being
             'spin': self.up_dict['spin'].three_dim_to_dynamo_item(),
-            #'error': {'L': dynamo_error},
+            'error': {'L': dynamo_error},
             'serial_number': {'N': str(self.up_dict.get('serial_number'))},
             'user_id': {'S': str(self.up_dict.get('user_id'))},
             'pitch_id': {'S': str(self.up_dict.get('pitch_id'))},
@@ -55,40 +57,56 @@ class Pitch:
             'height_offset': {'N': str(self.up_dict.get('height_offset'))}
         }
 
-    def to_processed_dynamo_item(self, ):
+    def to_processed_dynamo_item(self):
         dynamo_positions = []
         dynamo_rts_positions = []
 
-        #for position in self.p_dict.get('positions'):
-        #    dynamo_positions.append(position.three_dim_to_dynamo_item())
-        #for rts_position in self.p_dict.get('rts_positions'):
-        #    dynamo_positions.append(rts_position.three_dim_to_dynamo_item())
-
+        for position in self.p_dict.get('positions'):
+            dynamo_positions.append(position.three_dim_to_dynamo_item())
+        for rts_position in self.p_dict.get('rts_positions'):
+            dynamo_rts_positions.append(rts_position.three_dim_to_dynamo_item())
         return {
-        #    'positions': {'L': dynamo_positions},
-        #    'rts_positions': {'L': dynamo_rts_positions},
+            'positions': {'L': dynamo_positions},
+            'rts_positions': {'L': dynamo_rts_positions},
             'serial_number': {'N': str(self.p_dict.get('serial_number'))},
             'user_id': {'S': str(self.p_dict.get('user_id'))},
             'pitch_id': {'S': str(self.p_dict.get('pitch_id'))},
-            'time': {'S': str(self.p_dict.get('time'))},
-            #'mound_offset': {'N': str(self.p_dict.get('mound_offset'))},
-            #'height_offset': {'N': str(self.p_dict.get('height_offset'))}
+            'time': {'S': str(self.p_dict.get('time'))}
         }
 
     def kalman_filter(self):
-        print('filter the pitch')
+        UKF = UKFB(self.up_dict)
+        UKF.control_loop()
+        kalman_output = UKF.output_dict()
 
-        # pass input_dict into kalman filter
-        # smooth result
-        # set result equal to p_dict
+        PM = BaseballPhysicalModel(kalman_output)
+        PM.physical_model_control()
+        PM.print_output()
 
-    def simulate(self):
-        print('simulate the rest of the pitch from the kalman filter')
+        downSampled = []
+        samples = 20
+        step = int(len(PM.positionVector) / samples)
+        for i in range(0, len(PM.positionVector), step):
+            temp = Vector3D(round(PM.positionVector[i][0], 2), round(PM.positionVector[i][1], 2),
+                            round(PM.positionVector[i][2], 2))
+            downSampled.append(temp)
+        if (len(PM.positionVector) - 1) % step != 0:
+            temp = Vector3D(round(PM.positionVector[-1][0], 2), round(PM.positionVector[-1][1], 2),
+                            round(PM.positionVector[-1][2], 2))
+            downSampled.append(temp)
 
-    def smooth(self):
-        print("smooth the 'tracked' portion of the pitch")
+        smoothed = UKF.position_smoother()
+        samples = 8
+        step = int(len(smoothed) / samples)
+        if step < 1:
+            step = 1
+        # print (step)
+        downSampledRTS = []
+        # len(smoothed-1) because the last rts_position is the start of the phys model positions
+        # No need to include it twice
+        for i in range(0, len(smoothed)-1, step):
+            temp = Vector3D(round(smoothed[i][0], 2), round(smoothed[i][1], 2), round(smoothed[i][2], 2))
+            downSampledRTS.append(temp)
 
-    def routine(self):
-        self.kalman_filter()
-        self.simulate()
-        self.smooth()
+        self.p_dict["positions"] = downSampled
+        self.p_dict["rts_positions"] = downSampledRTS
