@@ -3,7 +3,6 @@
 service: serverless-flask
 
 plugins:
-  - serverless-python-requirements
   - serverless-wsgi
   - serverless-dynamodb-local
 
@@ -42,10 +41,15 @@ provider:
   environment:
     UNPROCESSED_PITCHES_TABLE: ${self:custom.unProcessedTableName}
     PROCESSED_PITCHES_TABLE: ${self:custom.processedTableName}
+  ecr:
+    images:
+      backendapp:
+        path: ./
 
 functions:
   app:
-    handler: wsgi.handler
+    image:
+      name: backendapp
     events:
       - http: ANY /
       - http: 'ANY {proxy+}'

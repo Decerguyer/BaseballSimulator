@@ -7,8 +7,7 @@ def convert_processed_pitch_to_response(pitch):
     rts_positions = []
     for rts_position in pitch.get('rts_positions').get('L'):
         rts_positions.append([float(rts_position.get('M')['x'].get('N')), float(rts_position.get('M')['y'].get('N')),
-                            float(rts_position.get('M')['z'].get('N'))])
-
+                              float(rts_position.get('M')['z'].get('N'))])
     return {
         'pitch_id': pitch.get('pitch_id').get('S'),
         'positions': positions,
