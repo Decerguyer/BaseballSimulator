@@ -9,6 +9,7 @@ plugins:
 custom:
   unProcessedTableName: 'unProcessed-pitches-table-${self:provider.stage}'
   processedTableName: 'processed-pitches-table-${self:provider.stage}'
+  configurationTableName: 'configuration-table-${self:provider.stage}'
   wsgi:
     app: app.app
     packRequirements: false
@@ -38,9 +39,11 @@ provider:
       Resource:
         - { "Fn::GetAtt": ["unProcessedPitchesDynamoDBTable", "Arn" ] }
         - { "Fn::GetAtt": ["processedPitchesDynamoDBTable", "Arn" ] }
+        - { "Fn::GetAtt": ["configurationDynamoDBTable", "Arn" ] }
   environment:
     UNPROCESSED_PITCHES_TABLE: ${self:custom.unProcessedTableName}
     PROCESSED_PITCHES_TABLE: ${self:custom.processedTableName}
+    CONFIGURATION_TABLE: ${self:custom.configurationTableName}
   ecr:
     images:
       backendapp:
@@ -90,6 +93,19 @@ resources:
           ReadCapacityUnits: 25
           WriteCapacityUnits: 1
         TableName: ${self:custom.processedTableName}
+    configurationDynamoDBTable:
+      Type: 'AWS::DynamoDB::Table'
+      Properties:
+        AttributeDefinitions:
+          - AttributeName: serial_number
+            AttributeType: N
+        KeySchema:
+          - AttributeName: serial_number
+            KeyType: HASH
+        ProvisionedThroughput:
+          ReadCapacityUnits: 25
+          WriteCapacityUnits: 1
+        TableName: ${self:custom.configurationTableName}
 
 package:
   exclude:

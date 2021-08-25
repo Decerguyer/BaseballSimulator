@@ -205,7 +205,7 @@ class UKFB:
             #Add 60.5-mound_offset to the Y value (was Z)
             offset = 60.5-mound_offset
             #position_set = [(position[0]*-1)/0.3048, (position[2]*-1)/0.3048+offset, (position[1]*-1)/0.3048+height_offset]
-            position_set = [(position.x*-1)/0.3048, (position.y*-1)/0.3048+offset, (position.z*-1)/0.3048+height_offset]
+            position_set = [(position.x*-1)/0.3048, (position.z*-1)/0.3048+offset, (position.y*-1)/0.3048+height_offset]
             zs.append(position_set)
 
         r = []
@@ -213,7 +213,7 @@ class UKFB:
             # Z becomes Y and is inverted. Y becomes Z and is inverted. X is inverted
             # Convert meters to feet
             #error_set = [(error[0]*-1)/0.3048, (error[2]*-1)/0.3048, (error[1]*-1)/0.3048]
-            error_set = [(error.x * -1) / 0.3048, (error.y * -1) / 0.3048, (error.z * -1) / 0.3048]
+            error_set = [(error.x * -1) / 0.3048, (error.z * -1) / 0.3048, (error.y * -1) / 0.3048]
             r.append(error_set)
 
         time_stamps = []

@@ -86,6 +86,7 @@ class Pitch:
         downSampled = []
         samples = 20
         step = int(len(PM.positionVector) / samples)
+
         for i in range(0, len(PM.positionVector), step):
             temp = Vector3D(round(PM.positionVector[i][0], 2), round(PM.positionVector[i][1], 2),
                             round(PM.positionVector[i][2], 2))
@@ -96,6 +97,7 @@ class Pitch:
             downSampled.append(temp)
 
         smoothed = UKF.position_smoother()
+
         samples = 8
         step = int(len(smoothed) / samples)
         if step < 1:

@@ -70,9 +70,9 @@ def get_pitch_history():
 @app.route("/pitch", methods=["POST"])
 def record_pitch():
     try:
-
         up_dict = {}
         positions = []
+
         for position in request.json.get('positions'):
             positions.append(Vector3D(*position))
         up_dict['positions'] = positions

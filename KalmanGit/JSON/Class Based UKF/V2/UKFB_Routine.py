@@ -8,7 +8,8 @@ mount_offset = float(input("Enter the distance from the mount to the Target in f
 height_offset = float(input("Enter the height of the inner top right corner relative to the ground: "))
 
 http_handler = HTTPHandler("JEYSolutions")
-json_data = http_handler.get_most_recent_pitch()
+#json_data = http_handler.get_most_recent_pitch()
+json_data = http_handler.get_specific_pitch()
 json_data["mound_offset"] = mount_offset
 json_data["height_offset"] = height_offset
 print(json_data)
