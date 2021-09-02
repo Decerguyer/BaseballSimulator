@@ -46,13 +46,10 @@ def convert_unprocessed_pitch_to_response(pitch):
     }
 
 
-def get_user_from_serial(serial_number: int) -> str:
-    return "dummy_user"
-
-
-def get_mound_offset_from_serial(serial_number: int) -> str:
-    return 10
-
-
-def get_height_offset_from_serial(serial_number: int) -> str:
-    return 10
+def convert_config_to_response(config):
+    return {
+        'serial_number': int(config.get('serial_number').get('N')),
+        'user_id': config.get('user_id').get('S'),
+        'mound_offset': int(config.get('mound_offset').get('N')),
+        'height_offset': int(config.get('height_offset').get('N'))
+    }
