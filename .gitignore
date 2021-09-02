@@ -4,6 +4,9 @@ backend/venv
 backend/.serverless
 backend/.dynamodb
 backend/__pycache__
+node_modules/
+__pycache__/
+.DS_Store
 venv
 .idea/BaseballSimulator2.iml
 baseball-simulator/cmake-build-debug
