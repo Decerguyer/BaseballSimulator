@@ -1,10 +1,10 @@
-backend/secrets.txt
-backend/node_modules
-backend/venv
-backend/.serverless
-backend/.dynamodb
-backend/__pycache__
-venv
+secrets.txt/
+node_modules/
+venv/
+.serverless/
+.dynamodb/
+__pycache__/
+.DS_Store
 .idea/BaseballSimulator2.iml
 baseball-simulator/cmake-build-debug
 KalmanGit/JSON/Class Based UKF/V2/Smoothed.json
