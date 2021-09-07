@@ -8,15 +8,17 @@ import uuid
 import json
 from flask_cors import CORS
 
-from utils import convert_pitch_to_response, get_user_from_serial, get_mound_offset_from_serial, get_height_offset_from_serial
+from utils import convert_processed_pitch_to_response, convert_config_to_response
 from pitch import Pitch
 from vector3D import Vector3D
+from sys_config import SysConfig
 
 app = Flask(__name__)
 CORS(app)
 
 UNPROCESSED_PITCHES_TABLE = os.environ.get('UNPROCESSED_PITCHES_TABLE')
 PROCESSED_PITCHES_TABLE = os.environ.get('PROCESSED_PITCHES_TABLE')
+CONFIGURATION_TABLE = os.environ.get('CONFIGURATION_TABLE')
 IS_OFFLINE = os.environ.get('IS_OFFLINE')
 
 if IS_OFFLINE:
@@ -47,7 +49,7 @@ def get_user(pitch_id):
         if not pitch:
             return jsonify({'error': 'Pitch does not exist'}), 404
 
-        return jsonify(convert_pitch_to_response(pitch)), 200
+        return jsonify(convert_processed_pitch_to_response(pitch)), 200
     except Exception as e:
         return jsonify({'error': str(e)}), 400
 
@@ -61,7 +63,7 @@ def get_pitch_history():
         result = []
         print('Response: ', resp)
         for pitch in resp.get('Items'):
-            result.append(convert_pitch_to_response(pitch))
+            result.append(convert_processed_pitch_to_response(pitch))
         return jsonify(result), 200
     except Exception as e:
         return jsonify({'error': str(e)}), 400
@@ -70,9 +72,9 @@ def get_pitch_history():
 @app.route("/pitch", methods=["POST"])
 def record_pitch():
     try:
-
         up_dict = {}
         positions = []
+
         for position in request.json.get('positions'):
             positions.append(Vector3D(*position))
         up_dict['positions'] = positions
@@ -94,14 +96,17 @@ def record_pitch():
         # get user_id from config dynamodb table
         #Also mound and height offsets
         # NEEDS TO BE IMPLEMENTED
-        up_dict['user_id'] = get_user_from_serial(up_dict['serial_number'])
-        up_dict['mound_offset'] = get_mound_offset_from_serial(up_dict['serial_number'])
-        up_dict['height_offset'] = get_height_offset_from_serial(up_dict['serial_number'])
-
-
+        config_dict = get_config_from_sn(up_dict['serial_number'])
+        if(config_dict):
+            up_dict['user_id'] = config_dict['user_id']
+            up_dict['mound_offset'] = config_dict['mound_offset']
+            up_dict['height_offset'] = config_dict['height_offset']
+        else:
+            return jsonify({'error': 'This System has not been configured'}), 400
+        print("After config")
         # RELEVANT TO KF: positions, timestamps, spin, error_list
         pitch = Pitch(up_dict)
-        pitch.routine()
+        pitch.kalman_filter()
 
         # post to unprocessed table first
         up_resp = client.put_item(
@@ -121,16 +126,46 @@ def record_pitch():
     except Exception as e:
         return jsonify({'error': str(e)}), 400
 
-def convert_pitch_to_response(pitch):
-    #positions = []
-    #for position in pitch.get('positions').get('L'):
-    #    positions.append([float(position.get('M')['x'].get('N')), float(position.get('M')['y'].get('N')),
-    #                      float(position.get('M')['z'].get('N'))])
 
-    return {
-        'pitch_id': pitch.get('pitch_id').get('S'),
-        #'positions': positions,
-        'serial_number': int(pitch.get('serial_number').get('N')),
-        'time': pitch.get('time').get('S'),
-        'user_id': pitch.get('user_id').get('S')
-    }
+@app.route("/config", methods=["POST"])
+def record_config():
+    try:
+        config_dict = {}
+        config_dict['serial_number'] = request.json.get('serial_number')
+        config_dict['user_id'] = request.json.get('user_id')
+        config_dict['mound_offset'] = request.json.get('mound_offset')
+        config_dict['height_offset'] = request.json.get('height_offset')
+
+        if not config_dict['serial_number'] or not config_dict['user_id'] or not config_dict['mound_offset'] \
+                or not config_dict['height_offset']:
+            return jsonify({'error': 'Please provide valid positions, spin and error'}), 400
+
+        config = SysConfig(config_dict)
+
+        # post to processed table second
+        p_resp = client.put_item(
+            TableName=CONFIGURATION_TABLE,
+            Item=config.to_processed_dynamo_item()
+        )
+
+        return jsonify({
+            'success': 'recorded config for SN: {}'.format(config_dict['serial_number'])
+        }), 201
+    except Exception as e:
+        return jsonify({'error': str(e)}), 400
+
+
+def get_config_from_sn(serial_number: str):
+    try:
+        resp = client.get_item(
+            TableName=CONFIGURATION_TABLE,
+            Key={
+                'serial_number': {'S': serial_number}
+            }
+        )
+        config = resp.get('Item')
+        if not config:
+            return False
+        return convert_config_to_response(config)
+    except Exception as e:
+        return str(e)

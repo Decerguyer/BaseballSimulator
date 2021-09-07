@@ -33,21 +33,4 @@ class HTTPHandler:
         all_pitches = self.get_user_pitches()
         return all_pitches[-1]
 
-    def get_specific_pitch(self):
-        pitch_id = 'f71c154e69dc42b4af88f69d806ed2fc'
-        url = "https://2342hbqxca.execute-api.us-east-1.amazonaws.com/dev/pitch"
-        final_url = url + '/' + pitch_id
-        pitch = requests.get(final_url)
-        return pitch.json()
-
-    def post_to_JEY_backend(self, up_pitch: dict):
-        url = 'https://ygya0707cg.execute-api.us-east-1.amazonaws.com/dev/pitch'
-        #url = 'http://localhost:5000/pitch'
-        print("Posting")
-        x = requests.post(url, json=up_pitch)
-        print(x.text)
-
-
-
-
 
