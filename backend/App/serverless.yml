@@ -5,7 +5,6 @@ service: serverless-flask
 plugins:
   - serverless-wsgi
   - serverless-dynamodb-local
-
 custom:
   unProcessedTableName: 'unProcessed-pitches-table-${self:provider.stage}'
   processedTableName: 'processed-pitches-table-${self:provider.stage}'
