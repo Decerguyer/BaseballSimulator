@@ -244,7 +244,21 @@ class UKFB:
 
     def position_smoother(self):
         pre = T.time()
-        (sxs, Ps, K) = self.ukf.rts_smoother(np.array(self.xs), np.array(self.ps))
+
+        samples = 100
+        step = int(len(self.xs) / samples)
+        if step < 1:
+            step = 1
+        # print (step)
+        downSampledXS = []
+        downSampledPS = []
+        # len(smoothed-1) because the last rts_position is the start of the phys model positions
+        # No need to include it twice
+        for i in range(0, len(self.xs) - 1, step):
+            downSampledXS.append(self.xs[i])
+        for i in range(0, len(self.ps) - 1, step):
+            downSampledPS.append(self.ps[i])
+        (sxs, Ps, K) = self.ukf.rts_smoother(np.array(downSampledXS), np.array(downSampledPS))
         print(str(T.time()-pre) + " Seconds to smooth")
         return sxs
 
