@@ -97,13 +97,14 @@ def record_pitch():
         #Also mound and height offsets
         # NEEDS TO BE IMPLEMENTED
         config_dict = get_config_from_sn(up_dict['serial_number'])
+
         if(config_dict):
             up_dict['user_id'] = config_dict['user_id']
             up_dict['mound_offset'] = config_dict['mound_offset']
             up_dict['height_offset'] = config_dict['height_offset']
         else:
             return jsonify({'error': 'This System has not been configured'}), 400
-        print("After config")
+
         # RELEVANT TO KF: positions, timestamps, spin, error_list
         pitch = Pitch(up_dict)
         pitch.kalman_filter()
@@ -155,12 +156,12 @@ def record_config():
         return jsonify({'error': str(e)}), 400
 
 
-def get_config_from_sn(serial_number: str):
+def get_config_from_sn(serial_number: int):
     try:
         resp = client.get_item(
             TableName=CONFIGURATION_TABLE,
             Key={
-                'serial_number': {'S': serial_number}
+                'serial_number': {'N': str(serial_number)}
             }
         )
         config = resp.get('Item')
@@ -168,4 +169,5 @@ def get_config_from_sn(serial_number: str):
             return False
         return convert_config_to_response(config)
     except Exception as e:
+        print(e)
         return str(e)

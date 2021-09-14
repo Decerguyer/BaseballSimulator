@@ -2,7 +2,7 @@ secrets.txt/
 node_modules/
 venv/
 .serverless/
-.dynamodb/
+backend/App/.dynamodb/
 __pycache__/
 .DS_Store
 .idea/BaseballSimulator2.iml
