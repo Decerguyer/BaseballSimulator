@@ -41,13 +41,19 @@ class HTTPHandler:
         return pitch.json()
 
     def post_to_JEY_backend(self, up_pitch: dict):
-        url = 'https://ygya0707cg.execute-api.us-east-1.amazonaws.com/dev/pitch'
+        url = 'https://pkafa2msue.execute-api.us-east-1.amazonaws.com/dev/pitch'
         #url = 'http://localhost:5000/pitch'
         print("Posting")
         x = requests.post(url, json=up_pitch)
         print(x.text)
 
-
+    def get_pitches_timeframe(self, start_time: str, end_time: str):
+        url = 'https://pkafa2msue.execute-api.us-east-1.amazonaws.com/dev/pitch/time?'
+        url = url + 'start_time=' + start_time + '&end_time=' + end_time
+        print("Getting this URL")
+        print(url)
+        x = requests.get(url)
+        print(x.text)
 
 
 

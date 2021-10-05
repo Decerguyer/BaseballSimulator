@@ -2,6 +2,7 @@ from flask import Flask, jsonify, request
 from typing import List, Tuple, Dict
 import os
 import boto3
+from boto3.dynamodb.conditions import Key
 import math
 import datetime
 import uuid
@@ -50,6 +51,32 @@ def get_user(pitch_id):
             return jsonify({'error': 'Pitch does not exist'}), 404
 
         return jsonify(convert_processed_pitch_to_response(pitch)), 200
+    except Exception as e:
+        return jsonify({'error': str(e)}), 400
+
+
+@app.route("/pitch/time")
+def get_pitch():
+    try:
+        start_time = str(request.args['start_time'])
+        end_time = str(request.args['end_time'])
+        resp = client.query(
+            TableName=PROCESSED_PITCHES_TABLE,
+            KeyConditionExpression='user_id = :user AND #t BETWEEN :start AND :end',
+            ExpressionAttributeValues={
+                ':user': {'S': 'JEYSolutions'},
+                ':start': {'S': start_time},
+                ':end': {'S': end_time}
+            },
+            ExpressionAttributeNames={"#t": "time"}
+        )
+        pitches = resp.get('Items')
+        if not pitches:
+            return jsonify({'error': 'Pitches do not exist'}), 404
+        result = []
+        for pitch in pitches:
+            result.append(convert_processed_pitch_to_response(pitch))
+        return jsonify(result), 200
     except Exception as e:
         return jsonify({'error': str(e)}), 400
 
