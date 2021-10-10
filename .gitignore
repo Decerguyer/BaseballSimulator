@@ -9,3 +9,4 @@ __pycache__/
 baseball-simulator/cmake-build-debug
 KalmanGit/JSON/Class Based UKF/V2/
 
+*.pyc
