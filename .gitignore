@@ -10,3 +10,4 @@ baseball-simulator/cmake-build-debug
 KalmanGit/JSON/Class Based UKF/V2/
 
 *.pyc
+KalmanGit/JSON/Class Based UKF/V2/__pycache__/HTTPHandler.cpython-39.pyc
