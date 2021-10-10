@@ -60,11 +60,12 @@ def get_pitch():
     try:
         start_time = str(request.args['start_time'])
         end_time = str(request.args['end_time'])
+        user_id = str(request.args['user_id'])
         resp = client.query(
             TableName=PROCESSED_PITCHES_TABLE,
             KeyConditionExpression='user_id = :user AND #t BETWEEN :start AND :end',
             ExpressionAttributeValues={
-                ':user': {'S': 'JEYSolutions'},
+                ':user': {'S': user_id},
                 ':start': {'S': start_time},
                 ':end': {'S': end_time}
             },

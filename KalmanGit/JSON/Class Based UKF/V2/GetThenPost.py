@@ -15,4 +15,4 @@ print(pulled_json)
 http.post_to_JEY_backend(pulled_json)
 '''
 
-http.get_pitches_timeframe('2021-09-25', '2021-12')
+http.get_pitches_timeframe('2021-10-9', '2021-10-9', 'JEYSolutions')

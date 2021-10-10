@@ -38,7 +38,7 @@ class Home extends React.Component{
 
 
     componentDidMount() {
-        fetch('https://ygya0707cg.execute-api.us-east-1.amazonaws.com/dev/pitch')
+        fetch('https://pkafa2msue.execute-api.us-east-1.amazonaws.com/dev/pitch')
             .then(res => res.json())
             .then(data=>{
                 this.setState({pitches: data, isLoaded: true})

@@ -176,6 +176,7 @@ class Pitch3D extends Component {
         this.scene.add(lights[2]);
     };
 
+	//Had to add inversions to the x positions since the axis is flipped -Yoni
     addCustomSceneObjects = () => {
         const {pitches = []} = this.props;
         pitches.map(pitch => {
@@ -186,15 +187,15 @@ class Pitch3D extends Component {
             const ball_sphere = new THREE.Mesh( ball_geometry, ball_material );
             let first_ball_pos = trajectory[0];
             let last_ball_pos = trajectory.slice(-1)[0];
-            ball_sphere.position.set(last_ball_pos[0], last_ball_pos[2], last_ball_pos[1]);
+            ball_sphere.position.set(last_ball_pos[0]*-1, last_ball_pos[2], last_ball_pos[1]);
             this.scene.add( ball_sphere );
             let ball2 = ball_sphere.clone()
-            ball2.position.set(first_ball_pos[0], first_ball_pos[2], first_ball_pos[1]);
+            ball2.position.set(first_ball_pos[0]*-1, first_ball_pos[2], first_ball_pos[1]);
             this.scene.add(ball2);
 
             //Trajectory of the ball
             let curve = new THREE.CatmullRomCurve3(trajectory.map(p=>{
-                return new THREE.Vector3(p[0], p[2], p[1]);
+                return new THREE.Vector3(p[0]*-1, p[2], p[1]);
             }));
             const trajecPoints = curve.getPoints( 50 );
             const trajecGeom = new THREE.TubeGeometry(curve,200, 0.1,50, false );
